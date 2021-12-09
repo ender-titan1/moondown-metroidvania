@@ -22,6 +22,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField]
+    private const float _playerSpeed;
+
     private void Awake()
     {
         Debug.Log("hello world");
