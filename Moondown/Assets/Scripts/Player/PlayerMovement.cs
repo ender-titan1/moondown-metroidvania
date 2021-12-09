@@ -60,7 +60,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {
-        _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _rigidBody.velocity.y + 10f);
+        if (grounded)
+            _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _rigidBody.velocity.y + 12f);
     }
 
     void Move(float direction)
@@ -70,8 +71,8 @@ public class PlayerMovement : MonoBehaviour
 
     void MoveCancelled()
     {
-        // if grounded
-        _rigidBody.velocity = new Vector2(0f, _rigidBody.velocity.y);
+        if (grounded)
+            _rigidBody.velocity = new Vector2(0f, _rigidBody.velocity.y);
     }
 
     bool IsGrounded()
