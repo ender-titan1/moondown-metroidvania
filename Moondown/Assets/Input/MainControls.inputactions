@@ -25,12 +25,12 @@
                 },
                 {
                     "name": "Movement",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "9a5d308a-e08e-4287-92d0-a22d25237416",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -92,39 +92,6 @@
                 {
                     "name": "positive",
                     "id": "36ff78bd-2c29-4020-b663-633a9e2909cd",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard & Mouse",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "QuickDash",
-                    "id": "4aec784f-0165-4679-a25f-83335cc7257f",
-                    "path": "1DAxis",
-                    "interactions": "MultiTap",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "dce606d8-6017-4cee-902e-509be12a28ae",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard & Mouse",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "6bb46819-ebdc-4045-8cb2-49412fc1c698",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",

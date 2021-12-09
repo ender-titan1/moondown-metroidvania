@@ -15,18 +15,68 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
-    private const float _playerSpeed;
+    private float _playerSpeed;
+    private MainControls _controls;
+    private Rigidbody2D _rigidBody;
+
+    private bool isMovementPressed = false;
+    private float movementAxis;
+
+    private bool grounded = true;
 
     private void Awake()
     {
-        Debug.Log("hello world");
+        _controls = new MainControls();
+
+        _controls.Player.AttackMeele.performed += ctx => AttackMeele();
+        _controls.Player.Jump.performed += ctx => Jump();
+        _controls.Player.Movement.performed += ctx => { isMovementPressed = true; movementAxis = ctx.ReadValue<float>(); };
+        _controls.Player.Movement.canceled += _ => { isMovementPressed = false; MoveCancelled(); };
+
+        _rigidBody = gameObject.GetComponent<Rigidbody2D>();
+    }
+    private void FixedUpdate()
+    {
+        grounded = IsGrounded();
+
+        if (isMovementPressed)
+            Move(movementAxis);
+    }
+
+    private void OnEnable() => _controls.Enable();
+    private void OnDisable() => _controls.Enable();
+
+    void AttackMeele()
+    {
+        Debug.Log("attacked");
+    }
+
+    void Jump()
+    {
+        _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _rigidBody.velocity.y + 10f);
+    }
+
+    void Move(float direction)
+    {
+        _rigidBody.velocity = new Vector2(_playerSpeed * direction, _rigidBody.velocity.y);
+    }
+
+    void MoveCancelled()
+    {
+        // if grounded
+        _rigidBody.velocity = new Vector2(0f, _rigidBody.velocity.y);
+    }
+
+    bool IsGrounded()
+    {
+        // boxcast
+        return true;
     }
 }
