@@ -6,24 +6,6 @@
             "id": "2f9729c4-654d-4e09-8b40-451906462157",
             "actions": [
                 {
-                    "name": "Move Left",
-                    "type": "Button",
-                    "id": "995dfe98-d91f-4801-9336-0c523da57cd0",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Move Right",
-                    "type": "Button",
-                    "id": "d79eb628-6f92-4425-a361-a42eb71fac14",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Jump",
                     "type": "Button",
                     "id": "5e9ce7f3-6717-42c0-9832-881c03564dec",
@@ -42,18 +24,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "QuickDash Left",
+                    "name": "Movement",
                     "type": "Button",
-                    "id": "e9124022-d6aa-437f-b056-81cb7b6536f8",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "QuickDash Right",
-                    "type": "Button",
-                    "id": "7707dee2-2629-4cca-aef5-e8c1997cab5d",
+                    "id": "9a5d308a-e08e-4287-92d0-a22d25237416",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -63,33 +36,11 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "e8597582-d3f8-41e4-834e-1af5822c6d95",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move Left",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "5a0e267e-ef1a-42fd-a552-b0fdc6a5505c",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move Right",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "9008a5e8-52ee-4a22-85a4-1be51e55d27d",
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard & Mouse",
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -100,7 +51,7 @@
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard & Mouse",
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -111,35 +62,96 @@
                     "path": "<Keyboard>/x",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard & Mouse",
                     "action": "Attack Meele",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "aa33a282-53db-4722-86be-8d29fb513b1a",
-                    "path": "<Keyboard>/a",
-                    "interactions": "MultiTap",
+                    "name": "Walk",
+                    "id": "c07f20aa-3706-435a-949d-26542b1d5e18",
+                    "path": "1DAxis",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "QuickDash Left",
-                    "isComposite": false,
+                    "action": "Movement",
+                    "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "6fdca010-786d-4240-9160-39a30b21479c",
+                    "name": "negative",
+                    "id": "c38b1dfe-d2f7-4fc8-adef-0ee20472a614",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "36ff78bd-2c29-4020-b663-633a9e2909cd",
                     "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "QuickDash",
+                    "id": "4aec784f-0165-4679-a25f-83335cc7257f",
+                    "path": "1DAxis",
                     "interactions": "MultiTap",
                     "processors": "",
                     "groups": "",
-                    "action": "QuickDash Right",
-                    "isComposite": false,
+                    "action": "Movement",
+                    "isComposite": true,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "dce606d8-6017-4cee-902e-509be12a28ae",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "6bb46819-ebdc-4045-8cb2-49412fc1c698",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }
     ],
-    "controlSchemes": []
+    "controlSchemes": [
+        {
+            "name": "Keyboard & Mouse",
+            "bindingGroup": "Keyboard & Mouse",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
 }
