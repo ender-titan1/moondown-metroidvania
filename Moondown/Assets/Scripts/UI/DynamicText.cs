@@ -14,30 +14,34 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class BasePlayerModule : AbstractModule
+[RequireComponent(typeof(Text))]
+public class DynamicText : MonoBehaviour
 {
-    public BasePlayerModule()
+    [SerializeField]
+    private string[] inputs;
+
+    public void Replace(Text text)
     {
-        setup();
+        for (int i = 0; i < inputs.Length; i++)
+        {
+            text.text.Replace($"{{{i}}}", GenInput(inputs[i]));
+        }
     }
 
-    public override void OnHeal(int amount)
+    private string GenInput(string str)
     {
-        PlayerManager.Instance.Health += amount;
-    }
-
-    public override void OnCharge(int amount)
-    {
-        PlayerManager.Instance.Charge += amount;
-    }
-
-    public override void OnDamageTaken(int amount)
-    {
-        // this is done because the 'amount' parameter is negative
-        PlayerManager.Instance.Health += amount;
+        string[] strings = str.Split(char.Parse("."));
+        Type type = Type.GetType(strings[1]);
+        PropertyInfo instanceInfo = type.GetProperty(strings[1]);
+        object instance = instanceInfo.GetValue(null);
+        PropertyInfo prop = type.GetProperty(strings[2]);
+        return prop.GetValue(instance).ToString();
     }
 }
