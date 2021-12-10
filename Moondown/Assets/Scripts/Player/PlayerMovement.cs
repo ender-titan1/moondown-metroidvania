@@ -35,13 +35,14 @@ public class PlayerMovement : MonoBehaviour
     {
         _controls = new MainControls();
 
-        _controls.Player.AttackMeele.performed += ctx => AttackMeele();
-        _controls.Player.Jump.performed += ctx => Jump();
+        _controls.Player.AttackMeele.performed += _ => AttackMeele();
+        _controls.Player.Jump.performed += _ => Jump();
         _controls.Player.Movement.performed += ctx => { isMovementPressed = true; movementAxis = ctx.ReadValue<float>(); };
         _controls.Player.Movement.canceled += _ => { isMovementPressed = false; MoveCancelled(); };
 
         _rigidBody = gameObject.GetComponent<Rigidbody2D>();
     }
+
     private void FixedUpdate()
     {
         grounded = IsGrounded();
@@ -51,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void OnEnable() => _controls.Enable();
-    private void OnDisable() => _controls.Enable();
+    private void OnDisable() => _controls.Disable();
 
     void AttackMeele()
     {
