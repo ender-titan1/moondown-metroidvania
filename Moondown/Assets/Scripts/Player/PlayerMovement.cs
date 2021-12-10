@@ -19,17 +19,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider2D))]
 public class PlayerMovement : MonoBehaviour
 {
+    private const float MAX_ANGLE = 45f;
+
     [SerializeField]
     private float _playerSpeed;
+    [SerializeField]
+    private float _jumpVelocity;
+
     private MainControls _controls;
     private Rigidbody2D _rigidBody;
 
-    private bool isMovementPressed = false;
+    private bool isMovementPressed;
     private float movementAxis;
 
-    private bool grounded = true;
+    private bool grounded;
+    private PhysicsMaterial2D groundMaterial;
 
     private void Awake()
     {
@@ -46,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         grounded = IsGrounded();
-
+        
         if (isMovementPressed)
             Move(movementAxis);
     }
@@ -59,26 +66,51 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("attacked");
     }
 
+    #region movement
+
     void Jump()
     {
         if (grounded)
-            _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _rigidBody.velocity.y + 12f);
+            _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _rigidBody.velocity.y + _jumpVelocity);
     }
 
     void Move(float direction)
     {
-        _rigidBody.velocity = new Vector2(_playerSpeed * direction, _rigidBody.velocity.y);
+       _rigidBody.velocity = new Vector2(
+           _playerSpeed * direction - (grounded ? (groundMaterial.friction * direction) : 0f),
+           _rigidBody.velocity.y
+       );
     }
 
     void MoveCancelled()
     {
-        if (grounded)
-            _rigidBody.velocity = new Vector2(0f, _rigidBody.velocity.y);
+        _rigidBody.velocity = new Vector2(0f, _rigidBody.velocity.y);
     }
+
+    #endregion
 
     bool IsGrounded()
     {
-        // boxcast
-        return true;
+        BoxCollider2D collider = gameObject.GetComponent<BoxCollider2D>();
+
+        Vector2 pos = new Vector2(transform.position.x, transform.position.y);
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(pos - new Vector2(0, 1f), collider.size, 0, Vector2.down, collider.size.y);
+
+        foreach (RaycastHit2D item in hits)
+        {
+            if (item.transform.CompareTag("Player")) 
+                continue;
+
+            float angle = Mathf.Atan2(item.normal.x, item.normal.y) * (180 / Mathf.PI);
+            float fixedangle = Mathf.Abs(angle);
+
+            if (fixedangle < MAX_ANGLE)
+            {
+                groundMaterial = item.collider.sharedMaterial;
+                return true;
+            }
+        }
+
+        return false;
     }
 }
