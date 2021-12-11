@@ -44,6 +44,12 @@ public class LocalizationManager : MonoBehaviour
                 if (i == maxLength)
                     break;
 
+                if (line.Replace("\n", "").Replace("\r", "").Length == 0)
+                    continue;
+
+                if (line.Replace("\n", "").Replace("\r", "")[0] == char.Parse("#"))
+                    continue;
+
                 var l = line.Replace(" = ", "=");
 
                 string key = l.Split(char.Parse("="))[0].Replace("\n", "").Replace("\r", "");
@@ -70,7 +76,6 @@ public class LocalizationManager : MonoBehaviour
             if (currentLocale.ContainsKey(text.text))
             {
                 text.text = currentLocale[text.text];
-
 
                 if (text.gameObject.GetComponent<DynamicText>() != null)
                     text.gameObject.GetComponent<DynamicText>().Replace(true);
