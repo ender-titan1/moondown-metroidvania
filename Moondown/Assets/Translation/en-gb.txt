@@ -1,2 +1,2 @@
-HP=health points: {0}
-CHARGE=charge: {0}
+HP = health points: {0}/{1};
+CHARGE = charge: {0}/{1};

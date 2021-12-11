@@ -25,9 +25,9 @@ public class LocalizationManager : MonoBehaviour
     [SerializeField]
     private TextAsset[] translations;
 
-    private void Start() => translate();
+    private void Start() => Translate();
 
-    private void translate()
+    private void Translate()
     {
         Dictionary<string, Dictionary<string, string>> locales = new Dictionary<string, Dictionary<string, string>> { };
 
@@ -37,12 +37,22 @@ public class LocalizationManager : MonoBehaviour
         {
             locales.Add(locale.name, new Dictionary<string, string> { });
 
-            foreach (string line in locale.text.Split(char.Parse("\n")))
+            int maxLength = locale.text.Split(char.Parse("\n")).Length;
+            int i = 0;
+            foreach (string line in locale.text.Split(char.Parse(";")))
             {
-                string key = line.Split(char.Parse("="))[0];
-                string value = line.Split(char.Parse("="))[1];
+                if (i == maxLength)
+                    break;
+
+                var l = line.Replace(" = ", "=");
+
+                string key = l.Split(char.Parse("="))[0].Replace("\n", "").Replace("\r", "");
+                string value = l.Split(char.Parse("="))[1];
+
+                Debug.Log(key.Replace("\r", "."));
 
                 locales[locale.name].Add(key, value);
+                i++;
             }
         }
 
@@ -54,15 +64,18 @@ public class LocalizationManager : MonoBehaviour
         // get current locale
         Dictionary<string, string> currentLocale = locales["en-gb"];
 
+
         // translate
         foreach (Text text in toTranslate)
         {
+
             if (currentLocale.ContainsKey(text.text))
             {
                 text.text = currentLocale[text.text];
 
+
                 if (text.gameObject.GetComponent<DynamicText>() != null)
-                    text.gameObject.GetComponent<DynamicText>().Replace(text);
+                    text.gameObject.GetComponent<DynamicText>().Replace();
             }
         }
 

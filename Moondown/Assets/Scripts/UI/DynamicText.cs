@@ -27,21 +27,37 @@ public class DynamicText : MonoBehaviour
     [SerializeField]
     private string[] inputs;
 
-    public void Replace(Text text)
+    public void Replace()
     {
+        Text text = gameObject.GetComponent<Text>();
+
         for (int i = 0; i < inputs.Length; i++)
         {
-            text.text.Replace($"{{{i}}}", GenInput(inputs[i]));
+            text.text = text.text.Replace("{" + i.ToString() + "}", GenInput(inputs[i]));
         }
     }
 
     private string GenInput(string str)
     {
+
         string[] strings = str.Split(char.Parse("."));
-        Type type = Type.GetType(strings[1]);
-        PropertyInfo instanceInfo = type.GetProperty(strings[1]);
-        object instance = instanceInfo.GetValue(null);
+
+        Type type = GetTypeByName(strings[0]);
+        object instance = type.GetProperty(strings[1]).GetValue(null);
+
         PropertyInfo prop = type.GetProperty(strings[2]);
         return prop.GetValue(instance).ToString();
+    }
+
+    private Type GetTypeByName(string name)
+    {
+        foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+        {
+            var tt = assembly.GetType(name);
+            if (tt != null)
+                return tt;
+        }
+
+        return null;
     }
 }
