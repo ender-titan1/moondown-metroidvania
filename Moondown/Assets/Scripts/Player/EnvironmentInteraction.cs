@@ -26,7 +26,13 @@ public class EnvironmentInteraction : MonoBehaviour
         public int charge;
     }
 
-    public static EnvironmentInteraction Instance { get; } = new EnvironmentInteraction();
+    public static EnvironmentInteraction Instance { get; private set;  }
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+    }
 
     public Modifiers CheckCollisions()
     {

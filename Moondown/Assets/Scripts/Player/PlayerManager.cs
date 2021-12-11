@@ -23,7 +23,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     // singelton
-    public static PlayerManager Instance { get; } = new PlayerManager();
+    public static PlayerManager Instance { get; private set; }
 
     public delegate void actionDelegate(int amount);
 
@@ -31,20 +31,29 @@ public class PlayerManager : MonoBehaviour
     public event actionDelegate OnHeal;
     public event actionDelegate OnCharge;
 
-    public int Health { get; set; }
-    public int MaxHealth { get; set; }
+    public int Health { get; set; } = 5;
+    public int MaxHealth { get; set; } = 10;
 
-    public int Charge { get; set; }
-    public int MaxCharge { get; set; }
+    public int Charge { get; set; } = 0;
+    public int MaxCharge { get; set; } = 3;
 
     public List<AbstractModule> modules = new List<AbstractModule> { };
-    
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+    }
+
     private void Update()
     {
         EnvironmentInteraction.Modifiers modifiers = EnvironmentInteraction.Instance.CheckCollisions();
 
         if (modifiers.charge > 0)
             OnCharge(modifiers.charge);
+
+        if (modifiers.health == 0)
+            return;
 
         if (modifiers.health > 0)
             OnHeal(modifiers.health);
