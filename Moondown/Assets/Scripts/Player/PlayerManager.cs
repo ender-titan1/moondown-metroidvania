@@ -25,11 +25,11 @@ public class PlayerManager : MonoBehaviour
     // singelton
     public static PlayerManager Instance { get; private set; }
 
-    public delegate void actionDelegate(int amount);
+    public delegate void ActionDelegate(int amount);
 
-    public event actionDelegate OnDamageTaken;
-    public event actionDelegate OnHeal;
-    public event actionDelegate OnCharge;
+    public event ActionDelegate OnDamageTaken;
+    public event ActionDelegate OnHeal;
+    public event ActionDelegate OnCharge;
 
     public int Health { get; set; } = 5;
     public int MaxHealth { get; set; } = 10;
@@ -43,6 +43,11 @@ public class PlayerManager : MonoBehaviour
     {
         if (Instance == null)
             Instance = this;
+    }
+
+    private void Start()
+    {
+        modules.Add(new BasePlayerModule());
     }
 
     private void Update()

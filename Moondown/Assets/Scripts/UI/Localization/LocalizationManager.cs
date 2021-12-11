@@ -49,8 +49,6 @@ public class LocalizationManager : MonoBehaviour
                 string key = l.Split(char.Parse("="))[0].Replace("\n", "").Replace("\r", "");
                 string value = l.Split(char.Parse("="))[1];
 
-                Debug.Log(key.Replace("\r", "."));
-
                 locales[locale.name].Add(key, value);
                 i++;
             }
@@ -75,7 +73,7 @@ public class LocalizationManager : MonoBehaviour
 
 
                 if (text.gameObject.GetComponent<DynamicText>() != null)
-                    text.gameObject.GetComponent<DynamicText>().Replace();
+                    text.gameObject.GetComponent<DynamicText>().Replace(true);
             }
         }
 

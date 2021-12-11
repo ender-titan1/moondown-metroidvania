@@ -28,6 +28,8 @@ public class EnvironmentInteraction : MonoBehaviour
 
     public static EnvironmentInteraction Instance { get; private set;  }
 
+    private List<GameObject> gameObjects = new List<GameObject> { };
+
     private void Awake()
     {
         if (Instance == null)
@@ -36,22 +38,31 @@ public class EnvironmentInteraction : MonoBehaviour
 
     public Modifiers CheckCollisions()
     {
-        BoxCollider2D collider = gameObject.GetComponent<BoxCollider2D>();
-
-        Vector2 pos = new Vector2(transform.position.x, transform.position.y);
-        RaycastHit2D hit = Physics2D.BoxCast(pos - new Vector2(0, 1f), collider.size, 0, Vector2.down, collider.size.y);
-
         Modifiers m = new Modifiers();
         m.charge = 0;
         m.health = 0;
 
-        if (hit.collider.GetComponent<EnvironmentBehaviour>() != null)
+        foreach (GameObject collision in gameObjects)
         {
-            m.health = hit.collider.GetComponent<EnvironmentBehaviour>().healthModifier;
-            m.charge = hit.collider.GetComponent<EnvironmentBehaviour>().chargeModifier;
+            EnvironmentBehaviour behaviour = collision.GetComponent<EnvironmentBehaviour>();
+
+            m.charge += behaviour.chargeModifier;
+            m.health += behaviour.healthModifier;
+
+            if (behaviour.singleUse)
+                Destroy(behaviour.gameObject);
+
+            behaviour.isUsable = false;
         }
 
+        gameObjects.Clear();
         return m;
 
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.GetComponent<EnvironmentBehaviour>() != null)
+            gameObjects.Add(collision.gameObject);
     }
 }

@@ -27,13 +27,24 @@ public class DynamicText : MonoBehaviour
     [SerializeField]
     private string[] inputs;
 
-    public void Replace()
+    private string template;
+
+    private void Update() => Replace(false);
+
+    public void Replace(bool firstTime)
     {
         Text text = gameObject.GetComponent<Text>();
 
+        if (firstTime)
+            template = text.text;
+
+        string updatedString = template;
+
         for (int i = 0; i < inputs.Length; i++)
         {
-            text.text = text.text.Replace("{" + i.ToString() + "}", GenInput(inputs[i]));
+            string str = updatedString.Replace("{" + i.ToString() + "}", GenInput(inputs[i]));
+            text.text = str;
+            updatedString = str;
         }
     }
 

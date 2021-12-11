@@ -20,10 +20,7 @@ using UnityEngine;
 
 public class BasePlayerModule : AbstractModule
 {
-    public BasePlayerModule()
-    {
-        setup();
-    }
+    public BasePlayerModule() => setup();
 
     public override void OnHeal(int amount)
     {

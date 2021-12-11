@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     private float _playerSpeed;
+
     [SerializeField]
     private float _jumpVelocity;
 
@@ -63,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
 
     void AttackMeele()
     {
-        Debug.Log("attacked");
+        PlayerManager.Instance.Health += 1;
     }
 
     #region movement
@@ -94,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
         BoxCollider2D collider = gameObject.GetComponent<BoxCollider2D>();
 
         Vector2 pos = new Vector2(transform.position.x, transform.position.y);
-        RaycastHit2D[] hits = Physics2D.BoxCastAll(pos - new Vector2(0, 1f), collider.size, 0, Vector2.down, collider.size.y);
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(pos - new Vector2(0, 0.1f), collider.size, 0, Vector2.down, collider.size.y);
 
         foreach (RaycastHit2D item in hits)
         {
