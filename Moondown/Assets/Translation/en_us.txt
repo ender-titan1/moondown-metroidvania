@@ -1,4 +1,0 @@
-# To translate;
-HP =  ;
-# To translate;
-CHARGE =  ;

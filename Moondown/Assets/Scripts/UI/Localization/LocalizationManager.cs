@@ -23,8 +23,6 @@ using System.IO;
 
 public class LocalizationManager : MonoBehaviour
 {
-    
-
     private static TextAsset[] translations;
 
     [SerializeField]
@@ -35,6 +33,8 @@ public class LocalizationManager : MonoBehaviour
     {
 
         Text[] toCheck = GetText().ToArray();
+
+
         Dictionary<string, Dictionary<string, string>> locales = GetLocales();
 
 
@@ -43,23 +43,23 @@ public class LocalizationManager : MonoBehaviour
             string name = locales.FirstOrDefault(x => x.Value == locale).Key;
             string path = Application.dataPath + @"/Translation/" + name + @".txt";
 
-            Debug.Log(path);
 
             foreach (Text text in toCheck)
             {
                 if (!locale.ContainsKey(text.text))
                 {
-                    Debug.Log(text.text);
 
                     using (StreamWriter sw = File.AppendText(path))
                     {
-                        sw.WriteLine("# To translate;");
+                        sw.WriteLine("\n# To translate;");
                         sw.WriteLine(text.text + " =  ;");
                     }
                 }
-
             }
+
+
         }
+
 
     }
 
