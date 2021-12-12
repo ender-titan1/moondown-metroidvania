@@ -25,5 +25,5 @@ To add a translation you need to:
 To add a new language you need to:
 * Go to the `Moondown/Assets/Translation` directory
 * Make a new file with the appropriate [ICU code](https://www.localeplanet.com/icu/) as the name 
-* Add the newly created asset to the list of languages in the `Localization` directory
+* Add the newly created asset to the list of languages in the `Localization` game object
 * Click on the `Moondown Tools` tab and select `Refresh Translations`
