@@ -19,12 +19,11 @@ You might want to include unkowns in the translations. Check `using DynamicText.
 # Adding a translation
 To add a translation you need to:
 * First, make a text game object, set it's text as your desired key
-* Secondly, go into all translation files add add the key and the value for that specific language (you don't need to add proper translations
-to all the files. If you don't know the languageof a file, you should do something like this `KEY = ;`)
-
+* Secondly, click on the `Moondown Tools` tab and select `Refresh Translations`
+* Thirdly, find the key in the translation files and add a value, do this for all languages you know how to translate
 # Adding a language 
 To add a new language you need to:
 * Go to the `Moondown/Assets/Translation` directory
 * Make a new file with the appropriate [ICU code](https://www.localeplanet.com/icu/) as the name 
-* Add the newly created asset to the list of languages in the `Localization` game object
-* Add all the translation already in the game
+* Add the newly created asset to the list of languages in the `Localization` directory
+* Click on the `Moondown Tools` tab and select `Refresh Translations`
