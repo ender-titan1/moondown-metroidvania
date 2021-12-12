@@ -26,15 +26,21 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager Instance { get; private set; }
 
     public delegate void ActionDelegate(int amount);
+    public delegate void BlankDelegate();
 
     public event ActionDelegate OnDamageTaken;
     public event ActionDelegate OnHeal;
     public event ActionDelegate OnCharge;
+    public event BlankDelegate OnDeath;
+    public event BlankDelegate OnRespawn;
 
-    public int Health { get; set; } = 5;
+    public RespawnLocation LocalRespawn { get; set; }
+    public RespawnLocation DeathRespawn { get; set; }
+
+    public int Health { get; set; }
     public int MaxHealth { get; set; } = 10;
 
-    public int Charge { get; set; } = 0;
+    public int Charge { get; set; }
     public int MaxCharge { get; set; } = 3;
 
     public List<AbstractModule> modules = new List<AbstractModule> { };
@@ -48,6 +54,8 @@ public class PlayerManager : MonoBehaviour
     private void Start()
     {
         modules.Add(new BasePlayerModule());
+        
+        OnRespawn();
     }
 
     private void Update()
@@ -57,13 +65,20 @@ public class PlayerManager : MonoBehaviour
         if (modifiers.charge > 0)
             OnCharge(modifiers.charge);
 
-        if (modifiers.health == 0)
-            return;
+        if (modifiers.health != 0)
+        {
 
-        if (modifiers.health > 0)
-            OnHeal(modifiers.health);
-        else
-            OnDamageTaken(modifiers.health);
+            if (modifiers.health > 0)
+                OnHeal(modifiers.health);
+            else
+                OnDamageTaken(modifiers.health);
+        }
+
+        if (modifiers.hasBeenHit)
+        {
+            gameObject.transform.position = LocalRespawn.position;
+        }
+
     }
 
 

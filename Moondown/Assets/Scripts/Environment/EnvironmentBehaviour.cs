@@ -25,6 +25,7 @@ public class EnvironmentBehaviour : MonoBehaviour
     public int chargeModifier = 0;
 
     public bool singleUse;
+    public bool reset;
 
     [HideInInspector]
     public bool isUsable;

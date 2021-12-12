@@ -24,6 +24,8 @@ public class EnvironmentInteraction : MonoBehaviour
     {
         public int health;
         public int charge;
+
+        public bool hasBeenHit;
     }
 
     public static EnvironmentInteraction Instance { get; private set;  }
@@ -49,6 +51,9 @@ public class EnvironmentInteraction : MonoBehaviour
             m.charge += behaviour.chargeModifier;
             m.health += behaviour.healthModifier;
 
+            if (behaviour.reset)
+                m.hasBeenHit = true;
+
             if (behaviour.singleUse)
                 Destroy(behaviour.gameObject);
 
@@ -64,5 +69,13 @@ public class EnvironmentInteraction : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<EnvironmentBehaviour>() != null)
             gameObjects.Add(collision.gameObject);
+
+        RespawnLocation respawn = collision.gameObject.GetComponent<RespawnLocation>();
+
+        if (respawn != null)
+        {
+            if (respawn.mode == RespawnLocation.RespawnMode.HIT)
+                PlayerManager.Instance.LocalRespawn = respawn;
+        }
     }
 }

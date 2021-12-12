@@ -37,4 +37,14 @@ public class BasePlayerModule : AbstractModule
         // this is done because the 'amount' parameter is negative
         PlayerManager.Instance.Health += amount;
     }
+
+    public override void OnRespawn()
+    {
+        PlayerManager.Instance.Health += 10;
+    }
+
+    public override void OnDeath()
+    {
+        PlayerManager.Instance.gameObject.transform.position = PlayerManager.Instance.DeathRespawn.position;
+    }
 }

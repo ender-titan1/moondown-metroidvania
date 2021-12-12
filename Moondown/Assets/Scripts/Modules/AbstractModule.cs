@@ -25,9 +25,13 @@ public abstract class AbstractModule
         PlayerManager.Instance.OnCharge += amount => OnCharge(amount);
         PlayerManager.Instance.OnHeal += amount => OnHeal(amount);
         PlayerManager.Instance.OnDamageTaken += amount => OnDamageTaken(amount);
+        PlayerManager.Instance.OnRespawn += () => OnRespawn();
+        PlayerManager.Instance.OnDeath += () => OnDeath();
     }
 
     public abstract void OnDamageTaken(int amount);
     public abstract void OnHeal(int amount);
     public abstract void OnCharge(int amount);
+    public abstract void OnRespawn();
+    public abstract void OnDeath();
 }
