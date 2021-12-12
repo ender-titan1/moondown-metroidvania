@@ -76,6 +76,14 @@ public class EnvironmentInteraction : MonoBehaviour
         {
             if (respawn.mode == RespawnLocation.RespawnMode.HIT)
                 PlayerManager.Instance.LocalRespawn = respawn;
+            else
+            {
+                if (respawn.cost == 0)
+                    PlayerManager.Instance.DeathRespawn = respawn;
+                else
+                    //IMPORTANT: for testing only
+                    respawn.Activate();
+            }
         }
     }
 }

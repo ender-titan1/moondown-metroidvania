@@ -18,4 +18,13 @@ public class RespawnLocation : MonoBehaviour
     {
         position = gameObject.transform.position;
     }
+
+    public void Activate()
+    {
+        if (PlayerManager.Instance.Charge >= cost)
+        {
+            PlayerManager.Instance.Charge -= cost;
+            PlayerManager.Instance.DeathRespawn = this;
+        }
+    }
 }

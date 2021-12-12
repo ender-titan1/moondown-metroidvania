@@ -30,6 +30,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float _jumpVelocity;
 
+    [SerializeField]
+    private LayerMask mask;
+
     private MainControls _controls;
     private Rigidbody2D _rigidBody;
 
@@ -95,7 +98,7 @@ public class PlayerMovement : MonoBehaviour
         BoxCollider2D collider = gameObject.GetComponent<BoxCollider2D>();
 
         Vector2 pos = new Vector2(transform.position.x, transform.position.y);
-        RaycastHit2D[] hits = Physics2D.BoxCastAll(pos - new Vector2(0, 0.1f), collider.size, 0, Vector2.down, collider.size.y);
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(pos - new Vector2(0, 0.1f), collider.size, 0, Vector2.down, collider.size.y, mask);
 
         foreach (RaycastHit2D item in hits)
         {

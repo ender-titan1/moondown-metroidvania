@@ -79,6 +79,15 @@ public class PlayerManager : MonoBehaviour
             gameObject.transform.position = LocalRespawn.position;
         }
 
+        if (Health <= 0)
+            Die();
+
+    }
+
+    private void Die()
+    {
+        OnDeath();
+        OnRespawn();
     }
 
 
