@@ -14,23 +14,88 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+using UnityEditor;
+using System.Linq;
+using System.IO;
 
 public class LocalizationManager : MonoBehaviour
 {
+    
+
+    private static TextAsset[] translations;
+
     [SerializeField]
-    private TextAsset[] translations;
+    private TextAsset[] visibleTranslations;
+
+    [MenuItem("Moondown Tools/Refresh Translations")]
+    public static void RefreshTranslations()
+    {
+
+        Text[] toCheck = GetText().ToArray();
+        Dictionary<string, Dictionary<string, string>> locales = GetLocales();
+
+
+        foreach (Dictionary<string, string> locale in locales.Values)
+        {
+            string name = locales.FirstOrDefault(x => x.Value == locale).Key;
+            string path = Application.dataPath + @"/Translation/" + name + @".txt";
+
+            Debug.Log(path);
+
+            foreach (Text text in toCheck)
+            {
+                if (!locale.ContainsKey(text.text))
+                {
+                    Debug.Log(text.text);
+
+                    using (StreamWriter sw = File.AppendText(path))
+                    {
+                        sw.WriteLine("# To translate;");
+                        sw.WriteLine(text.text + " =  ;");
+                    }
+                }
+
+            }
+        }
+
+    }
+
+    private void Awake() => translations = visibleTranslations;
 
     private void Start() => Translate();
 
     private void Translate()
     {
-        Dictionary<string, Dictionary<string, string>> locales = new Dictionary<string, Dictionary<string, string>> { };
+        Dictionary<string, Dictionary<string, string>> locales = GetLocales();
 
+        // get all relevant text objects
+        List<Text> toTranslate = GetText();
+
+        // get current locale
+        Dictionary<string, string> currentLocale = locales["en_gb"];
+
+
+        // translate
+        foreach (Text text in toTranslate)
+        {
+
+            if (currentLocale.ContainsKey(text.text))
+            {
+                text.text = currentLocale[text.text];
+
+                if (text.gameObject.GetComponent<DynamicText>() != null)
+                    text.gameObject.GetComponent<DynamicText>().Replace(true);
+            }
+        }
+
+    }
+
+    private static Dictionary<string, Dictionary<string, string>> GetLocales()
+    {
+        Dictionary<string, Dictionary<string, string>> locales = new Dictionary<string, Dictionary<string, string>> { };
 
         // get all key-value pairs
         foreach (TextAsset locale in translations)
@@ -60,31 +125,18 @@ public class LocalizationManager : MonoBehaviour
             }
         }
 
-        // get all relevant text objects
+        return locales;
+    }
+
+    private static List<Text> GetText()
+    {
         List<Text> toTranslate = new List<Text> { };
         foreach (Transform @object in GameObject.Find("Canvas").transform)
             GetChildren(@object.gameObject, ref toTranslate);
-
-        // get current locale
-        Dictionary<string, string> currentLocale = locales["en-gb"];
-
-
-        // translate
-        foreach (Text text in toTranslate)
-        {
-
-            if (currentLocale.ContainsKey(text.text))
-            {
-                text.text = currentLocale[text.text];
-
-                if (text.gameObject.GetComponent<DynamicText>() != null)
-                    text.gameObject.GetComponent<DynamicText>().Replace(true);
-            }
-        }
-
+        return toTranslate;
     }
 
-    private void GetChildren(GameObject parent, ref List<Text> toTranslate)
+    private static void GetChildren(GameObject parent, ref List<Text> toTranslate)
     {
         if (parent.GetComponent<Text>() != null)
             toTranslate.Add(parent.GetComponent<Text>());
