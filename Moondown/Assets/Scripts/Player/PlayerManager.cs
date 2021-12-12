@@ -54,7 +54,9 @@ public class PlayerManager : MonoBehaviour
     private void Start()
     {
         modules.Add(new BasePlayerModule());
-        
+
+        EquipmentManager.Instance.inventory.Add(new MeeleWeapon("Basic Sword", "An old, partly broken sword.", null, 1, AttackMode.NORMAL));
+            
         OnRespawn();
     }
 
