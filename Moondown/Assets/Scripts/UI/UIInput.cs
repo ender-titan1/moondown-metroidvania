@@ -18,29 +18,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RespawnLocation : MonoBehaviour
+public class UIInput : MonoBehaviour
 {
-    public enum RespawnMode
+    private MainControls controls;
+
+    private void Awake()
     {
-        HIT,
-        DEATH
+        controls = new MainControls();
+
+        controls.Player.Interact.performed += _ => Interact();
+        controls.Player.OpenInventory.performed += _ => OpenInventoryUI();
     }
 
-    public Vector2 position;
-    public RespawnMode mode;
-    public int cost;
-
-    private void OnEnable()
+    void Interact()
     {
-        position = gameObject.transform.position;
+
     }
 
-    public void Activate()
+    void OpenInventoryUI()
     {
-        if (PlayerManager.Instance.Charge >= cost)
-        {
-            PlayerManager.Instance.Charge -= cost;
-            PlayerManager.Instance.DeathRespawn = this;
-        }
+
     }
+
 }
