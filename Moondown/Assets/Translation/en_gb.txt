@@ -3,3 +3,10 @@
 HP = health points: {0}/{1};
 
 CHARGE = charge: {0}/{1};
+
+
+#-------swords-------;
+
+BASIC_SWORD_NAME = basic sword;
+
+BASIC_SWORD_DESC = An old, partly broken sword. Not much, but it can do for now;

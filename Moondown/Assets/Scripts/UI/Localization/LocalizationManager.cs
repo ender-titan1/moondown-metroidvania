@@ -149,4 +149,6 @@ public class LocalizationManager : MonoBehaviour
         }
     }
 
+    public static string Get(string key) => GetLocales()["en_gb"][key];
+
 }
