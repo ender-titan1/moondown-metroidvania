@@ -4,8 +4,8 @@ using UnityEngine;
 
 public interface IInventoryItem
 {
-    public string Name { get; set; }
-    public string Description { get; set; }
+    string Name { get; set; }
+    string Description { get; set; }
 
-    public Sprite Image { get; set; }
+    Sprite Image { get; set; }
 }

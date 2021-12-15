@@ -25,11 +25,13 @@ public class Weapon : IInventoryItem
     public Sprite Image { get; set; }
 
     public int Damage { get; set; }
+    public AttackMode Mode { get; set; }
 
-    public Weapon(string name, string desc, string spriteName, int dmg)
+    public Weapon(string name, string desc, string spriteName, int dmg, AttackMode mode)
     {
         this.Name = name;
         this.Description = desc;
         this.Damage = dmg;
+        this.Mode = mode;
     }
 }

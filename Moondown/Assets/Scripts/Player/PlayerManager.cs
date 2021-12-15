@@ -55,14 +55,17 @@ public class PlayerManager : MonoBehaviour
     {
         modules.Add(new BasePlayerModule());
 
-        EquipmentManager.Instance.inventory.Add(new MeeleWeapon(
-            LocalizationManager.Get("BASIC_SWORD_NAME"), 
-            LocalizationManager.Get("BASIC_SWORD_DESC"), 
-            null, 
-            1, 
+        Weapon weapon = new Weapon(
+            LocalizationManager.Get("BASIC_SWORD_NAME"),
+            LocalizationManager.Get("BASIC_SWORD_DESC"),
+            "",
+            1,
             AttackMode.NORMAL
-        ));
-            
+        );
+
+        EquipmentManager.Instance.Inventory.Add(weapon);
+        EquipmentManager.Instance.Equip(weapon);
+
         OnRespawn();
     }
 

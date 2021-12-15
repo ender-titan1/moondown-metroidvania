@@ -16,18 +16,38 @@
 */
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EquipmentManager : MonoBehaviour
 {
     public static EquipmentManager Instance { get; private set; }
     public string MeeleWeaponName { get; private set; }
+    public Weapon EquipedWeapon { get; private set; }
+
+    public List<IInventoryItem> Inventory { get; set; } = new List<IInventoryItem> { };
 
     public void Awake()
     {
         if (Instance == null)
             Instance = this;
     } 
-
     
+    public void Equip(string name)
+    {
+        EquipedWeapon = (Weapon)(
+            from IInventoryItem item in Inventory
+            where item.Name == name
+            select item
+        );
+    }
+
+    public void Equip(Weapon weapon)
+    {
+        EquipedWeapon = (Weapon)(
+            from IInventoryItem item in Inventory
+            where item.Name == weapon.Name
+            select item
+        );
+    }
 }
