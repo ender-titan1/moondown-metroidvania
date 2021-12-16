@@ -58,7 +58,7 @@ public class PlayerManager : MonoBehaviour
         Weapon weapon = new Weapon(
             LocalizationManager.Get("BASIC_SWORD_NAME"),
             LocalizationManager.Get("BASIC_SWORD_DESC"),
-            "",
+            "UI/Inventory/Placeholder",
             1,
             AttackMode.NORMAL,
             ItemType.MEELE_WEAPON

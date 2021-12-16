@@ -15,10 +15,11 @@ public class InventoryDisplay
 
     public static InventoryDisplay Instance { get; private set; } = new InventoryDisplay();
 
-    private LastViewed lastViewed;
+    private LastViewed lastViewed = LastViewed.GENERAL;
 
     public void Load(GameObject[] slots, GameObject[] quickBarSlots, Sprite baseSprite, GameObject UI)
     {
+
         if (lastViewed == LastViewed.GENERAL)
         {
             for (int i = 0; i < slots.Length; i++)
@@ -28,6 +29,12 @@ public class InventoryDisplay
                     where item.SlotNumber == i
                     select item.Image
                 ).First();
+
+                Debug.Log((
+                    from IInventoryItem item in EquipmentManager.Instance.Inventory
+                    where item.SlotNumber == i
+                    select item.Image
+                ).ToArray().Length);
 
                 Sprite sprite = MergeTextures(
                     new Sprite[]
@@ -44,6 +51,7 @@ public class InventoryDisplay
 
     private Sprite MergeTextures(Sprite[] sprites)
     {
+        Resources.UnloadUnusedAssets();
         Texture2D newTexture = new Texture2D(100, 100);
 
         for (int y = 0; y < newTexture.height; y++)

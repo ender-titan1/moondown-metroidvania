@@ -22,9 +22,18 @@ public class UIInput : MonoBehaviour
 {
     private MainControls controls;
 
+    [SerializeField] private GameObject[] slots;
+    [SerializeField] private GameObject[] quickBarSlots;
+    [SerializeField] private Sprite baseSlotSprite;
+    [SerializeField] private GameObject UI;
+
+    private bool isInInventory;
+
     private void Awake()
     {
         controls = new MainControls();
+
+        controls.Enable();
 
         controls.Player.Interact.performed += _ => Interact();
         controls.Player.OpenInventory.performed += _ => OpenInventoryUI();
@@ -37,7 +46,15 @@ public class UIInput : MonoBehaviour
 
     void OpenInventoryUI()
     {
-        InventoryDisplay.Instance.Load();
+        if (!isInInventory) { 
+            InventoryDisplay.Instance.Load(slots, quickBarSlots, baseSlotSprite, UI);
+            isInInventory = true;
+        }   
+        else
+        {
+            UI.SetActive(false);
+            isInInventory = false;
+        }
     }
 
 }

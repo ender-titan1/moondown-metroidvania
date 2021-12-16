@@ -16,6 +16,7 @@
 */
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Weapon : IInventoryItem
@@ -36,5 +37,10 @@ public class Weapon : IInventoryItem
         this.Damage = dmg;
         this.Mode = mode;
         this.Type = type;
+
+        string spritePath = @"Assets/Sprites/" + spriteName + ".png";
+        this.Image = (Sprite)AssetDatabase.LoadAssetAtPath(spritePath, typeof(Sprite));
+
+        this.SlotNumber = EquipmentManager.Instance.NextFreeSlot;
     }
 }

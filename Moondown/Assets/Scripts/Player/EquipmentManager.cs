@@ -25,6 +25,17 @@ public class EquipmentManager : MonoBehaviour
     public string MeeleWeaponName { get; private set; }
     public Weapon EquipedWeapon { get; private set; }
 
+    private int _next = 0;
+    public int NextFreeSlot
+    {
+        get
+        {
+            int val = _next;
+            _next++;
+            return val;
+        }
+    }
+
     public List<IInventoryItem> Inventory { get; set; } = new List<IInventoryItem> { };
 
     public void Awake()
@@ -39,7 +50,9 @@ public class EquipmentManager : MonoBehaviour
             from IInventoryItem item in Inventory
             where item.Name == name
             select item
-        );
+        ).First();
+
+        MeeleWeaponName = name;
     }
 
     public void Equip(Weapon weapon)
@@ -48,6 +61,8 @@ public class EquipmentManager : MonoBehaviour
             from IInventoryItem item in Inventory
             where item.Name == weapon.Name
             select item
-        );
+        ).First();
+
+        MeeleWeaponName = weapon.Name;
     }
 }
