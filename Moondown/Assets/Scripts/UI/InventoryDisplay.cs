@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryDisplay
 {
@@ -24,17 +26,21 @@ public class InventoryDisplay
         {
             for (int i = 0; i < slots.Length; i++)
             {
-                Sprite itemSprite = (
-                    from IInventoryItem item in EquipmentManager.Instance.Inventory
-                    where item.SlotNumber == i
-                    select item.Image
-                ).First();
+                Sprite itemSprite = null;
 
-                Debug.Log((
-                    from IInventoryItem item in EquipmentManager.Instance.Inventory
-                    where item.SlotNumber == i
-                    select item.Image
-                ).ToArray().Length);
+                try
+                {
+                   itemSprite = (
+                        from IInventoryItem item in EquipmentManager.Instance.Inventory
+                        where item.SlotNumber == i
+                        select item.Image
+                    ).ToArray().First();
+                
+                } catch(Exception e)
+                {
+                    continue;
+                }
+                
 
                 Sprite sprite = MergeTextures(
                     new Sprite[]
@@ -43,7 +49,9 @@ public class InventoryDisplay
                         itemSprite
                     }
                 );
-            }          
+                slots[i].GetComponent<RawImage>().texture = sprite.texture;
+            }
+            
         }
 
         UI.SetActive(true);
