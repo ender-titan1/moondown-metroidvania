@@ -60,7 +60,8 @@ public class PlayerManager : MonoBehaviour
             LocalizationManager.Get("BASIC_SWORD_DESC"),
             "",
             1,
-            AttackMode.NORMAL
+            AttackMode.NORMAL,
+            ItemType.MEELE_WEAPON
         );
 
         EquipmentManager.Instance.Inventory.Add(weapon);
