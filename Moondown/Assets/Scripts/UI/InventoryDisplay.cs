@@ -36,7 +36,7 @@ public class InventoryDisplay
                         select item.Image
                     ).ToArray().First();
                 
-                } catch(Exception e)
+                } catch (Exception)
                 {
                     continue;
                 }
@@ -49,6 +49,7 @@ public class InventoryDisplay
                         itemSprite
                     }
                 );
+
                 slots[i].GetComponent<RawImage>().texture = sprite.texture;
             }
             
@@ -60,7 +61,7 @@ public class InventoryDisplay
     private Sprite MergeTextures(Sprite[] sprites)
     {
         Resources.UnloadUnusedAssets();
-        Texture2D newTexture = new Texture2D(100, 100);
+        Texture2D newTexture = new Texture2D(320, 320);
 
         for (int y = 0; y < newTexture.height; y++)
         {
@@ -90,7 +91,4 @@ public class InventoryDisplay
         finalSprite.name = "Inevntory slot";
         return finalSprite;
     }
-
-
-
 }
