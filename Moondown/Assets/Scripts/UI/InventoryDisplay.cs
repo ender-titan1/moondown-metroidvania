@@ -17,45 +17,90 @@ public class InventoryDisplay
 
     public static InventoryDisplay Instance { get; private set; } = new InventoryDisplay();
 
-    private LastViewed lastViewed = LastViewed.GENERAL;
+    private LastViewed lastViewed = LastViewed.MEELE_WEAPON;
 
     public void Load(GameObject[] slots, GameObject[] quickBarSlots, Sprite baseSprite, GameObject UI)
     {
 
-        if (lastViewed == LastViewed.GENERAL)
+        var watch = new System.Diagnostics.Stopwatch();
+
+        watch.Start();
+
+        for (int i = 0; i < slots.Length; i++)
         {
-            for (int i = 0; i < slots.Length; i++)
+            Sprite itemSprite = null;
+
+            try
             {
-                Sprite itemSprite = null;
-
-                try
-                {
-                   itemSprite = (
-                        from IInventoryItem item in EquipmentManager.Instance.Inventory
-                        where item.SlotNumber == i
-                        select item.Image
-                    ).ToArray().First();
+                itemSprite = (
+                    from IInventoryItem item in EquipmentManager.Instance.Inventory
+                    where item.SlotNumber == i
+                    select item.Image
+                ).ToArray().First();
                 
-                } catch (Exception)
-                {
-                    continue;
-                }
-                
-
-                Sprite sprite = MergeTextures(
-                    new Sprite[]
-                    {
-                        baseSprite,
-                        itemSprite
-                    }
-                );
-
-                slots[i].GetComponent<RawImage>().texture = sprite.texture;
+            } catch (Exception)
+            {
+                continue;
             }
+                
+
+            Sprite sprite = MergeTextures(
+                new Sprite[]
+                {
+                    baseSprite,
+                    itemSprite
+                }
+            );
+
+            slots[i].GetComponent<RawImage>().texture = sprite.texture;
             
         }
 
+        if (lastViewed == LastViewed.MEELE_WEAPON)
+            LoadRelevantItems(quickBarSlots, baseSprite, ItemType.MEELE_WEAPON, ItemType.TOOL);
+
+        watch.Stop();
+        Debug.Log(watch.Elapsed);
+
         UI.SetActive(true);
+    }
+
+    private void LoadRelevantItems(GameObject[] slots, Sprite baseSprite, params ItemType[] types)
+    {
+        List<IInventoryItem> items = new List<IInventoryItem> { };
+
+        for (
+            int i = 0;
+            i < slots.Length && 
+            i < EquipmentManager.Instance.Inventory.ToArray().Length; 
+            i++
+        )
+        {
+            IInventoryItem item = EquipmentManager.Instance.Inventory[i];
+
+            if (types.Contains(item.Type))
+                items.Add(item);
+        }
+
+
+        foreach (GameObject slot in slots)
+        {
+            if (items.ToArray().Length == 0)
+                break;
+
+            IInventoryItem item = items.ToArray().First();
+
+            slot.GetComponent<RawImage>().texture = MergeTextures(
+                new Sprite[]
+                {
+                    baseSprite,
+                    item.Image
+                }
+            ).texture;
+
+            items.RemoveAt(0);
+        }
+
     }
 
     private Sprite MergeTextures(Sprite[] sprites)
