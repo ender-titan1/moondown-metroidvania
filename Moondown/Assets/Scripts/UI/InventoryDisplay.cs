@@ -22,10 +22,6 @@ public class InventoryDisplay
     public void Load(GameObject[] slots, GameObject[] quickBarSlots, Sprite baseSprite, GameObject UI)
     {
 
-        var watch = new System.Diagnostics.Stopwatch();
-
-        watch.Start();
-
         for (int i = 0; i < slots.Length; i++)
         {
             Sprite itemSprite = null;
@@ -35,7 +31,7 @@ public class InventoryDisplay
                 itemSprite = (
                     from IInventoryItem item in EquipmentManager.Instance.Inventory
                     where item.SlotNumber == i
-                    select item.Image
+                    select item.ImageWithSlot
                 ).ToArray().First();
                 
             } catch (Exception)
@@ -44,23 +40,12 @@ public class InventoryDisplay
             }
                 
 
-            Sprite sprite = MergeTextures(
-                new Sprite[]
-                {
-                    baseSprite,
-                    itemSprite
-                }
-            );
-
-            slots[i].GetComponent<RawImage>().texture = sprite.texture;
+            slots[i].GetComponent<RawImage>().texture = itemSprite.texture;
             
         }
 
         if (lastViewed == LastViewed.MEELE_WEAPON)
             LoadRelevantItems(quickBarSlots, baseSprite, ItemType.MEELE_WEAPON, ItemType.TOOL);
-
-        watch.Stop();
-        Debug.Log(watch.Elapsed);
 
         UI.SetActive(true);
     }
@@ -90,20 +75,14 @@ public class InventoryDisplay
 
             IInventoryItem item = items.ToArray().First();
 
-            slot.GetComponent<RawImage>().texture = MergeTextures(
-                new Sprite[]
-                {
-                    baseSprite,
-                    item.Image
-                }
-            ).texture;
+            slot.GetComponent<RawImage>().texture = item.ImageWithSlot.texture;
 
             items.RemoveAt(0);
         }
 
     }
 
-    private Sprite MergeTextures(Sprite[] sprites)
+    public static Sprite MergeTextures(Sprite[] sprites)
     {
         Resources.UnloadUnusedAssets();
         Texture2D newTexture = new Texture2D(320, 320);

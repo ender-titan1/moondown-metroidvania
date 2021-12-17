@@ -45,6 +45,8 @@ public class PlayerManager : MonoBehaviour
 
     public List<AbstractModule> modules = new List<AbstractModule> { };
 
+    [SerializeField] private Sprite baseSprite;
+
     private void Awake()
     {
         if (Instance == null)
@@ -61,7 +63,8 @@ public class PlayerManager : MonoBehaviour
             "UI/Inventory/Placeholder",
             1,
             AttackMode.NORMAL,
-            ItemType.MEELE_WEAPON
+            ItemType.MEELE_WEAPON,
+            baseSprite
         );
 
         EquipmentManager.Instance.Inventory.Add(weapon);

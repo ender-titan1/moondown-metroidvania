@@ -24,13 +24,14 @@ public class Weapon : IInventoryItem
     public string Name { get; set; }
     public string Description { get; set; }
     public Sprite Image { get; set; }
+    public Sprite ImageWithSlot { get; set; }
     public ItemType Type { get; set; }
     public int SlotNumber { get; set; }
 
     public int Damage { get; set; }
     public AttackMode Mode { get; set; }
 
-    public Weapon(string name, string desc, string spriteName, int dmg, AttackMode mode, ItemType type)
+    public Weapon(string name, string desc, string spriteName, int dmg, AttackMode mode, ItemType type, Sprite baseSprite)
     {
         this.Name = name;
         this.Description = desc;
@@ -40,6 +41,8 @@ public class Weapon : IInventoryItem
 
         string spritePath = @"Assets/Sprites/" + spriteName + ".png";
         this.Image = (Sprite)AssetDatabase.LoadAssetAtPath(spritePath, typeof(Sprite));
+
+        this.ImageWithSlot = InventoryDisplay.MergeTextures(new Sprite[] { baseSprite, Image });
 
         this.SlotNumber = EquipmentManager.Instance.NextFreeSlot;
     }

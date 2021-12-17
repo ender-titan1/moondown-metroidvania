@@ -10,4 +10,5 @@ public interface IInventoryItem
     int SlotNumber { get; set; }
 
     Sprite Image { get; set; }
+    Sprite ImageWithSlot { get; set; }
 }
