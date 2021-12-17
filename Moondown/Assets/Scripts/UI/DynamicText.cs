@@ -57,7 +57,11 @@ public class DynamicText : MonoBehaviour
         object instance = type.GetProperty(strings[1]).GetValue(null);
 
         PropertyInfo prop = type.GetProperty(strings[2]);
-        return prop.GetValue(instance).ToString();
+
+        if (prop.GetValue(instance) != null)
+            return prop.GetValue(instance).ToString();
+        else
+            return "nothing";
     }
 
     private Type GetTypeByName(string name)

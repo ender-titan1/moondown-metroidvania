@@ -68,7 +68,6 @@ public class PlayerManager : MonoBehaviour
         );
 
         EquipmentManager.Instance.Inventory.Add(weapon);
-        EquipmentManager.Instance.Equip(weapon);
 
         OnRespawn();
     }

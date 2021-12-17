@@ -19,19 +19,31 @@ public class InventoryDisplay
 
     private LastViewed lastViewed = LastViewed.MEELE_WEAPON;
 
-    public void Load(GameObject[] slots, GameObject[] quickBarSlots, Sprite baseSprite, GameObject UI)
+    public GameObject[] slots;
+    public GameObject[] quickSelectSlots;
+    public GameObject equipedWeaponSlot;
+    public GameObject[] allSlots;
+
+    public void Load(GameObject[] slots, GameObject[] quickBarSlots, Sprite baseSprite, GameObject UI, GameObject equipedWeaponSlot)
     {
+        this.equipedWeaponSlot = equipedWeaponSlot;
+        this.quickSelectSlots = quickBarSlots;
+        this.slots = slots;
+        
+        List<GameObject> allSlots = slots.ToList();
+        allSlots.AddRange(quickBarSlots);
+        this.allSlots = allSlots.ToArray();
 
         for (int i = 0; i < slots.Length; i++)
         {
-            Sprite itemSprite = null;
+            IInventoryItem item = null;
 
             try
             {
-                itemSprite = (
-                    from IInventoryItem item in EquipmentManager.Instance.Inventory
-                    where item.SlotNumber == i
-                    select item.ImageWithSlot
+                item = (
+                    from IInventoryItem it in EquipmentManager.Instance.Inventory
+                    where it.SlotNumber == i
+                    select it
                 ).ToArray().First();
                 
             } catch (Exception)
@@ -40,7 +52,8 @@ public class InventoryDisplay
             }
                 
 
-            slots[i].GetComponent<RawImage>().texture = itemSprite.texture;
+            slots[i].GetComponent<RawImage>().texture = item.ImageWithSlot.texture;
+            slots[i].GetComponent<Slot>().item = item;
             
         }
 
@@ -76,6 +89,7 @@ public class InventoryDisplay
             IInventoryItem item = items.ToArray().First();
 
             slot.GetComponent<RawImage>().texture = item.ImageWithSlot.texture;
+            slot.GetComponent<Slot>().item = item;
 
             items.RemoveAt(0);
         }

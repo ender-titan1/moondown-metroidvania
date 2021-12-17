@@ -132,6 +132,8 @@ GameObject:
   - component: {fileID: 9182177}
   - component: {fileID: 9182179}
   - component: {fileID: 9182178}
+  - component: {fileID: 9182182}
+  - component: {fileID: 9182180}
   m_Layer: 5
   m_Name: QuickSelect Slot (5)
   m_TagString: Untagged
@@ -192,6 +194,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9182176}
   m_CullTransparentMesh: 0
+--- !u!61 &9182180
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9182176}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 80, y: 80}
+  m_EdgeRadius: 0
+--- !u!114 &9182182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9182176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a28acd30948cd98479f04cb7025fd839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9221961
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,8 +372,12 @@ MonoBehaviour:
   - {fileID: 1506471668}
   - {fileID: 1527457024}
   - {fileID: 9182176}
+  equipedWeaponSlot: {fileID: 0}
   baseSlotSprite: {fileID: 21300000, guid: 4f3ba89311a89864d81a7b2dedbb0863, type: 3}
   UI: {fileID: 1447971964}
+  UIMask:
+    serializedVersion: 2
+    m_Bits: 32
 --- !u!1 &18527947
 GameObject:
   m_ObjectHideFlags: 0
@@ -469,6 +513,8 @@ GameObject:
   - component: {fileID: 170352909}
   - component: {fileID: 170352911}
   - component: {fileID: 170352910}
+  - component: {fileID: 170352914}
+  - component: {fileID: 170352912}
   m_Layer: 5
   m_Name: QuickSelect Slot (1)
   m_TagString: Untagged
@@ -529,6 +575,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 170352908}
   m_CullTransparentMesh: 0
+--- !u!61 &170352912
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170352908}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 80, y: 80}
+  m_EdgeRadius: 0
+--- !u!114 &170352914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170352908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a28acd30948cd98479f04cb7025fd839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &299618933
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,6 +707,8 @@ GameObject:
   - component: {fileID: 333375894}
   - component: {fileID: 333375896}
   - component: {fileID: 333375895}
+  - component: {fileID: 333375899}
+  - component: {fileID: 333375897}
   m_Layer: 5
   m_Name: QuickSelect Slot (3)
   m_TagString: Untagged
@@ -683,6 +769,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 333375893}
   m_CullTransparentMesh: 0
+--- !u!61 &333375897
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333375893}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 80, y: 80}
+  m_EdgeRadius: 0
+--- !u!114 &333375899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333375893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a28acd30948cd98479f04cb7025fd839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &502026047
 GameObject:
   m_ObjectHideFlags: 0
@@ -1074,6 +1198,8 @@ GameObject:
   - component: {fileID: 540979806}
   - component: {fileID: 540979808}
   - component: {fileID: 540979807}
+  - component: {fileID: 540979811}
+  - component: {fileID: 540979809}
   m_Layer: 5
   m_Name: QuickSelect Slot (1)
   m_TagString: Untagged
@@ -1134,6 +1260,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 540979805}
   m_CullTransparentMesh: 0
+--- !u!61 &540979809
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540979805}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 80, y: 80}
+  m_EdgeRadius: 0
+--- !u!114 &540979811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540979805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a28acd30948cd98479f04cb7025fd839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &596754987
 GameObject:
   m_ObjectHideFlags: 0
@@ -1343,6 +1507,8 @@ GameObject:
   - component: {fileID: 712799478}
   - component: {fileID: 712799480}
   - component: {fileID: 712799479}
+  - component: {fileID: 712799482}
+  - component: {fileID: 712799481}
   m_Layer: 5
   m_Name: QuickSelect Slot
   m_TagString: Untagged
@@ -1403,6 +1569,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 712799477}
   m_CullTransparentMesh: 0
+--- !u!61 &712799481
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712799477}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 80, y: 80}
+  m_EdgeRadius: 0
+--- !u!114 &712799482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712799477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a28acd30948cd98479f04cb7025fd839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &779586328
 GameObject:
   m_ObjectHideFlags: 0
@@ -1620,6 +1824,8 @@ GameObject:
   - component: {fileID: 896587115}
   - component: {fileID: 896587117}
   - component: {fileID: 896587116}
+  - component: {fileID: 896587120}
+  - component: {fileID: 896587118}
   m_Layer: 5
   m_Name: QuickSelect Slot (2)
   m_TagString: Untagged
@@ -1680,6 +1886,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 896587114}
   m_CullTransparentMesh: 0
+--- !u!61 &896587118
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896587114}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 80, y: 80}
+  m_EdgeRadius: 0
+--- !u!114 &896587120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896587114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a28acd30948cd98479f04cb7025fd839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &918730689
 GameObject:
   m_ObjectHideFlags: 0
@@ -2101,6 +2345,8 @@ GameObject:
   - component: {fileID: 1506471669}
   - component: {fileID: 1506471671}
   - component: {fileID: 1506471670}
+  - component: {fileID: 1506471674}
+  - component: {fileID: 1506471672}
   m_Layer: 5
   m_Name: QuickSelect Slot (3)
   m_TagString: Untagged
@@ -2161,6 +2407,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1506471668}
   m_CullTransparentMesh: 0
+--- !u!61 &1506471672
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506471668}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 80, y: 80}
+  m_EdgeRadius: 0
+--- !u!114 &1506471674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506471668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a28acd30948cd98479f04cb7025fd839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1518964470
 GameObject:
   m_ObjectHideFlags: 0
@@ -2172,6 +2456,8 @@ GameObject:
   - component: {fileID: 1518964471}
   - component: {fileID: 1518964473}
   - component: {fileID: 1518964472}
+  - component: {fileID: 1518964476}
+  - component: {fileID: 1518964474}
   m_Layer: 5
   m_Name: QuickSelect Slot (2)
   m_TagString: Untagged
@@ -2232,6 +2518,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1518964470}
   m_CullTransparentMesh: 0
+--- !u!61 &1518964474
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518964470}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 80, y: 80}
+  m_EdgeRadius: 0
+--- !u!114 &1518964476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518964470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a28acd30948cd98479f04cb7025fd839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1527457024
 GameObject:
   m_ObjectHideFlags: 0
@@ -2243,6 +2567,8 @@ GameObject:
   - component: {fileID: 1527457025}
   - component: {fileID: 1527457027}
   - component: {fileID: 1527457026}
+  - component: {fileID: 1527457030}
+  - component: {fileID: 1527457028}
   m_Layer: 5
   m_Name: QuickSelect Slot (4)
   m_TagString: Untagged
@@ -2303,6 +2629,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1527457024}
   m_CullTransparentMesh: 0
+--- !u!61 &1527457028
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1527457024}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 80, y: 80}
+  m_EdgeRadius: 0
+--- !u!114 &1527457030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1527457024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a28acd30948cd98479f04cb7025fd839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1561068065
 GameObject:
   m_ObjectHideFlags: 0
@@ -2628,6 +2992,8 @@ GameObject:
   - component: {fileID: 1697231487}
   - component: {fileID: 1697231489}
   - component: {fileID: 1697231488}
+  - component: {fileID: 1697231492}
+  - component: {fileID: 1697231490}
   m_Layer: 5
   m_Name: QuickSelect Slot (5)
   m_TagString: Untagged
@@ -2688,6 +3054,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1697231486}
   m_CullTransparentMesh: 0
+--- !u!61 &1697231490
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697231486}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 80, y: 80}
+  m_EdgeRadius: 0
+--- !u!114 &1697231492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697231486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a28acd30948cd98479f04cb7025fd839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1726493456
 GameObject:
   m_ObjectHideFlags: 0
@@ -3082,6 +3486,8 @@ GameObject:
   - component: {fileID: 1881711272}
   - component: {fileID: 1881711274}
   - component: {fileID: 1881711273}
+  - component: {fileID: 1881711277}
+  - component: {fileID: 1881711275}
   m_Layer: 5
   m_Name: QuickSelect Slot (4)
   m_TagString: Untagged
@@ -3142,6 +3548,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1881711271}
   m_CullTransparentMesh: 0
+--- !u!61 &1881711275
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881711271}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 80, y: 80}
+  m_EdgeRadius: 0
+--- !u!114 &1881711277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881711271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a28acd30948cd98479f04cb7025fd839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1901226278
 GameObject:
   m_ObjectHideFlags: 0
@@ -3256,6 +3700,8 @@ GameObject:
   - component: {fileID: 2061959165}
   - component: {fileID: 2061959167}
   - component: {fileID: 2061959166}
+  - component: {fileID: 2061959170}
+  - component: {fileID: 2061959168}
   m_Layer: 5
   m_Name: QuickSelect Slot
   m_TagString: Untagged
@@ -3316,3 +3762,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2061959164}
   m_CullTransparentMesh: 0
+--- !u!61 &2061959168
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061959164}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 80, y: 80}
+  m_EdgeRadius: 0
+--- !u!114 &2061959170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061959164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a28acd30948cd98479f04cb7025fd839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
