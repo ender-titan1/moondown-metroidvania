@@ -18,7 +18,14 @@ public class Slot : MonoBehaviour, IPointerClickHandler
 
         if (item.Type == ItemType.MEELE_WEAPON)
         {
-            Texture2D texture = item.ImageWithSlot.texture;
+            GameObject s = InventoryDisplay.Instance.equipedWeaponSlot;
+
+            if (s == gameObject)
+            {
+
+            }
+
+            Texture2D texture = item.Image.texture;
             IInventoryItem selectedItem = item;
 
             Slot[] slots = (from GameObject slot in InventoryDisplay.Instance.allSlots 
@@ -33,8 +40,11 @@ public class Slot : MonoBehaviour, IPointerClickHandler
                 slot.item = null;
             }
 
-            InventoryDisplay.Instance.equipedWeaponSlot.GetComponent<RawImage>().texture = texture;
-            InventoryDisplay.Instance.equipedWeaponSlot.GetComponent<Slot>().item = selectedItem;
+            
+            s.GetComponent<RawImage>().enabled = true;
+            s.GetComponent<RawImage>().texture = texture;
+            s.GetComponent<Slot>().item = selectedItem;
+            EquipmentManager.Instance.Equip((Weapon)item);
 
         }       
     }

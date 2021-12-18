@@ -42,7 +42,7 @@ public class Weapon : IInventoryItem
         string spritePath = @"Assets/Sprites/" + spriteName + ".png";
         this.Image = (Sprite)AssetDatabase.LoadAssetAtPath(spritePath, typeof(Sprite));
 
-        this.ImageWithSlot = InventoryDisplay.MergeTextures(new Sprite[] { baseSprite, Image });
+        this.ImageWithSlot = new Sprite[] { baseSprite, Image }.MergeSprites();
 
         this.SlotNumber = EquipmentManager.Instance.NextFreeSlot;
     }
