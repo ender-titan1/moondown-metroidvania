@@ -31,7 +31,7 @@ public class Weapon : IInventoryItem
     public int Damage { get; set; }
     public AttackMode Mode { get; set; }
 
-    public Weapon(string name, string desc, string spriteName, int dmg, AttackMode mode, ItemType type, Sprite baseSprite)
+    public Weapon(string name, string desc, string spriteName, int dmg, AttackMode mode, ItemType type, Sprite baseSprite, int slotNumber)
     {
         this.Name = name;
         this.Description = desc;
@@ -44,6 +44,6 @@ public class Weapon : IInventoryItem
 
         this.ImageWithSlot = new Sprite[] { baseSprite, Image }.MergeSprites();
 
-        this.SlotNumber = EquipmentManager.Instance.NextFreeSlot;
+        this.SlotNumber = slotNumber;
     }
 }

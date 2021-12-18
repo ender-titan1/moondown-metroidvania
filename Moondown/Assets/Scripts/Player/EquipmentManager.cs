@@ -25,16 +25,26 @@ public class EquipmentManager : MonoBehaviour
     public string MeeleWeaponName { get; private set; }
     public Weapon EquipedWeapon { get; private set; }
 
-    private int _next = 0;
     public int NextFreeSlot
     {
         get
         {
-            int val = _next;
-            _next++;
-            return val;
+            Debug.Log(InventoryDisplay.Instance);
+
+            for (int i = 0; i < InventoryDisplay.Instance.slots.Length; i++)
+            {
+                GameObject slot = InventoryDisplay.Instance.slots[i];
+
+
+                if (slot.GetComponent<Slot>().item == null)
+                    return i;
+            }
+
+            return 0;
         }
     }
+
+    public int InvSize => InventoryDisplay.Instance.slots.Length;
 
     public List<IInventoryItem> Inventory { get; set; } = new List<IInventoryItem> { };
 
@@ -42,8 +52,8 @@ public class EquipmentManager : MonoBehaviour
     {
         if (Instance == null)
             Instance = this;
-    } 
-    
+    }
+
     public void Equip(string name)
     {
         EquipedWeapon = (Weapon)(
@@ -57,12 +67,16 @@ public class EquipmentManager : MonoBehaviour
 
     public void Equip(Weapon weapon)
     {
+        Debug.Log(Inventory.Count);
+
         EquipedWeapon = (Weapon)(
             from IInventoryItem item in Inventory
-            where item.Name == weapon.Name
+            where ((Weapon)item).Name == weapon.Name
             select item
         ).First();
 
         MeeleWeaponName = weapon.Name;
     }
+
+    public void UnequipWeapon() { MeeleWeaponName = null; EquipedWeapon = null; }
 }

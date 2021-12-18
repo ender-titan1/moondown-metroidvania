@@ -64,7 +64,8 @@ public class PlayerManager : MonoBehaviour
             1,
             AttackMode.NORMAL,
             ItemType.MEELE_WEAPON,
-            baseSprite
+            baseSprite,
+            EquipmentManager.Instance.NextFreeSlot
         );
 
         EquipmentManager.Instance.Inventory.Add(weapon);

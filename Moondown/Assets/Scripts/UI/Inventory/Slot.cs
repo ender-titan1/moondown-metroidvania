@@ -22,7 +22,18 @@ public class Slot : MonoBehaviour, IPointerClickHandler
 
             if (s == gameObject)
             {
+                Weapon weapon = (Weapon)item;
 
+                s.GetComponent<RawImage>().enabled = false;
+                s.GetComponent<RawImage>().texture = null;
+                s.GetComponent<Slot>().item = null;
+
+                EquipmentManager.Instance.UnequipWeapon();
+
+                weapon.SlotNumber = EquipmentManager.Instance.NextFreeSlot;
+                InventoryDisplay.Instance.Load();
+
+                return;
             }
 
             Texture2D texture = item.Image.texture;
@@ -44,7 +55,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
             s.GetComponent<RawImage>().enabled = true;
             s.GetComponent<RawImage>().texture = texture;
             s.GetComponent<Slot>().item = selectedItem;
-            EquipmentManager.Instance.Equip((Weapon)item);
+            EquipmentManager.Instance.Equip((Weapon)selectedItem);
 
         }       
     }

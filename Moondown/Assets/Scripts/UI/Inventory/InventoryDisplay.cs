@@ -24,6 +24,7 @@ public class InventoryDisplay
     public GameObject equipedWeaponSlot;
     public GameObject[] allSlots;
     public Sprite baseSlotTexture;
+    public GameObject UI;
 
     public void Load(GameObject[] slots, GameObject[] quickBarSlots, Sprite baseSprite, GameObject UI, GameObject equipedWeaponSlot)
     {
@@ -31,6 +32,7 @@ public class InventoryDisplay
         this.quickSelectSlots = quickBarSlots;
         this.slots = slots;
         this.baseSlotTexture = baseSprite;
+        this.UI = UI;
 
         List<GameObject> allSlots = slots.ToList();
         allSlots.AddRange(quickBarSlots);
@@ -63,6 +65,11 @@ public class InventoryDisplay
             LoadRelevantItems(quickBarSlots, baseSprite, ItemType.MEELE_WEAPON, ItemType.TOOL);
 
         UI.SetActive(true);
+    }
+
+    public void Load()
+    {
+        Load(slots, quickSelectSlots, baseSlotTexture, UI, equipedWeaponSlot);
     }
 
     private void LoadRelevantItems(GameObject[] slots, Sprite baseSprite, params ItemType[] types)

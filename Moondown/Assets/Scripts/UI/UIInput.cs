@@ -34,6 +34,9 @@ public class UIInput : MonoBehaviour
 
     private void Awake()
     {
+        InventoryDisplay.Instance.slots = slots;
+        InventoryDisplay.Instance.quickSelectSlots = quickBarSlots;
+
         controls = new MainControls();
 
         controls.Player.Interact.performed += _ => Interact();
