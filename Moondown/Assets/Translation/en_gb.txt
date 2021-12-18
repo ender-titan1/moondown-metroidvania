@@ -11,3 +11,9 @@ CURRENT_MEELE_WEAPON = weapon: {0};
 BASIC_SWORD_NAME = basic sword;
 
 BASIC_SWORD_DESC = An old, partly broken sword. Not much, but it can do for now;
+
+#--------misc--------;
+
+MISC_NAME = An energy container;
+
+MISC_DESC = Consume to get +1 charge;

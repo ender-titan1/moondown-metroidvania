@@ -3009,8 +3009,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputs:
-  - PlayerManager.Instance.Charge
-  - PlayerManager.Instance.MaxCharge
+  - Player.Instance.Charge
+  - Player.Instance.MaxCharge
 --- !u!1 &1590800486
 GameObject:
   m_ObjectHideFlags: 0
@@ -3103,8 +3103,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputs:
-  - PlayerManager.Instance.Health
-  - PlayerManager.Instance.MaxHealth
+  - Player.Instance.Health
+  - Player.Instance.MaxHealth
 --- !u!1 &1633551892
 GameObject:
   m_ObjectHideFlags: 0

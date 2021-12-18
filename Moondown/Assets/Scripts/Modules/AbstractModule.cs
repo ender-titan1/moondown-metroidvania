@@ -22,11 +22,11 @@ public abstract class AbstractModule
 {
     public void setup()
     {
-        PlayerManager.Instance.OnCharge += amount => OnCharge(amount);
-        PlayerManager.Instance.OnHeal += amount => OnHeal(amount);
-        PlayerManager.Instance.OnDamageTaken += amount => OnDamageTaken(amount);
-        PlayerManager.Instance.OnRespawn += () => OnRespawn();
-        PlayerManager.Instance.OnDeath += () => OnDeath();
+        Player.Instance.OnCharge += amount => OnCharge(amount);
+        Player.Instance.OnHeal += amount => OnHeal(amount);
+        Player.Instance.OnDamageTaken += amount => OnDamageTaken(amount);
+        Player.Instance.OnRespawn += () => OnRespawn();
+        Player.Instance.OnDeath += () => OnDeath();
     }
 
     public abstract void OnDamageTaken(int amount);

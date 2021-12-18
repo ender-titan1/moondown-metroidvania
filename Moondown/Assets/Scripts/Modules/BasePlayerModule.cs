@@ -24,27 +24,27 @@ public class BasePlayerModule : AbstractModule
 
     public override void OnHeal(int amount)
     {
-        PlayerManager.Instance.Health += amount;
+        Player.Instance.Health += amount;
     }
 
     public override void OnCharge(int amount)
     {
-        PlayerManager.Instance.Charge += amount;
+        Player.Instance.Charge += amount;
     }
 
     public override void OnDamageTaken(int amount)
     {
         // this is done because the 'amount' parameter is negative
-        PlayerManager.Instance.Health += amount;
+        Player.Instance.Health += amount;
     }
 
     public override void OnRespawn()
     {
-        PlayerManager.Instance.Health += 10;
+        Player.Instance.Health += 10;
     }
 
     public override void OnDeath()
     {
-        PlayerManager.Instance.gameObject.transform.position = PlayerManager.Instance.DeathRespawn.position;
+        Player.Instance.gameObject.transform.position = Player.Instance.DeathRespawn.position;
     }
 }

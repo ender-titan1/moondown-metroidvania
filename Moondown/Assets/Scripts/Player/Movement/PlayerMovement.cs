@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
 
     void AttackMeele()
     {
-        PlayerManager.Instance.Health += 1;
+        Player.Instance.Health += 1;
     }
 
     #region movement

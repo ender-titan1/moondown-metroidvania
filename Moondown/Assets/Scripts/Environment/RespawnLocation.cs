@@ -37,10 +37,10 @@ public class RespawnLocation : MonoBehaviour
 
     public void Activate()
     {
-        if (PlayerManager.Instance.Charge >= cost)
+        if (Player.Instance.Charge >= cost)
         {
-            PlayerManager.Instance.Charge -= cost;
-            PlayerManager.Instance.DeathRespawn = this;
+            Player.Instance.Charge -= cost;
+            Player.Instance.DeathRespawn = this;
         }
     }
 }

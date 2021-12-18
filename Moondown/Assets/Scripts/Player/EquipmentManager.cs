@@ -25,11 +25,22 @@ public class EquipmentManager : MonoBehaviour
     public string MeeleWeaponName { get; private set; }
     public Weapon EquipedWeapon { get; private set; }
 
+    public bool FirstLoading { private get; set; } = true;
+
+    int  _current = 0;
+
     public int NextFreeSlot
     {
         get
         {
-            Debug.Log(InventoryDisplay.Instance);
+            if (FirstLoading)
+            {
+                int val = _current;
+                _current++;
+                return val;
+
+            }
+
 
             for (int i = 0; i < InventoryDisplay.Instance.slots.Length; i++)
             {
@@ -67,7 +78,6 @@ public class EquipmentManager : MonoBehaviour
 
     public void Equip(Weapon weapon)
     {
-        Debug.Log(Inventory.Count);
 
         EquipedWeapon = (Weapon)(
             from IInventoryItem item in Inventory

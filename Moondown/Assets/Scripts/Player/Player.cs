@@ -20,10 +20,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public class PlayerManager : MonoBehaviour
+public class Player : MonoBehaviour
 {
     // singelton
-    public static PlayerManager Instance { get; private set; }
+    public static Player Instance { get; private set; }
 
     public delegate void ActionDelegate(int amount);
     public delegate void BlankDelegate();
@@ -70,6 +70,19 @@ public class PlayerManager : MonoBehaviour
 
         EquipmentManager.Instance.Inventory.Add(weapon);
 
+        Item item = new Item(
+            LocalizationManager.Get("MISC_NAME"),
+            LocalizationManager.Get("MISC_DESC"),
+            "UI/Inventory/PlaceholderItem",
+            ItemType.ITEM,
+            baseSprite,
+            EquipmentManager.Instance.NextFreeSlot
+        );
+
+        EquipmentManager.Instance.Inventory.Add(item);
+
+
+        EquipmentManager.Instance.FirstLoading = false;
         OnRespawn();
     }
 
@@ -104,6 +117,4 @@ public class PlayerManager : MonoBehaviour
         OnDeath();
         OnRespawn();
     }
-
-
 }
