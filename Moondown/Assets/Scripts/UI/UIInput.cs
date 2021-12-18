@@ -17,6 +17,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class UIInput : MonoBehaviour
@@ -28,7 +29,6 @@ public class UIInput : MonoBehaviour
     [SerializeField] private GameObject equipedWeaponSlot;
     [SerializeField] private Sprite baseSlotSprite;
     [SerializeField] private GameObject UI;
-    [SerializeField] private LayerMask UIMask;
 
     private bool isInInventory;
 
@@ -38,8 +38,6 @@ public class UIInput : MonoBehaviour
 
         controls.Player.Interact.performed += _ => Interact();
         controls.Player.OpenInventory.performed += _ => OpenInventoryUI();
-        controls.UI.RightClick.performed += _ => CheckClicked();
-
         controls.Enable();
     }
 
@@ -60,22 +58,4 @@ public class UIInput : MonoBehaviour
             isInInventory = false;
         }
     }
-
-    void CheckClicked()
-    {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
-
-        RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero, UIMask);
-
-        Debug.Log(hit);
-
-        if (hit.collider == null)
-            return;
-
-        if (hit.collider.GetComponent<Slot>() != null)
-            hit.collider.GetComponent<Slot>().OnClick(baseSlotSprite);
-        
-    }
-
 }

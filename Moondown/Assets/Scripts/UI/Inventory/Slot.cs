@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(RawImage))]
-public class Slot : MonoBehaviour
+public class Slot : MonoBehaviour, IPointerClickHandler
 {
     [HideInInspector]
     public IInventoryItem item = null;
@@ -36,5 +37,11 @@ public class Slot : MonoBehaviour
             InventoryDisplay.Instance.equipedWeaponSlot.GetComponent<Slot>().item = selectedItem;
 
         }       
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Right)
+            OnClick(InventoryDisplay.Instance.baseSlotTexture);
     }
 }

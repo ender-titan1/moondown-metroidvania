@@ -23,13 +23,15 @@ public class InventoryDisplay
     public GameObject[] quickSelectSlots;
     public GameObject equipedWeaponSlot;
     public GameObject[] allSlots;
+    public Sprite baseSlotTexture;
 
     public void Load(GameObject[] slots, GameObject[] quickBarSlots, Sprite baseSprite, GameObject UI, GameObject equipedWeaponSlot)
     {
         this.equipedWeaponSlot = equipedWeaponSlot;
         this.quickSelectSlots = quickBarSlots;
         this.slots = slots;
-        
+        this.baseSlotTexture = baseSprite;
+
         List<GameObject> allSlots = slots.ToList();
         allSlots.AddRange(quickBarSlots);
         this.allSlots = allSlots.ToArray();
