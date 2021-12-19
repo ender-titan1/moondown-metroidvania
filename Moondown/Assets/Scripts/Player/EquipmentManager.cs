@@ -81,7 +81,7 @@ public class EquipmentManager : MonoBehaviour
 
         EquipedWeapon = (Weapon)(
             from IInventoryItem item in Inventory
-            where ((Weapon)item).Name == weapon.Name
+            where item is Weapon w && w.Name == weapon.Name
             select item
         ).First();
 

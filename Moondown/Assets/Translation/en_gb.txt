@@ -1,3 +1,6 @@
+# This translation file contains default translations;
+# This file should be used for debugging;
+
 #-------hud-------;
 
 HP = health points: {0}/{1};
@@ -11,6 +14,10 @@ CURRENT_MEELE_WEAPON = weapon: {0};
 BASIC_SWORD_NAME = basic sword;
 
 BASIC_SWORD_DESC = An old, partly broken sword. Not much, but it can do for now;
+
+OTHER_SWORD_NAME = other sword;
+
+OTHER_SWORD_DESC = another sword;
 
 #--------misc--------;
 

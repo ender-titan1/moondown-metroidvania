@@ -57,6 +57,7 @@ public class Player : MonoBehaviour
     {
         modules.Add(new BasePlayerModule());
 
+        #region weapon
         Weapon weapon = new Weapon(
             LocalizationManager.Get("BASIC_SWORD_NAME"),
             LocalizationManager.Get("BASIC_SWORD_DESC"),
@@ -69,7 +70,8 @@ public class Player : MonoBehaviour
         );
 
         EquipmentManager.Instance.Inventory.Add(weapon);
-
+        #endregion
+        #region item
         Item item = new Item(
             LocalizationManager.Get("MISC_NAME"),
             LocalizationManager.Get("MISC_DESC"),
@@ -80,7 +82,22 @@ public class Player : MonoBehaviour
         );
 
         EquipmentManager.Instance.Inventory.Add(item);
+        #endregion
+        #region otherWeapon
+        Weapon otherWeapon = new Weapon(
+            LocalizationManager.Get("OTHER_SWORD_NAME"),
+            LocalizationManager.Get("OTHER_SWORD_DESC"),
+            "UI/Inventory/other placeholder",
+            2,
+            AttackMode.DASH,
+            ItemType.MEELE_WEAPON,
+            baseSprite,
+            EquipmentManager.Instance.NextFreeSlot
+        );
 
+        EquipmentManager.Instance.Inventory.Add(otherWeapon);
+
+        #endregion
 
         EquipmentManager.Instance.FirstLoading = false;
         OnRespawn();
