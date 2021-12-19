@@ -18,21 +18,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class MeeleAttack
+public enum Facing
 {
-    MainControls controls;
-
-    public MeeleAttack()
-    {
-        controls = new MainControls();
-
-        controls.Player.AttackMeele.performed += _ => Attack();
-
-        controls.Enable();
-    }
-
-    private void Attack()
-    {
-
-    }
+    LEFT,
+    RIGHT
 }
