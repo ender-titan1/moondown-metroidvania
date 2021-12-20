@@ -75,4 +75,7 @@ public static class Extensions
         finalSprite.name = "Inevntory slot";
         return finalSprite;
     }
+
+    public static bool Has<T>(this GameObject gameObject) where T : Component => gameObject.GetComponent<T>() != null;
+    public static bool Has<T>(this Component component) where T : Component => component.GetComponent<T>() != null;
 }

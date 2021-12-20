@@ -20,19 +20,50 @@ using UnityEngine;
 
 public sealed class MeeleAttack
 {
-    MainControls controls;
+    private readonly MainControls controls;
+    private readonly BoxCollider2D collider;
+    private readonly Transform transform;
+    private readonly LayerMask mask;
 
-    public MeeleAttack()
+    public MeeleAttack(BoxCollider2D collider, Transform transform, LayerMask mask)
     {
         controls = new MainControls();
 
         controls.Player.AttackMeele.performed += _ => Attack();
-
         controls.Enable();
+
+        this.collider = collider;
+        this.transform = transform;
+        this.mask = mask;
     }
 
     private void Attack()
     {
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(
+            new Vector2(
+                transform.position.x + EquipmentManager.Instance.EquipedWeapon.Range * (int)PlayerMovement.Instance.facing,
+                transform.position.y
+            ),
+            collider.size,
+            0f,
+            PlayerMovement.Instance.facing == Facing.LEFT ? Vector2.left : Vector2.right,
+            collider.size.x,
+            mask
+        );
+
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (hit.collider.CompareTag("Player"))
+                continue;
+
+            if (hit.collider.Has<EnvironmentBehaviour>() && hit.collider.GetComponent<EnvironmentBehaviour>().attackable)
+            {
+                EnvironmentBehaviour behaviour = hit.collider.GetComponent<EnvironmentBehaviour>();
+                behaviour.healthPoints -= EquipmentManager.Instance.EquipedWeapon.Damage;
+            }
+        }
 
     }
+
+
 }

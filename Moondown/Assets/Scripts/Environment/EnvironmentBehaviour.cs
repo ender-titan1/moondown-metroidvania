@@ -21,11 +21,17 @@ using UnityEngine;
 
 public class EnvironmentBehaviour : MonoBehaviour
 {
+    [Header("Modifiers")]
     public int healthModifier = 0;
     public int chargeModifier = 0;
-
     public bool singleUse;
+
+    [Space]
     public bool reset;
+
+    [Header("Attack system")]
+    public int healthPoints;
+    public bool attackable;
 
     [HideInInspector]
     public bool isUsable;
@@ -35,11 +41,19 @@ public class EnvironmentBehaviour : MonoBehaviour
         StartCoroutine(Refresh());
     }
 
+    private void Update()
+    {
+        if (!attackable)
+            return;
+
+        if (healthPoints <= 0)
+            Destroy(gameObject);
+    }
+
     private IEnumerator Refresh()
     {
         yield return new WaitForSeconds(1);
 
         isUsable = true;
-
     }
 }

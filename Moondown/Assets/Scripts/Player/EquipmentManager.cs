@@ -22,6 +22,10 @@ using UnityEngine;
 public class EquipmentManager : MonoBehaviour
 {
     public static EquipmentManager Instance { get; private set; }
+
+    public LayerMask mask; 
+    private MeeleAttack MeeleAttack { get; set; }
+
     public string MeeleWeaponName { get; private set; }
     public Weapon EquipedWeapon { get; private set; }
 
@@ -74,6 +78,8 @@ public class EquipmentManager : MonoBehaviour
         ).First();
 
         MeeleWeaponName = name;
+
+        CreateMeeleAttack();
     }
 
     public void Equip(Weapon weapon)
@@ -86,7 +92,11 @@ public class EquipmentManager : MonoBehaviour
         ).First();
 
         MeeleWeaponName = weapon.Name;
+
+        CreateMeeleAttack();
     }
+
+    private void CreateMeeleAttack() => MeeleAttack = new MeeleAttack(gameObject.GetComponent<BoxCollider2D>(), gameObject.transform, mask);
 
     public void UnequipWeapon() { MeeleWeaponName = null; EquipedWeapon = null; }
 }

@@ -20,6 +20,6 @@ using UnityEngine;
 
 public enum Facing
 {
-    LEFT,
-    RIGHT
+    LEFT = -1,
+    RIGHT = 1
 }

@@ -22,6 +22,9 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class PlayerMovement : MonoBehaviour
 {
+    public static PlayerMovement Instance { get; private set; }
+
+
     private const float MAX_ANGLE = 45f;
 
     [SerializeField]
@@ -42,8 +45,15 @@ public class PlayerMovement : MonoBehaviour
     private bool grounded;
     private PhysicsMaterial2D groundMaterial;
 
+    public Facing facing;
+
     private void Awake()
     {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+
         _controls = new MainControls();
 
         _controls.Player.Jump.performed += _ => Jump();
@@ -64,7 +74,6 @@ public class PlayerMovement : MonoBehaviour
     private void OnEnable() => _controls.Enable();
     private void OnDisable() => _controls.Disable();
 
-
     #region movement
 
     void Jump()
@@ -75,6 +84,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Move(float direction)
     {
+        facing = (Facing)direction;
+
        _rigidBody.velocity = new Vector2(
            _playerSpeed * direction - (grounded ? (groundMaterial.friction * direction) : 0f),
            _rigidBody.velocity.y

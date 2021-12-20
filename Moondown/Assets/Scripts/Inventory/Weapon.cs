@@ -28,16 +28,18 @@ public class Weapon : IInventoryItem
     public ItemType Type { get; set; }
     public int SlotNumber { get; set; }
 
+    public float Range { get; private set; }
     public int Damage { get; set; }
     public AttackMode Mode { get; set; }
 
-    public Weapon(string name, string desc, string spriteName, int dmg, AttackMode mode, ItemType type, Sprite baseSprite, int slotNumber)
+    public Weapon(string name, string desc, string spriteName, int dmg, float range, AttackMode mode, ItemType type, Sprite baseSprite, int slotNumber)
     {
         this.Name = name;
         this.Description = desc;
         this.Damage = dmg;
         this.Mode = mode;
         this.Type = type;
+        this.Range = range;
 
         string spritePath = @"Assets/Sprites/" + spriteName + ".png";
         this.Image = (Sprite)AssetDatabase.LoadAssetAtPath(spritePath, typeof(Sprite));
