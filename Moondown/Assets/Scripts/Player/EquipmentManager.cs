@@ -18,85 +18,91 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Moondown.WeaponSystem;
+using Moondown.WeaponSystem.Attacks;
+using Moondown.UI.Inventory;
 
-public class EquipmentManager : MonoBehaviour
+namespace Moondown.Inventory
 {
-    public static EquipmentManager Instance { get; private set; }
-
-    public LayerMask mask; 
-    private MeeleAttack MeeleAttack { get; set; }
-
-    public string MeeleWeaponName { get; private set; }
-    public Weapon EquipedWeapon { get; private set; }
-
-    public bool FirstLoading { private get; set; } = true;
-
-    int  _current = 0;
-
-    public int NextFreeSlot
+    public class EquipmentManager : MonoBehaviour
     {
-        get
+        public static EquipmentManager Instance { get; private set; }
+
+        public LayerMask mask;
+        private MeeleAttack MeeleAttack { get; set; }
+
+        public string MeeleWeaponName { get; private set; }
+        public Weapon EquipedWeapon { get; private set; }
+
+        public bool FirstLoading { private get; set; } = true;
+
+        int _current = 0;
+
+        public int NextFreeSlot
         {
-            if (FirstLoading)
+            get
             {
-                int val = _current;
-                _current++;
-                return val;
+                if (FirstLoading)
+                {
+                    int val = _current;
+                    _current++;
+                    return val;
 
+                }
+
+
+                for (int i = 0; i < InventoryDisplay.Instance.slots.Length; i++)
+                {
+                    GameObject slot = InventoryDisplay.Instance.slots[i];
+
+
+                    if (slot.GetComponent<Slot>().item == null)
+                        return i;
+                }
+
+                return 0;
             }
-
-
-            for (int i = 0; i < InventoryDisplay.Instance.slots.Length; i++)
-            {
-                GameObject slot = InventoryDisplay.Instance.slots[i];
-
-
-                if (slot.GetComponent<Slot>().item == null)
-                    return i;
-            }
-
-            return 0;
         }
+
+        public int InvSize => InventoryDisplay.Instance.slots.Length;
+
+        public List<IInventoryItem> Inventory { get; set; } = new List<IInventoryItem> { };
+
+        public void Awake()
+        {
+            if (Instance == null)
+                Instance = this;
+        }
+
+        public void Equip(string name)
+        {
+            EquipedWeapon = (Weapon)(
+                from IInventoryItem item in Inventory
+                where item.Name == name
+                select item
+            ).First();
+
+            MeeleWeaponName = name;
+
+            CreateMeeleAttack();
+        }
+
+        public void Equip(Weapon weapon)
+        {
+
+            EquipedWeapon = (Weapon)(
+                from IInventoryItem item in Inventory
+                where item is Weapon w && w.Name == weapon.Name
+                select item
+            ).First();
+
+            MeeleWeaponName = weapon.Name;
+
+            CreateMeeleAttack();
+        }
+
+        private void CreateMeeleAttack() => MeeleAttack = new MeeleAttack(gameObject.GetComponent<BoxCollider2D>(), gameObject.transform, mask);
+
+        public void UnequipWeapon() { MeeleWeaponName = null; EquipedWeapon = null; }
     }
-
-    public int InvSize => InventoryDisplay.Instance.slots.Length;
-
-    public List<IInventoryItem> Inventory { get; set; } = new List<IInventoryItem> { };
-
-    public void Awake()
-    {
-        if (Instance == null)
-            Instance = this;
-    }
-
-    public void Equip(string name)
-    {
-        EquipedWeapon = (Weapon)(
-            from IInventoryItem item in Inventory
-            where item.Name == name
-            select item
-        ).First();
-
-        MeeleWeaponName = name;
-
-        CreateMeeleAttack();
-    }
-
-    public void Equip(Weapon weapon)
-    {
-
-        EquipedWeapon = (Weapon)(
-            from IInventoryItem item in Inventory
-            where item is Weapon w && w.Name == weapon.Name
-            select item
-        ).First();
-
-        MeeleWeaponName = weapon.Name;
-
-        CreateMeeleAttack();
-    }
-
-    private void CreateMeeleAttack() => MeeleAttack = new MeeleAttack(gameObject.GetComponent<BoxCollider2D>(), gameObject.transform, mask);
-
-    public void UnequipWeapon() { MeeleWeaponName = null; EquipedWeapon = null; }
 }

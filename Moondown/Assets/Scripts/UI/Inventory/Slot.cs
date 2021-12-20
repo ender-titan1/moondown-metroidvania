@@ -14,6 +14,8 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using Moondown.Inventory;
+using Moondown.WeaponSystem;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,67 +23,71 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(RawImage))]
-public class Slot : MonoBehaviour, IPointerClickHandler
+namespace Moondown.UI.Inventory
 {
-    [HideInInspector]
-    public IInventoryItem item = null;
 
-    public void OnClick(Sprite @base)
+    [RequireComponent(typeof(RawImage))]
+    public class Slot : MonoBehaviour, IPointerClickHandler
     {
-        if (item == null)
-            return;
+        [HideInInspector]
+        public IInventoryItem item = null;
 
-        if (item.Type == ItemType.MEELE_WEAPON)
+        public void OnClick(Sprite @base)
         {
-            GameObject s = InventoryDisplay.Instance.equipedWeaponSlot;
-
-            if (s == gameObject)
-            {
-                Weapon weapon = (Weapon)item;
-
-                s.GetComponent<RawImage>().enabled = false;
-                s.GetComponent<RawImage>().texture = null;
-                s.GetComponent<Slot>().item = null;
-
-                EquipmentManager.Instance.UnequipWeapon();
-
-                weapon.SlotNumber = EquipmentManager.Instance.NextFreeSlot;
-                InventoryDisplay.Instance.Load();
-
+            if (item == null)
                 return;
-            }
 
-            Texture2D texture = item.Image.texture;
-            IInventoryItem selectedItem = item;
-
-            Slot[] slots = (from GameObject slot in InventoryDisplay.Instance.allSlots 
-                            where slot.GetComponent<Slot>().item == item
-                            select slot.GetComponent<Slot>()
-                           ).ToArray();
-
-
-            foreach (Slot slot in slots)
+            if (item.Type == ItemType.MEELE_WEAPON)
             {
-                slot.gameObject.GetComponent<RawImage>().texture = @base.texture;
-                slot.item = null;
+                GameObject s = InventoryDisplay.Instance.equipedWeaponSlot;
+
+                if (s == gameObject)
+                {
+                    Weapon weapon = (Weapon)item;
+
+                    s.GetComponent<RawImage>().enabled = false;
+                    s.GetComponent<RawImage>().texture = null;
+                    s.GetComponent<Slot>().item = null;
+
+                    EquipmentManager.Instance.UnequipWeapon();
+
+                    weapon.SlotNumber = EquipmentManager.Instance.NextFreeSlot;
+                    InventoryDisplay.Instance.Load();
+
+                    return;
+                }
+
+                Texture2D texture = item.Image.texture;
+                IInventoryItem selectedItem = item;
+
+                Slot[] slots = (from GameObject slot in InventoryDisplay.Instance.allSlots
+                                where slot.GetComponent<Slot>().item == item
+                                select slot.GetComponent<Slot>()
+                               ).ToArray();
+
+
+                foreach (Slot slot in slots)
+                {
+                    slot.gameObject.GetComponent<RawImage>().texture = @base.texture;
+                    slot.item = null;
+                }
+
+
+                s.GetComponent<RawImage>().enabled = true;
+                s.GetComponent<RawImage>().texture = texture;
+                s.GetComponent<Slot>().item = selectedItem;
+                EquipmentManager.Instance.Equip((Weapon)selectedItem);
+                selectedItem.SlotNumber = -1;
+
             }
+        }
 
-            
-            s.GetComponent<RawImage>().enabled = true;
-            s.GetComponent<RawImage>().texture = texture;
-            s.GetComponent<Slot>().item = selectedItem;
-            EquipmentManager.Instance.Equip((Weapon)selectedItem);
-            selectedItem.SlotNumber = -1;
-
-        }       
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (eventData.button == PointerEventData.InputButton.Right)
+        public void OnPointerClick(PointerEventData eventData)
         {
-            OnClick(InventoryDisplay.Instance.baseSlotTexture);
+            if (eventData.button == PointerEventData.InputButton.Right)
+            {
+                OnClick(InventoryDisplay.Instance.baseSlotTexture);
+            }
         }
     }
 }

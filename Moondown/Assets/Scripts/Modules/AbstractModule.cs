@@ -17,21 +17,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Moondown.Player;
 
-public abstract class AbstractModule
+
+namespace Moondown.Player.Modules
 {
-    public void setup()
+    public abstract class AbstractModule
     {
-        Player.Instance.OnCharge += amount => OnCharge(amount);
-        Player.Instance.OnHeal += amount => OnHeal(amount);
-        Player.Instance.OnDamageTaken += amount => OnDamageTaken(amount);
-        Player.Instance.OnRespawn += () => OnRespawn();
-        Player.Instance.OnDeath += () => OnDeath();
-    }
+        public void setup()
+        {
+            Player.Instance.OnCharge += amount => OnCharge(amount);
+            Player.Instance.OnHeal += amount => OnHeal(amount);
+            Player.Instance.OnDamageTaken += amount => OnDamageTaken(amount);
+            Player.Instance.OnRespawn += () => OnRespawn();
+            Player.Instance.OnDeath += () => OnDeath();
+        }
 
-    public abstract void OnDamageTaken(int amount);
-    public abstract void OnHeal(int amount);
-    public abstract void OnCharge(int amount);
-    public abstract void OnRespawn();
-    public abstract void OnDeath();
+        public abstract void OnDamageTaken(int amount);
+        public abstract void OnHeal(int amount);
+        public abstract void OnCharge(int amount);
+        public abstract void OnRespawn();
+        public abstract void OnDeath();
+    }
 }

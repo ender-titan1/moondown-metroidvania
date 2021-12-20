@@ -17,53 +17,60 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Moondown.Inventory;
+using Moondown.Player.Movement;
+using Moondown.Environment;
+using Moondown.Utility;
 
-public sealed class MeeleAttack
+namespace Moondown.WeaponSystem.Attacks
 {
-    private readonly MainControls controls;
-    private readonly BoxCollider2D collider;
-    private readonly Transform transform;
-    private readonly LayerMask mask;
-
-    public MeeleAttack(BoxCollider2D collider, Transform transform, LayerMask mask)
+    public sealed class MeeleAttack
     {
-        controls = new MainControls();
+        private readonly MainControls controls;
+        private readonly BoxCollider2D collider;
+        private readonly Transform transform;
+        private readonly LayerMask mask;
 
-        controls.Player.AttackMeele.performed += _ => Attack();
-        controls.Enable();
-
-        this.collider = collider;
-        this.transform = transform;
-        this.mask = mask;
-    }
-
-    private void Attack()
-    {
-        RaycastHit2D[] hits = Physics2D.BoxCastAll(
-            new Vector2(
-                transform.position.x + EquipmentManager.Instance.EquipedWeapon.Range * (int)PlayerMovement.Instance.facing,
-                transform.position.y
-            ),
-            collider.size,
-            0f,
-            PlayerMovement.Instance.facing == Facing.LEFT ? Vector2.left : Vector2.right,
-            collider.size.x,
-            mask
-        );
-
-        foreach (RaycastHit2D hit in hits)
+        public MeeleAttack(BoxCollider2D collider, Transform transform, LayerMask mask)
         {
-            if (hit.collider.CompareTag("Player"))
-                continue;
+            controls = new MainControls();
 
-            if (hit.collider.Has<EnvironmentBehaviour>() && hit.collider.GetComponent<EnvironmentBehaviour>().attackable)
-            {
-                EnvironmentBehaviour behaviour = hit.collider.GetComponent<EnvironmentBehaviour>();
-                behaviour.healthPoints -= EquipmentManager.Instance.EquipedWeapon.Damage;
-            }
+            controls.Player.AttackMeele.performed += _ => Attack();
+            controls.Enable();
+
+            this.collider = collider;
+            this.transform = transform;
+            this.mask = mask;
         }
 
+        private void Attack()
+        {
+            RaycastHit2D[] hits = Physics2D.BoxCastAll(
+                new Vector2(
+                    transform.position.x + EquipmentManager.Instance.EquipedWeapon.Range * (int)PlayerMovement.Instance.facing,
+                    transform.position.y
+                ),
+                collider.size,
+                0f,
+                PlayerMovement.Instance.facing == Facing.LEFT ? Vector2.left : Vector2.right,
+                collider.size.x,
+                mask
+            );
+
+            foreach (RaycastHit2D hit in hits)
+            {
+                if (hit.collider.CompareTag("Player"))
+                    continue;
+
+                if (hit.collider.Has<EnvironmentBehaviour>() && hit.collider.GetComponent<EnvironmentBehaviour>().attackable)
+                {
+                    EnvironmentBehaviour behaviour = hit.collider.GetComponent<EnvironmentBehaviour>();
+                    behaviour.healthPoints -= EquipmentManager.Instance.EquipedWeapon.Damage;
+                }
+            }
+
+        }
+
+
     }
-
-
 }

@@ -18,33 +18,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasePlayerModule : AbstractModule
+namespace Moondown.Player.Modules
 {
-    public BasePlayerModule() => setup();
-
-    public override void OnHeal(int amount)
+    public class BasePlayerModule : AbstractModule
     {
-        Player.Instance.Health += amount;
-    }
+        public BasePlayerModule() => setup();
 
-    public override void OnCharge(int amount)
-    {
-        Player.Instance.Charge += amount;
-    }
+        public override void OnHeal(int amount)
+        {
+            Player.Instance.Health += amount;
+        }
 
-    public override void OnDamageTaken(int amount)
-    {
-        // this is done because the 'amount' parameter is negative
-        Player.Instance.Health += amount;
-    }
+        public override void OnCharge(int amount)
+        {
+            Player.Instance.Charge += amount;
+        }
 
-    public override void OnRespawn()
-    {
-        Player.Instance.Health += 10;
-    }
+        public override void OnDamageTaken(int amount)
+        {
+            // this is done because the 'amount' parameter is negative
+            Player.Instance.Health += amount;
+        }
 
-    public override void OnDeath()
-    {
-        Player.Instance.gameObject.transform.position = Player.Instance.DeathRespawn.position;
+        public override void OnRespawn()
+        {
+            Player.Instance.Health += 10;
+        }
+
+        public override void OnDeath()
+        {
+            Player.Instance.gameObject.transform.position = Player.Instance.DeathRespawn.position;
+        }
     }
 }

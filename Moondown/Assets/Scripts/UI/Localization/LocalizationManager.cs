@@ -21,134 +21,138 @@ using UnityEditor;
 using System.Linq;
 using System.IO;
 
-public class LocalizationManager : MonoBehaviour
+namespace Moondown.UI.Localization
 {
-    private static TextAsset[] translations;
 
-    [SerializeField]
-    private TextAsset[] visibleTranslations;
-
-    [MenuItem("Moondown Tools/Refresh Translations")]
-    public static void RefreshTranslations()
+    public class LocalizationManager : MonoBehaviour
     {
+        private static TextAsset[] translations;
 
-        Text[] toCheck = GetText().ToArray();
+        [SerializeField]
+        private TextAsset[] visibleTranslations;
 
-
-        Dictionary<string, Dictionary<string, string>> locales = GetLocales();
-
-
-        foreach (Dictionary<string, string> locale in locales.Values)
+        [MenuItem("Moondown Tools/Refresh Translations")]
+        public static void RefreshTranslations()
         {
-            string name = locales.FirstOrDefault(x => x.Value == locale).Key;
-            string path = Application.dataPath + @"/Translation/" + name + @".txt";
+
+            Text[] toCheck = GetText().ToArray();
 
 
-            foreach (Text text in toCheck)
+            Dictionary<string, Dictionary<string, string>> locales = GetLocales();
+
+
+            foreach (Dictionary<string, string> locale in locales.Values)
             {
-                if (!locale.ContainsKey(text.text))
-                {
+                string name = locales.FirstOrDefault(x => x.Value == locale).Key;
+                string path = Application.dataPath + @"/Translation/" + name + @".txt";
 
-                    using (StreamWriter sw = File.AppendText(path))
+
+                foreach (Text text in toCheck)
+                {
+                    if (!locale.ContainsKey(text.text))
                     {
-                        sw.WriteLine("\n# To translate;");
-                        sw.WriteLine(text.text + " =  ;");
+
+                        using (StreamWriter sw = File.AppendText(path))
+                        {
+                            sw.WriteLine("\n# To translate;");
+                            sw.WriteLine(text.text + " =  ;");
+                        }
                     }
+                }
+
+
+            }
+
+
+        }
+
+        private void Awake() => translations = visibleTranslations;
+
+        private void Start() => Translate();
+
+        private void Translate()
+        {
+            Dictionary<string, Dictionary<string, string>> locales = GetLocales();
+
+            // get all relevant text objects
+            List<Text> toTranslate = GetText();
+
+            // get current locale
+            Dictionary<string, string> currentLocale = locales["en_gb"];
+
+
+            // translate
+            foreach (Text text in toTranslate)
+            {
+
+                if (currentLocale.ContainsKey(text.text))
+                {
+                    text.text = currentLocale[text.text];
+
+                    if (text.gameObject.GetComponent<DynamicText>() != null)
+                        text.gameObject.GetComponent<DynamicText>().Replace(true);
                 }
             }
 
-
         }
 
-
-    }
-
-    private void Awake() => translations = visibleTranslations;
-
-    private void Start() => Translate();
-
-    private void Translate()
-    {
-        Dictionary<string, Dictionary<string, string>> locales = GetLocales();
-
-        // get all relevant text objects
-        List<Text> toTranslate = GetText();
-
-        // get current locale
-        Dictionary<string, string> currentLocale = locales["en_gb"];
-
-
-        // translate
-        foreach (Text text in toTranslate)
+        private static Dictionary<string, Dictionary<string, string>> GetLocales()
         {
+            Dictionary<string, Dictionary<string, string>> locales = new Dictionary<string, Dictionary<string, string>> { };
 
-            if (currentLocale.ContainsKey(text.text))
+            // get all key-value pairs
+            foreach (TextAsset locale in translations)
             {
-                text.text = currentLocale[text.text];
+                locales.Add(locale.name, new Dictionary<string, string> { });
 
-                if (text.gameObject.GetComponent<DynamicText>() != null)
-                    text.gameObject.GetComponent<DynamicText>().Replace(true);
+                int maxLength = locale.text.Split(char.Parse("\n")).Length;
+                int i = 0;
+                foreach (string line in locale.text.Split(char.Parse(";")))
+                {
+                    if (i == maxLength)
+                        break;
+
+                    if (line.Replace("\n", "").Replace("\r", "").Length == 0)
+                        continue;
+
+                    if (line.Replace("\n", "").Replace("\r", "")[0] == char.Parse("#"))
+                        continue;
+
+                    var l = line.Replace(" = ", "=");
+
+                    string key = l.Split(char.Parse("="))[0].Replace("\n", "").Replace("\r", "");
+                    string value = l.Split(char.Parse("="))[1];
+
+                    locales[locale.name].Add(key, value);
+                    i++;
+                }
+            }
+
+            return locales;
+        }
+
+        private static List<Text> GetText()
+        {
+            List<Text> toTranslate = new List<Text> { };
+            foreach (Transform @object in GameObject.Find("Canvas").transform)
+                GetChildren(@object.gameObject, ref toTranslate);
+            return toTranslate;
+        }
+
+        private static void GetChildren(GameObject parent, ref List<Text> toTranslate)
+        {
+            if (parent.GetComponent<Text>() != null)
+                toTranslate.Add(parent.GetComponent<Text>());
+
+            foreach (Transform child in parent.transform)
+            {
+                if (child.GetComponent<Text>() != null)
+                    toTranslate.Add(child.GetComponent<Text>());
+                GetChildren(child.gameObject, ref toTranslate);
             }
         }
 
+        public static string Get(string key) => GetLocales()["en_gb"][key];
+
     }
-
-    private static Dictionary<string, Dictionary<string, string>> GetLocales()
-    {
-        Dictionary<string, Dictionary<string, string>> locales = new Dictionary<string, Dictionary<string, string>> { };
-
-        // get all key-value pairs
-        foreach (TextAsset locale in translations)
-        {
-            locales.Add(locale.name, new Dictionary<string, string> { });
-
-            int maxLength = locale.text.Split(char.Parse("\n")).Length;
-            int i = 0;
-            foreach (string line in locale.text.Split(char.Parse(";")))
-            {
-                if (i == maxLength)
-                    break;
-
-                if (line.Replace("\n", "").Replace("\r", "").Length == 0)
-                    continue;
-
-                if (line.Replace("\n", "").Replace("\r", "")[0] == char.Parse("#"))
-                    continue;
-
-                var l = line.Replace(" = ", "=");
-
-                string key = l.Split(char.Parse("="))[0].Replace("\n", "").Replace("\r", "");
-                string value = l.Split(char.Parse("="))[1];
-
-                locales[locale.name].Add(key, value);
-                i++;
-            }
-        }
-
-        return locales;
-    }
-
-    private static List<Text> GetText()
-    {
-        List<Text> toTranslate = new List<Text> { };
-        foreach (Transform @object in GameObject.Find("Canvas").transform)
-            GetChildren(@object.gameObject, ref toTranslate);
-        return toTranslate;
-    }
-
-    private static void GetChildren(GameObject parent, ref List<Text> toTranslate)
-    {
-        if (parent.GetComponent<Text>() != null)
-            toTranslate.Add(parent.GetComponent<Text>());
-
-        foreach (Transform child in parent.transform)
-        {
-            if (child.GetComponent<Text>() != null)
-                toTranslate.Add(child.GetComponent<Text>());
-            GetChildren(child.gameObject, ref toTranslate);
-        }
-    }
-
-    public static string Get(string key) => GetLocales()["en_gb"][key];
-
 }

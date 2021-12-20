@@ -18,122 +18,130 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Moondown.WeaponSystem;
+using Moondown.Inventory;
+using Moondown.Player.Modules;
+using Moondown.Environment;
+using Moondown.UI.Localization;
 
-[RequireComponent(typeof(BoxCollider2D))]
-public class Player : MonoBehaviour
+namespace Moondown.Player
 {
-    // singelton
-    public static Player Instance { get; private set; }
-
-    public delegate void ActionDelegate(int amount);
-    public delegate void BlankDelegate();
-
-    public event ActionDelegate OnDamageTaken;
-    public event ActionDelegate OnHeal;
-    public event ActionDelegate OnCharge;
-    public event BlankDelegate OnDeath;
-    public event BlankDelegate OnRespawn;
-
-    public RespawnLocation LocalRespawn { get; set; }
-    public RespawnLocation DeathRespawn { get; set; }
-
-    public int Health { get; set; }
-    public int MaxHealth { get; set; } = 10;
-
-    public int Charge { get; set; }
-    public int MaxCharge { get; set; } = 3;
-
-    public List<AbstractModule> modules = new List<AbstractModule> { };
-
-    [SerializeField] private Sprite baseSprite;
-
-    private void Awake()
+    [RequireComponent(typeof(BoxCollider2D))]
+    public class Player : MonoBehaviour
     {
-        if (Instance == null)
-            Instance = this;
-    }
+        // singelton
+        public static Player Instance { get; private set; }
 
-    private void Start()
-    {
-        modules.Add(new BasePlayerModule());
+        public delegate void ActionDelegate(int amount);
+        public delegate void BlankDelegate();
 
-        #region weapon
-        Weapon weapon = new Weapon(
-            LocalizationManager.Get("BASIC_SWORD_NAME"),
-            LocalizationManager.Get("BASIC_SWORD_DESC"),
-            "UI/Inventory/Placeholder",
-            1,
-            0.3f,
-            AttackMode.NORMAL,
-            ItemType.MEELE_WEAPON,
-            baseSprite,
-            EquipmentManager.Instance.NextFreeSlot
-        );
+        public event ActionDelegate OnDamageTaken;
+        public event ActionDelegate OnHeal;
+        public event ActionDelegate OnCharge;
+        public event BlankDelegate OnDeath;
+        public event BlankDelegate OnRespawn;
 
-        EquipmentManager.Instance.Inventory.Add(weapon);
-        #endregion
-        #region item
-        Item item = new Item(
-            LocalizationManager.Get("MISC_NAME"),
-            LocalizationManager.Get("MISC_DESC"),
-            "UI/Inventory/PlaceholderItem",
-            ItemType.ITEM,
-            baseSprite,
-            EquipmentManager.Instance.NextFreeSlot
-        );
+        public RespawnLocation LocalRespawn { get; set; }
+        public RespawnLocation DeathRespawn { get; set; }
 
-        EquipmentManager.Instance.Inventory.Add(item);
-        #endregion
-        #region otherWeapon
-        Weapon otherWeapon = new Weapon(
-            LocalizationManager.Get("OTHER_SWORD_NAME"),
-            LocalizationManager.Get("OTHER_SWORD_DESC"),
-            "UI/Inventory/other placeholder",
-            2,
-            0.2f,
-            AttackMode.DASH,
-            ItemType.MEELE_WEAPON,
-            baseSprite,
-            EquipmentManager.Instance.NextFreeSlot
-        );
+        public int Health { get; set; }
+        public int MaxHealth { get; set; } = 10;
 
-        EquipmentManager.Instance.Inventory.Add(otherWeapon);
+        public int Charge { get; set; }
+        public int MaxCharge { get; set; } = 3;
 
-        #endregion
+        public List<AbstractModule> modules = new List<AbstractModule> { };
 
-        EquipmentManager.Instance.FirstLoading = false;
-        OnRespawn();
-    }
+        [SerializeField] private Sprite baseSprite;
 
-    private void Update()
-    {
-        EnvironmentInteraction.Modifiers modifiers = EnvironmentInteraction.Instance.CheckCollisions();
-
-        if (modifiers.charge > 0)
-            OnCharge(modifiers.charge);
-
-        if (modifiers.health != 0)
+        private void Awake()
         {
-
-            if (modifiers.health > 0)
-                OnHeal(modifiers.health);
-            else
-                OnDamageTaken(modifiers.health);
+            if (Instance == null)
+                Instance = this;
         }
 
-        if (modifiers.hasBeenHit)
+        private void Start()
         {
-            gameObject.transform.position = LocalRespawn.position;
+            modules.Add(new BasePlayerModule());
+
+            #region weapon
+            Weapon weapon = new Weapon(
+                LocalizationManager.Get("BASIC_SWORD_NAME"),
+                LocalizationManager.Get("BASIC_SWORD_DESC"),
+                "UI/Inventory/Placeholder",
+                1,
+                0.3f,
+                AttackMode.NORMAL,
+                ItemType.MEELE_WEAPON,
+                baseSprite,
+                EquipmentManager.Instance.NextFreeSlot
+            );
+
+            EquipmentManager.Instance.Inventory.Add(weapon);
+            #endregion
+            #region item
+            Item item = new Item(
+                LocalizationManager.Get("MISC_NAME"),
+                LocalizationManager.Get("MISC_DESC"),
+                "UI/Inventory/PlaceholderItem",
+                ItemType.ITEM,
+                baseSprite,
+                EquipmentManager.Instance.NextFreeSlot
+            );
+
+            EquipmentManager.Instance.Inventory.Add(item);
+            #endregion
+            #region otherWeapon
+            Weapon otherWeapon = new Weapon(
+                LocalizationManager.Get("OTHER_SWORD_NAME"),
+                LocalizationManager.Get("OTHER_SWORD_DESC"),
+                "UI/Inventory/other placeholder",
+                2,
+                0.2f,
+                AttackMode.DASH,
+                ItemType.MEELE_WEAPON,
+                baseSprite,
+                EquipmentManager.Instance.NextFreeSlot
+            );
+
+            EquipmentManager.Instance.Inventory.Add(otherWeapon);
+
+            #endregion
+
+            EquipmentManager.Instance.FirstLoading = false;
+            OnRespawn();
         }
 
-        if (Health <= 0)
-            Die();
+        private void Update()
+        {
+            EnvironmentInteraction.Modifiers modifiers = EnvironmentInteraction.Instance.CheckCollisions();
 
-    }
+            if (modifiers.charge > 0)
+                OnCharge(modifiers.charge);
 
-    private void Die()
-    {
-        OnDeath();
-        OnRespawn();
+            if (modifiers.health != 0)
+            {
+
+                if (modifiers.health > 0)
+                    OnHeal(modifiers.health);
+                else
+                    OnDamageTaken(modifiers.health);
+            }
+
+            if (modifiers.hasBeenHit)
+            {
+                gameObject.transform.position = LocalRespawn.position;
+            }
+
+            if (Health <= 0)
+                Die();
+
+        }
+
+        private void Die()
+        {
+            OnDeath();
+            OnRespawn();
+        }
     }
 }

@@ -19,108 +19,111 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider2D))]
-public class PlayerMovement : MonoBehaviour
+namespace Moondown.Player.Movement
 {
-    public static PlayerMovement Instance { get; private set; }
-
-
-    private const float MAX_ANGLE = 45f;
-
-    [SerializeField]
-    private float _playerSpeed;
-
-    [SerializeField]
-    private float _jumpVelocity;
-
-    [SerializeField]
-    private LayerMask mask;
-
-    private MainControls _controls;
-    private Rigidbody2D _rigidBody;
-
-    private bool isMovementPressed;
-    private float movementAxis;
-
-    private bool grounded;
-    private PhysicsMaterial2D groundMaterial;
-
-    public Facing facing;
-
-    private void Awake()
+    [RequireComponent(typeof(BoxCollider2D))]
+    public class PlayerMovement : MonoBehaviour
     {
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
+        public static PlayerMovement Instance { get; private set; }
 
-        _controls = new MainControls();
 
-        _controls.Player.Jump.performed += _ => Jump();
-        _controls.Player.Movement.performed += ctx => { isMovementPressed = true; movementAxis = ctx.ReadValue<float>(); };
-        _controls.Player.Movement.canceled += _ => { isMovementPressed = false; MoveCancelled(); };
+        private const float MAX_ANGLE = 45f;
 
-        _rigidBody = gameObject.GetComponent<Rigidbody2D>();
-    }
+        [SerializeField]
+        private float _playerSpeed;
 
-    private void FixedUpdate()
-    {
-        grounded = IsGrounded();
-        
-        if (isMovementPressed)
-            Move(movementAxis);
-    }
+        [SerializeField]
+        private float _jumpVelocity;
 
-    private void OnEnable() => _controls.Enable();
-    private void OnDisable() => _controls.Disable();
+        [SerializeField]
+        private LayerMask mask;
 
-    #region movement
+        private MainControls _controls;
+        private Rigidbody2D _rigidBody;
 
-    void Jump()
-    {
-        if (grounded)
-            _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _rigidBody.velocity.y + _jumpVelocity);
-    }
+        private bool isMovementPressed;
+        private float movementAxis;
 
-    void Move(float direction)
-    {
-        facing = (Facing)direction;
+        private bool grounded;
+        private PhysicsMaterial2D groundMaterial;
 
-       _rigidBody.velocity = new Vector2(
-           _playerSpeed * direction - (grounded ? (groundMaterial.friction * direction) : 0f),
-           _rigidBody.velocity.y
-       );
-    }
+        public Facing facing;
 
-    void MoveCancelled()
-    {
-        _rigidBody.velocity = new Vector2(0f, _rigidBody.velocity.y);
-    }
-
-    #endregion
-
-    bool IsGrounded()
-    {
-        BoxCollider2D collider = gameObject.GetComponent<BoxCollider2D>();
-
-        Vector2 pos = new Vector2(transform.position.x, transform.position.y);
-        RaycastHit2D[] hits = Physics2D.BoxCastAll(pos - new Vector2(0, 0.1f), collider.size, 0, Vector2.down, collider.size.y, mask);
-
-        foreach (RaycastHit2D item in hits)
+        private void Awake()
         {
-            if (item.transform.CompareTag("Player")) 
-                continue;
+            if (Instance == null)
+                Instance = this;
+            else
+                Destroy(gameObject);
 
-            float angle = Mathf.Atan2(item.normal.x, item.normal.y) * (180 / Mathf.PI);
-            float fixedangle = Mathf.Abs(angle);
+            _controls = new MainControls();
 
-            if (fixedangle < MAX_ANGLE)
-            {
-                groundMaterial = item.collider.sharedMaterial;
-                return true;
-            }
+            _controls.Player.Jump.performed += _ => Jump();
+            _controls.Player.Movement.performed += ctx => { isMovementPressed = true; movementAxis = ctx.ReadValue<float>(); };
+            _controls.Player.Movement.canceled += _ => { isMovementPressed = false; MoveCancelled(); };
+
+            _rigidBody = gameObject.GetComponent<Rigidbody2D>();
         }
 
-        return false;
+        private void FixedUpdate()
+        {
+            grounded = IsGrounded();
+
+            if (isMovementPressed)
+                Move(movementAxis);
+        }
+
+        private void OnEnable() => _controls.Enable();
+        private void OnDisable() => _controls.Disable();
+
+        #region movement
+
+        void Jump()
+        {
+            if (grounded)
+                _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _rigidBody.velocity.y + _jumpVelocity);
+        }
+
+        void Move(float direction)
+        {
+            facing = (Facing)direction;
+
+            _rigidBody.velocity = new Vector2(
+                _playerSpeed * direction - (grounded ? (groundMaterial.friction * direction) : 0f),
+                _rigidBody.velocity.y
+            );
+        }
+
+        void MoveCancelled()
+        {
+            _rigidBody.velocity = new Vector2(0f, _rigidBody.velocity.y);
+        }
+
+        #endregion
+
+        bool IsGrounded()
+        {
+            BoxCollider2D collider = gameObject.GetComponent<BoxCollider2D>();
+
+            Vector2 pos = new Vector2(transform.position.x, transform.position.y);
+            RaycastHit2D[] hits = Physics2D.BoxCastAll(pos - new Vector2(0, 0.1f), collider.size, 0, Vector2.down, collider.size.y, mask);
+
+            foreach (RaycastHit2D item in hits)
+            {
+                if (item.transform.CompareTag("Player"))
+                    continue;
+
+                float angle = Mathf.Atan2(item.normal.x, item.normal.y) * (180 / Mathf.PI);
+                float fixedangle = Mathf.Abs(angle);
+
+                if (fixedangle < MAX_ANGLE)
+                {
+                    groundMaterial = item.collider.sharedMaterial;
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

@@ -18,34 +18,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using Moondown.Inventory;
+using Moondown.Utility;
 
-public class Weapon : IInventoryItem
+namespace Moondown.WeaponSystem
 {
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public Sprite Image { get; set; }
-    public Sprite ImageWithSlot { get; set; }
-    public ItemType Type { get; set; }
-    public int SlotNumber { get; set; }
-
-    public float Range { get; private set; }
-    public int Damage { get; set; }
-    public AttackMode Mode { get; set; }
-
-    public Weapon(string name, string desc, string spriteName, int dmg, float range, AttackMode mode, ItemType type, Sprite baseSprite, int slotNumber)
+    public class Weapon : IInventoryItem
     {
-        this.Name = name;
-        this.Description = desc;
-        this.Damage = dmg;
-        this.Mode = mode;
-        this.Type = type;
-        this.Range = range;
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public Sprite Image { get; set; }
+        public Sprite ImageWithSlot { get; set; }
+        public ItemType Type { get; set; }
+        public int SlotNumber { get; set; }
 
-        string spritePath = @"Assets/Sprites/" + spriteName + ".png";
-        this.Image = (Sprite)AssetDatabase.LoadAssetAtPath(spritePath, typeof(Sprite));
+        public float Range { get; private set; }
+        public int Damage { get; set; }
+        public AttackMode Mode { get; set; }
 
-        this.ImageWithSlot = new Sprite[] { baseSprite, Image }.MergeSprites();
+        public Weapon(string name, string desc, string spriteName, int dmg, float range, AttackMode mode, ItemType type, Sprite baseSprite, int slotNumber)
+        {
+            this.Name = name;
+            this.Description = desc;
+            this.Damage = dmg;
+            this.Mode = mode;
+            this.Type = type;
+            this.Range = range;
 
-        this.SlotNumber = slotNumber;
+            string spritePath = @"Assets/Sprites/" + spriteName + ".png";
+            this.Image = (Sprite)AssetDatabase.LoadAssetAtPath(spritePath, typeof(Sprite));
+
+            this.ImageWithSlot = new Sprite[] { baseSprite, Image }.MergeSprites();
+
+            this.SlotNumber = slotNumber;
+        }
     }
 }

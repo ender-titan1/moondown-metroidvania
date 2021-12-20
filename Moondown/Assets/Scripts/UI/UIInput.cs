@@ -14,51 +14,57 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using Moondown.UI.Inventory;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class UIInput : MonoBehaviour
+namespace Moondown.UI
 {
-    private MainControls controls;
 
-    [SerializeField] private GameObject[] slots;
-    [SerializeField] private GameObject[] quickBarSlots;
-    [SerializeField] private GameObject equipedWeaponSlot;
-    [SerializeField] private Sprite baseSlotSprite;
-    [SerializeField] private GameObject UI;
-
-    private bool isInInventory;
-
-    private void Awake()
+    public class UIInput : MonoBehaviour
     {
-        InventoryDisplay.Instance.slots = slots;
-        InventoryDisplay.Instance.quickSelectSlots = quickBarSlots;
+        private MainControls controls;
 
-        controls = new MainControls();
+        [SerializeField] private GameObject[] slots;
+        [SerializeField] private GameObject[] quickBarSlots;
+        [SerializeField] private GameObject equipedWeaponSlot;
+        [SerializeField] private Sprite baseSlotSprite;
+        [SerializeField] private GameObject UI;
 
-        controls.Player.Interact.performed += _ => Interact();
-        controls.Player.OpenInventory.performed += _ => OpenInventoryUI();
-        controls.Enable();
-    }
+        private bool isInInventory;
 
-    void Interact()
-    {
-
-    }
-
-    void OpenInventoryUI()
-    {
-        if (!isInInventory) { 
-            InventoryDisplay.Instance.Load(slots, quickBarSlots, baseSlotSprite, UI, equipedWeaponSlot);
-            isInInventory = true;
-        }   
-        else
+        private void Awake()
         {
-            UI.SetActive(false);
-            isInInventory = false;
+            InventoryDisplay.Instance.slots = slots;
+            InventoryDisplay.Instance.quickSelectSlots = quickBarSlots;
+
+            controls = new MainControls();
+
+            controls.Player.Interact.performed += _ => Interact();
+            controls.Player.OpenInventory.performed += _ => OpenInventoryUI();
+            controls.Enable();
+        }
+
+        void Interact()
+        {
+
+        }
+
+        void OpenInventoryUI()
+        {
+            if (!isInInventory)
+            {
+                InventoryDisplay.Instance.Load(slots, quickBarSlots, baseSlotSprite, UI, equipedWeaponSlot);
+                isInInventory = true;
+            }
+            else
+            {
+                UI.SetActive(false);
+                isInInventory = false;
+            }
         }
     }
 }

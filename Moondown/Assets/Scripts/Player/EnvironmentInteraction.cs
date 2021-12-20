@@ -14,75 +14,79 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using Moondown.Environment;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnvironmentInteraction : MonoBehaviour
+namespace Moondown.Player
 {
-    public struct Modifiers
+    public class EnvironmentInteraction : MonoBehaviour
     {
-        public int health;
-        public int charge;
-
-        public bool hasBeenHit;
-    }
-
-    public static EnvironmentInteraction Instance { get; private set;  }
-
-    private List<GameObject> gameObjects = new List<GameObject> { };
-
-    private void Awake()
-    {
-        if (Instance == null)
-            Instance = this;
-    }
-
-    public Modifiers CheckCollisions()
-    {
-        Modifiers m = new Modifiers();
-        m.charge = 0;
-        m.health = 0;
-
-        foreach (GameObject collision in gameObjects)
+        public struct Modifiers
         {
-            EnvironmentBehaviour behaviour = collision.GetComponent<EnvironmentBehaviour>();
+            public int health;
+            public int charge;
 
-            m.charge += behaviour.chargeModifier;
-            m.health += behaviour.healthModifier;
-
-            if (behaviour.reset)
-                m.hasBeenHit = true;
-
-            if (behaviour.singleUse)
-                Destroy(behaviour.gameObject);
-
-            behaviour.isUsable = false;
+            public bool hasBeenHit;
         }
 
-        gameObjects.Clear();
-        return m;
+        public static EnvironmentInteraction Instance { get; private set; }
 
-    }
+        private List<GameObject> gameObjects = new List<GameObject> { };
 
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.GetComponent<EnvironmentBehaviour>() != null)
-            gameObjects.Add(collision.gameObject);
-
-        RespawnLocation respawn = collision.gameObject.GetComponent<RespawnLocation>();
-
-        if (respawn != null)
+        private void Awake()
         {
-            if (respawn.mode == RespawnLocation.RespawnMode.HIT)
-                Player.Instance.LocalRespawn = respawn;
-            else
+            if (Instance == null)
+                Instance = this;
+        }
+
+        public Modifiers CheckCollisions()
+        {
+            Modifiers m = new Modifiers();
+            m.charge = 0;
+            m.health = 0;
+
+            foreach (GameObject collision in gameObjects)
             {
-                if (respawn.cost == 0)
-                    Player.Instance.DeathRespawn = respawn;
+                EnvironmentBehaviour behaviour = collision.GetComponent<EnvironmentBehaviour>();
+
+                m.charge += behaviour.chargeModifier;
+                m.health += behaviour.healthModifier;
+
+                if (behaviour.reset)
+                    m.hasBeenHit = true;
+
+                if (behaviour.singleUse)
+                    Destroy(behaviour.gameObject);
+
+                behaviour.isUsable = false;
+            }
+
+            gameObjects.Clear();
+            return m;
+
+        }
+
+        public void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.gameObject.GetComponent<EnvironmentBehaviour>() != null)
+                gameObjects.Add(collision.gameObject);
+
+            RespawnLocation respawn = collision.gameObject.GetComponent<RespawnLocation>();
+
+            if (respawn != null)
+            {
+                if (respawn.mode == RespawnLocation.RespawnMode.HIT)
+                    Player.Instance.LocalRespawn = respawn;
                 else
-                    //IMPORTANT: for testing only
-                    respawn.Activate();
+                {
+                    if (respawn.cost == 0)
+                        Player.Instance.DeathRespawn = respawn;
+                    else
+                        //IMPORTANT: for testing only
+                        respawn.Activate();
+                }
             }
         }
     }

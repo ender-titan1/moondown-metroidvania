@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ItemType
+namespace Moondown.Inventory
 {
-    MEELE_WEAPON,
-    RANGED_WEAPON,
-    ARMOUR,
-    MODULE,
-    TOOL,
-    ITEM
+    public enum ItemType
+    {
+        MEELE_WEAPON,
+        RANGED_WEAPON,
+        ARMOUR,
+        MODULE,
+        TOOL,
+        ITEM
+    }
 }

@@ -14,33 +14,37 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using Moondown.Utility;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class Item : IInventoryItem
+namespace Moondown.Inventory
 {
-    public string Name          { get; set; }
-    public string Description   { get; set; }
-    public ItemType Type        { get; set; }
-    public int SlotNumber       { get; set; }
-    public Sprite Image         { get; set; }
-    public Sprite ImageWithSlot { get; set; }
-
-    public Item(string name, string desc, string spriteName, ItemType type, Sprite baseSprite, int slotNumber)
+    public class Item : IInventoryItem
     {
-        this.Name = name;
-        this.Description = desc;
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public ItemType Type { get; set; }
+        public int SlotNumber { get; set; }
+        public Sprite Image { get; set; }
+        public Sprite ImageWithSlot { get; set; }
 
-        this.Type = type;
+        public Item(string name, string desc, string spriteName, ItemType type, Sprite baseSprite, int slotNumber)
+        {
+            this.Name = name;
+            this.Description = desc;
 
-        string spritePath = @"Assets/Sprites/" + spriteName + ".png";
-        this.Image = (Sprite)AssetDatabase.LoadAssetAtPath(spritePath, typeof(Sprite));
+            this.Type = type;
 
-        this.ImageWithSlot = new Sprite[] { baseSprite, Image }.MergeSprites();
+            string spritePath = @"Assets/Sprites/" + spriteName + ".png";
+            this.Image = (Sprite)AssetDatabase.LoadAssetAtPath(spritePath, typeof(Sprite));
 
-        this.SlotNumber = slotNumber;
+            this.ImageWithSlot = new Sprite[] { baseSprite, Image }.MergeSprites();
+
+            this.SlotNumber = slotNumber;
+        }
+
     }
-
 }

@@ -18,10 +18,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum AttackMode
+namespace Moondown.WeaponSystem
 {
-    NORMAL,
-    DASH,
-    AIR,
-    DASH_AIR
+    public enum AttackMode
+    {
+        NORMAL,
+        DASH,
+        AIR,
+        DASH_AIR
+    }
 }

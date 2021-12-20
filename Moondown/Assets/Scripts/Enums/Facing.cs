@@ -18,8 +18,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Facing
+namespace Moondown.Player.Movement
 {
-    LEFT = -1,
-    RIGHT = 1
+    public enum Facing
+    {
+        LEFT = -1,
+        RIGHT = 1
+    }
 }

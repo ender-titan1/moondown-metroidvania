@@ -21,58 +21,62 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Text))]
-public class DynamicText : MonoBehaviour
+namespace Moondown.UI
 {
-    [SerializeField]
-    private string[] inputs;
 
-    private string template;
-
-    private void Update() => Replace(false);
-
-    public void Replace(bool firstTime)
+    [RequireComponent(typeof(Text))]
+    public class DynamicText : MonoBehaviour
     {
-        Text text = gameObject.GetComponent<Text>();
+        [SerializeField]
+        private string[] inputs;
 
-        if (firstTime)
-            template = text.text;
+        private string template;
 
-        string updatedString = template;
+        private void Update() => Replace(false);
 
-        for (int i = 0; i < inputs.Length; i++)
+        public void Replace(bool firstTime)
         {
-            string str = updatedString.Replace("{" + i.ToString() + "}", GenInput(inputs[i]));
-            text.text = str;
-            updatedString = str;
-        }
-    }
+            Text text = gameObject.GetComponent<Text>();
 
-    private string GenInput(string str)
-    {
+            if (firstTime)
+                template = text.text;
 
-        string[] strings = str.Split(char.Parse("."));
+            string updatedString = template;
 
-        Type type = GetTypeByName(strings[0]);
-        object instance = type.GetProperty(strings[1]).GetValue(null);
-
-        PropertyInfo prop = type.GetProperty(strings[2]);
-
-        if (prop.GetValue(instance) != null)
-            return prop.GetValue(instance).ToString();
-        else
-            return "nothing";
-    }
-
-    private Type GetTypeByName(string name)
-    {
-        foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
-        {
-            var tt = assembly.GetType(name);
-            if (tt != null)
-                return tt;
+            for (int i = 0; i < inputs.Length; i++)
+            {
+                string str = updatedString.Replace("{" + i.ToString() + "}", GenInput(inputs[i]));
+                text.text = str;
+                updatedString = str;
+            }
         }
 
-        return null;
+        private string GenInput(string str)
+        {
+
+            string[] strings = str.Split(char.Parse("."));
+
+            Type type = GetTypeByName(strings[0]);
+            object instance = type.GetProperty(strings[1]).GetValue(null);
+
+            PropertyInfo prop = type.GetProperty(strings[2]);
+
+            if (prop.GetValue(instance) != null)
+                return prop.GetValue(instance).ToString();
+            else
+                return "nothing";
+        }
+
+        private Type GetTypeByName(string name)
+        {
+            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                var tt = assembly.GetType(name);
+                if (tt != null)
+                    return tt;
+            }
+
+            return null;
+        }
     }
 }
