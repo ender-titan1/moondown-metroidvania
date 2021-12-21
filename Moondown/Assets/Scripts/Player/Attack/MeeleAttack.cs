@@ -24,6 +24,8 @@ using Moondown.Utility;
 
 namespace Moondown.WeaponSystem.Attacks
 {
+    using Moondown.Player;
+    
     public sealed class MeeleAttack
     {
         private readonly MainControls controls;
@@ -66,6 +68,13 @@ namespace Moondown.WeaponSystem.Attacks
                 {
                     EnvironmentBehaviour behaviour = hit.collider.GetComponent<EnvironmentBehaviour>();
                     behaviour.healthPoints -= EquipmentManager.Instance.EquipedWeapon.Damage;
+                }
+                else if (hit.collider.Has<RespawnLocation>() && hit.collider.GetComponent<RespawnLocation>().cost > 0)
+                {
+                    if (Player.Instance.DeathRespawn.cost == 0)
+                        Object.Destroy(Player.Instance.DeathRespawn.gameObject);
+
+                    hit.collider.GetComponent<RespawnLocation>().Activate();
                 }
             }
 

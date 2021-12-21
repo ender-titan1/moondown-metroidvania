@@ -14,10 +14,10 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-using Moondown.Environment;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Moondown.Environment;
 
 namespace Moondown.Player
 {
@@ -83,9 +83,6 @@ namespace Moondown.Player
                 {
                     if (respawn.cost == 0)
                         Player.Instance.DeathRespawn = respawn;
-                    else
-                        //IMPORTANT: for testing only
-                        respawn.Activate();
                 }
             }
         }
