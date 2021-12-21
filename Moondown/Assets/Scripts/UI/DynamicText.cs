@@ -69,11 +69,10 @@ namespace Moondown.UI
 
         private Type GetTypeByName(string name)
         {
-            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+            foreach (Type type in Assembly.GetExecutingAssembly().GetTypes())
             {
-                var tt = assembly.GetType(name);
-                if (tt != null)
-                    return tt;
+                if (type.Name == name)
+                    return type;
             }
 
             return null;
