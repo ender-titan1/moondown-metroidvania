@@ -58,6 +58,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Dash Left",
+                    "type": "Button",
+                    "id": "fce4a817-8612-4e04-b93e-9052326cfa77",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "MultiTap",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Dash Right",
+                    "type": "Button",
+                    "id": "7d189297-76d6-4459-bf7e-48eecbf0b4d9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "MultiTap",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -157,6 +175,28 @@
                     "processors": "",
                     "groups": "Keyboard & Mouse",
                     "action": "Pause and exit UI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4299cb3a-0a3d-4f15-b669-57cda459557a",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "Dash Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "18195db0-a9df-4c17-88da-870a32346035",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "Dash Left",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

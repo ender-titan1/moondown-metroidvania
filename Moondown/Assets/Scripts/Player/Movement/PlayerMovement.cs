@@ -26,28 +26,45 @@ namespace Moondown.Player.Movement
     {
         public static PlayerMovement Instance { get; private set; }
 
-
         private const float MAX_ANGLE = 45f;
 
-        [SerializeField]
-        private float _playerSpeed;
+        private MainControls controls;
+        private Rigidbody2D rigidBody;
+        public Facing facing;
 
+        #region Jumping 
         [SerializeField]
-        private float _jumpVelocity;
+        private float jumpVelocity;
 
+        private bool grounded;
+        #endregion
+
+        #region Walking
         [SerializeField]
         private LayerMask mask;
-
-        private MainControls _controls;
-        private Rigidbody2D _rigidBody;
+        
+        [SerializeField]
+        private float playerSpeed;
 
         private bool isMovementPressed;
         private float movementAxis;
 
-        private bool grounded;
         private PhysicsMaterial2D groundMaterial;
+        #endregion
 
-        public Facing facing;
+        #region Dashing
+        private bool canDash = true;
+        private bool isDashing;
+
+        private float playerYPos;
+
+        [SerializeField]
+        private float dashVelocity;
+        [SerializeField]
+        private float dashDuration;
+        [SerializeField]
+        private float dashCooldown;
+        #endregion
 
         private void Awake()
         {
@@ -56,47 +73,82 @@ namespace Moondown.Player.Movement
             else
                 Destroy(gameObject);
 
-            _controls = new MainControls();
+            controls = new MainControls();
+            rigidBody = gameObject.GetComponent<Rigidbody2D>();
 
-            _controls.Player.Jump.performed += _ => Jump();
-            _controls.Player.Movement.performed += ctx => { isMovementPressed = true; movementAxis = ctx.ReadValue<float>(); };
-            _controls.Player.Movement.canceled += _ => { isMovementPressed = false; MoveCancelled(); };
+            controls.Player.Jump.performed += _ => Jump();
+            controls.Player.DashRight.performed += _ => Dash(1);
+            controls.Player.DashLeft.performed += _ =>  Dash(-1);
+            controls.Player.Movement.performed += ctx => { isMovementPressed = true; movementAxis = ctx.ReadValue<float>(); };
+            controls.Player.Movement.canceled += _ => { isMovementPressed = false; MoveCancelled(); };
 
-            _rigidBody = gameObject.GetComponent<Rigidbody2D>();
         }
 
         private void FixedUpdate()
         {
+            // jumping
             grounded = IsGrounded();
 
+            // moving
             if (isMovementPressed)
                 Move(movementAxis);
+
+            // dashing
+            if (isDashing && gameObject.transform.position.y < playerYPos)
+              gameObject.transform.position = new Vector2(gameObject.transform.position.x, playerYPos);
         }
 
-        private void OnEnable() => _controls.Enable();
-        private void OnDisable() => _controls.Disable();
+        private void OnEnable() => controls.Enable();
+        private void OnDisable() => controls.Disable();
 
         #region movement
 
         void Jump()
         {
             if (grounded)
-                _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _rigidBody.velocity.y + _jumpVelocity);
+                rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y + jumpVelocity);
         }
 
         void Move(float direction)
         {
             facing = (Facing)direction;
 
-            _rigidBody.velocity = new Vector2(
-                _playerSpeed * direction - (grounded ? (groundMaterial.friction * direction) : 0f),
-                _rigidBody.velocity.y
+            rigidBody.velocity = new Vector2(
+                playerSpeed * direction - (grounded ? (groundMaterial.friction * direction) : 0f),
+                rigidBody.velocity.y
             );
         }
 
         void MoveCancelled()
         {
-            _rigidBody.velocity = new Vector2(0f, _rigidBody.velocity.y);
+            rigidBody.velocity = new Vector2(0f, rigidBody.velocity.y);
+        }
+
+        void Dash(float direction)
+        {
+            if (!canDash)
+                return;
+
+            canDash = false;
+            facing = (Facing)direction;
+            playerYPos = gameObject.transform.position.y;
+            isDashing = true;
+
+            rigidBody.AddForce(new Vector2(dashVelocity * (int)facing * 600, 0f));
+
+            Invoke(nameof(CancelDash), dashDuration);
+            Invoke(nameof(RefreshDash), dashCooldown);
+        }
+
+        void CancelDash()
+        {
+            rigidBody.velocity = Vector2.zero;
+            isDashing = false;
+        }
+
+        void RefreshDash()
+        {
+            canDash = true;
         }
 
         #endregion
