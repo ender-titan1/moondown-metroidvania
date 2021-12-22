@@ -102,16 +102,9 @@ namespace Moondown.Inventory
             CreateMeeleAttack();
         }
 
-        private void CreateMeeleAttack()
-        {
-            meeleAttack = new MeeleAttack(gameObject.GetComponent<BoxCollider2D>(), gameObject.transform, mask);
-        }
+        private void CreateMeeleAttack() => meeleAttack = new MeeleAttack(gameObject.GetComponent<BoxCollider2D>(), gameObject.transform, mask);
 
-        public void ReactivateWeapon()
-        {
-            Debug.Log("reactivating");
-            Invoke(nameof(Reactivate), 1);
-        }
+        public void ReactivateWeapon() => Invoke(nameof(Reactivate), 1);
 
         private void Reactivate() => meeleAttack.CanAttack = true;
 

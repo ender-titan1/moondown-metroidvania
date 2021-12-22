@@ -52,7 +52,6 @@ namespace Moondown.WeaponSystem.Attacks
             if (!CanAttack)
                 return;
 
-            Debug.Log("reactivating from MeeleAttack");
             EquipmentManager.Instance.ReactivateWeapon();
 
             RaycastHit2D[] hits = Physics2D.BoxCastAll(
