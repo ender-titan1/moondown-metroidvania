@@ -1,5 +1,5 @@
-# This translation file contains default translations;
-# This file should be used for debugging;
+# This translation file contains default translations
+  It should be used for debugging;
 
 #-------hud-------;
 
@@ -8,6 +8,8 @@ HP = health points: {0}/{1};
 CHARGE = charge: {0}/{1};
 
 CURRENT_MEELE_WEAPON = weapon: {0};
+
+PAUSED = Game Paused;
 
 #-------swords-------;
 

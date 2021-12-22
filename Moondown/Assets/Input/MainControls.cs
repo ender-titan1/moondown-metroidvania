@@ -71,6 +71,15 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause and exit UI"",
+                    ""type"": ""Button"",
+                    ""id"": ""104aca5d-7766-4359-9ebf-13a181ebea2c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -161,6 +170,17 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                     ""action"": ""Open Inventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""88b3733e-0f2d-4d45-9a96-4d8b1f632160"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""Pause and exit UI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -181,15 +201,6 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                     ""name"": ""Right Click"",
                     ""type"": ""Button"",
                     ""id"": ""420490b9-8fc3-40ca-993c-ba474863ad44"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Pause and exit UI"",
-                    ""type"": ""Button"",
-                    ""id"": ""3eb90010-9655-4a43-84af-07111e562e0b"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -216,17 +227,6 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
                     ""action"": ""Right Click"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""268a8f50-c88f-413e-8c6e-99047786a5a4"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""Pause and exit UI"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -259,11 +259,11 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_OpenInventory = m_Player.FindAction("Open Inventory", throwIfNotFound: true);
+        m_Player_PauseandexitUI = m_Player.FindAction("Pause and exit UI", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Click = m_UI.FindAction("Click", throwIfNotFound: true);
         m_UI_RightClick = m_UI.FindAction("Right Click", throwIfNotFound: true);
-        m_UI_PauseandexitUI = m_UI.FindAction("Pause and exit UI", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -328,6 +328,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_OpenInventory;
+    private readonly InputAction m_Player_PauseandexitUI;
     public struct PlayerActions
     {
         private @MainControls m_Wrapper;
@@ -337,6 +338,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @OpenInventory => m_Wrapper.m_Player_OpenInventory;
+        public InputAction @PauseandexitUI => m_Wrapper.m_Player_PauseandexitUI;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -361,6 +363,9 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 @OpenInventory.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenInventory;
                 @OpenInventory.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenInventory;
                 @OpenInventory.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenInventory;
+                @PauseandexitUI.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseandexitUI;
+                @PauseandexitUI.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseandexitUI;
+                @PauseandexitUI.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseandexitUI;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -380,6 +385,9 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 @OpenInventory.started += instance.OnOpenInventory;
                 @OpenInventory.performed += instance.OnOpenInventory;
                 @OpenInventory.canceled += instance.OnOpenInventory;
+                @PauseandexitUI.started += instance.OnPauseandexitUI;
+                @PauseandexitUI.performed += instance.OnPauseandexitUI;
+                @PauseandexitUI.canceled += instance.OnPauseandexitUI;
             }
         }
     }
@@ -390,14 +398,12 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
     private IUIActions m_UIActionsCallbackInterface;
     private readonly InputAction m_UI_Click;
     private readonly InputAction m_UI_RightClick;
-    private readonly InputAction m_UI_PauseandexitUI;
     public struct UIActions
     {
         private @MainControls m_Wrapper;
         public UIActions(@MainControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Click => m_Wrapper.m_UI_Click;
         public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
-        public InputAction @PauseandexitUI => m_Wrapper.m_UI_PauseandexitUI;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -413,9 +419,6 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 @RightClick.started -= m_Wrapper.m_UIActionsCallbackInterface.OnRightClick;
                 @RightClick.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnRightClick;
                 @RightClick.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnRightClick;
-                @PauseandexitUI.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPauseandexitUI;
-                @PauseandexitUI.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPauseandexitUI;
-                @PauseandexitUI.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPauseandexitUI;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -426,9 +429,6 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 @RightClick.started += instance.OnRightClick;
                 @RightClick.performed += instance.OnRightClick;
                 @RightClick.canceled += instance.OnRightClick;
-                @PauseandexitUI.started += instance.OnPauseandexitUI;
-                @PauseandexitUI.performed += instance.OnPauseandexitUI;
-                @PauseandexitUI.canceled += instance.OnPauseandexitUI;
             }
         }
     }
@@ -449,11 +449,11 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnOpenInventory(InputAction.CallbackContext context);
+        void OnPauseandexitUI(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
         void OnClick(InputAction.CallbackContext context);
         void OnRightClick(InputAction.CallbackContext context);
-        void OnPauseandexitUI(InputAction.CallbackContext context);
     }
 }

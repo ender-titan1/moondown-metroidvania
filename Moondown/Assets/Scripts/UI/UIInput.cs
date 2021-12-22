@@ -28,13 +28,18 @@ namespace Moondown.UI
     {
         private MainControls controls;
 
+        [Header("Inventory")]
         [SerializeField] private GameObject[] slots;
         [SerializeField] private GameObject[] quickBarSlots;
         [SerializeField] private GameObject equipedWeaponSlot;
         [SerializeField] private Sprite baseSlotSprite;
         [SerializeField] private GameObject UI;
 
+        [Header("Pause Menu")]
+        [SerializeField] private GameObject pauseUI;
+
         private bool isInInventory;
+        private bool isInPasue;
 
         private void Awake()
         {
@@ -45,7 +50,30 @@ namespace Moondown.UI
 
             controls.Player.Interact.performed += _ => Interact();
             controls.Player.OpenInventory.performed += _ => OpenInventoryUI();
+            controls.Player.PauseandexitUI.performed += _ => PauseOrExitUI();
+
             controls.Enable();
+        }
+
+        void PauseOrExitUI()
+        {
+            if (isInInventory)
+            {
+                UI.SetActive(false);
+                isInInventory = false;
+            }
+            else if (isInPasue)
+            {
+                pauseUI.SetActive(false);
+                Time.timeScale = 1;
+                isInPasue = false;
+            }
+            else
+            {
+                pauseUI.SetActive(true);
+                Time.timeScale = 0;
+                isInPasue = true;
+            }
         }
 
         void Interact()

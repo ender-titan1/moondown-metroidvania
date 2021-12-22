@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Pause and exit UI",
+                    "type": "Button",
+                    "id": "104aca5d-7766-4359-9ebf-13a181ebea2c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -139,6 +148,17 @@
                     "action": "Open Inventory",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "88b3733e-0f2d-4d45-9a96-4d8b1f632160",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "Pause and exit UI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -159,15 +179,6 @@
                     "name": "Right Click",
                     "type": "Button",
                     "id": "420490b9-8fc3-40ca-993c-ba474863ad44",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Pause and exit UI",
-                    "type": "Button",
-                    "id": "3eb90010-9655-4a43-84af-07111e562e0b",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -194,17 +205,6 @@
                     "processors": "",
                     "groups": "Keyboard & Mouse",
                     "action": "Right Click",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "268a8f50-c88f-413e-8c6e-99047786a5a4",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard & Mouse",
-                    "action": "Pause and exit UI",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
