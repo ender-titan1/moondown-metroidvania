@@ -29,7 +29,8 @@ namespace Moondown.Inventory
         public static EquipmentManager Instance { get; private set; }
 
         public LayerMask mask;
-        private MeeleAttack MeeleAttack { get; set; }
+
+        private MeeleAttack meeleAttack;
 
         public string MeeleWeaponName { get; private set; }
         public Weapon EquipedWeapon { get; private set; }
@@ -101,7 +102,18 @@ namespace Moondown.Inventory
             CreateMeeleAttack();
         }
 
-        private void CreateMeeleAttack() => MeeleAttack = new MeeleAttack(gameObject.GetComponent<BoxCollider2D>(), gameObject.transform, mask);
+        private void CreateMeeleAttack()
+        {
+            meeleAttack = new MeeleAttack(gameObject.GetComponent<BoxCollider2D>(), gameObject.transform, mask);
+        }
+
+        public void ReactivateWeapon()
+        {
+            Debug.Log("reactivating");
+            Invoke(nameof(Reactivate), 1);
+        }
+
+        private void Reactivate() => meeleAttack.CanAttack = true;
 
         public void UnequipWeapon() { MeeleWeaponName = null; EquipedWeapon = null; }
     }

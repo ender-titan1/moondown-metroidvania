@@ -185,6 +185,15 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause and exit UI"",
+                    ""type"": ""Button"",
+                    ""id"": ""3eb90010-9655-4a43-84af-07111e562e0b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -207,6 +216,17 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
                     ""action"": ""Right Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""268a8f50-c88f-413e-8c6e-99047786a5a4"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""Pause and exit UI"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -243,6 +263,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Click = m_UI.FindAction("Click", throwIfNotFound: true);
         m_UI_RightClick = m_UI.FindAction("Right Click", throwIfNotFound: true);
+        m_UI_PauseandexitUI = m_UI.FindAction("Pause and exit UI", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -369,12 +390,14 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
     private IUIActions m_UIActionsCallbackInterface;
     private readonly InputAction m_UI_Click;
     private readonly InputAction m_UI_RightClick;
+    private readonly InputAction m_UI_PauseandexitUI;
     public struct UIActions
     {
         private @MainControls m_Wrapper;
         public UIActions(@MainControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Click => m_Wrapper.m_UI_Click;
         public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
+        public InputAction @PauseandexitUI => m_Wrapper.m_UI_PauseandexitUI;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -390,6 +413,9 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 @RightClick.started -= m_Wrapper.m_UIActionsCallbackInterface.OnRightClick;
                 @RightClick.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnRightClick;
                 @RightClick.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnRightClick;
+                @PauseandexitUI.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPauseandexitUI;
+                @PauseandexitUI.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPauseandexitUI;
+                @PauseandexitUI.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPauseandexitUI;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -400,6 +426,9 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 @RightClick.started += instance.OnRightClick;
                 @RightClick.performed += instance.OnRightClick;
                 @RightClick.canceled += instance.OnRightClick;
+                @PauseandexitUI.started += instance.OnPauseandexitUI;
+                @PauseandexitUI.performed += instance.OnPauseandexitUI;
+                @PauseandexitUI.canceled += instance.OnPauseandexitUI;
             }
         }
     }
@@ -425,5 +454,6 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
     {
         void OnClick(InputAction.CallbackContext context);
         void OnRightClick(InputAction.CallbackContext context);
+        void OnPauseandexitUI(InputAction.CallbackContext context);
     }
 }

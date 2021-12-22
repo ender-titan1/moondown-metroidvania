@@ -33,6 +33,8 @@ namespace Moondown.WeaponSystem.Attacks
         private readonly Transform transform;
         private readonly LayerMask mask;
 
+        public bool CanAttack { get; set; } = true;
+
         public MeeleAttack(BoxCollider2D collider, Transform transform, LayerMask mask)
         {
             controls = new MainControls();
@@ -47,6 +49,12 @@ namespace Moondown.WeaponSystem.Attacks
 
         private void Attack()
         {
+            if (!CanAttack)
+                return;
+
+            Debug.Log("reactivating from MeeleAttack");
+            EquipmentManager.Instance.ReactivateWeapon();
+
             RaycastHit2D[] hits = Physics2D.BoxCastAll(
                 new Vector2(
                     transform.position.x + EquipmentManager.Instance.EquipedWeapon.Range * (int)PlayerMovement.Instance.facing,
@@ -78,8 +86,8 @@ namespace Moondown.WeaponSystem.Attacks
                 }
             }
 
+            CanAttack = false;
         }
-
 
     }
 }
