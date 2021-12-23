@@ -77,7 +77,7 @@ namespace Moondown.Player
 
             if (respawn != null)
             {
-                if (respawn.mode == RespawnLocation.RespawnMode.HIT)
+                if (respawn.mode == RespawnLocation.RespawnMode.HAZARD)
                     Player.Instance.LocalRespawn = respawn;
                 else
                 {
