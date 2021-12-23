@@ -9,7 +9,7 @@ namespace Moondown.Player.Modules {
         {
             base.setup();
             Player.Instance.OnApplyLowHealth += () => OnApplyLowHealth();
-            Player.Instance.OnClearVigette += () => OnClearVigette();
+            Player.Instance.OnClearVignette += () => OnClearVigette();
         }
 
         public abstract void OnApplyLowHealth();

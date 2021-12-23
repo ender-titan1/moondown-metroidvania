@@ -45,7 +45,7 @@ namespace Moondown.Player
         public event BlankDelegate OnRespawn;
 
         public event BlankDelegate OnApplyLowHealth;
-        public event BlankDelegate OnClearVigette;
+        public event BlankDelegate OnClearVignette;
 
         public RespawnLocation LocalRespawn { get; set; }
         public RespawnLocation DeathRespawn { get; set; }
@@ -142,7 +142,7 @@ namespace Moondown.Player
                     if (health == 1)
                         OnApplyLowHealth();
                     else
-                        OnClearVigette();
+                        OnClearVignette();
                 }
             }
 
