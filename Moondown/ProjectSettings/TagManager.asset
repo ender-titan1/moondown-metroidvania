@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Inventory
+  - hp bar
+  - charge bar
   layers:
   - Default
   - TransparentFX

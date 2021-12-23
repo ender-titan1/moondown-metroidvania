@@ -23,6 +23,7 @@ using Moondown.Inventory;
 using Moondown.Player.Modules;
 using Moondown.Environment;
 using Moondown.UI.Localization;
+using Moondown.UI;
 
 namespace Moondown.Player
 {
@@ -44,10 +45,10 @@ namespace Moondown.Player
         public RespawnLocation LocalRespawn { get; set; }
         public RespawnLocation DeathRespawn { get; set; }
 
-        public int Health { get; set; }
-        public int MaxHealth { get; set; } = 10;
+        public int health;
+        public int MaxHealth { get; set; } = 5;
 
-        public int Charge { get; set; }
+        public int charge;
         public int MaxCharge { get; set; } = 3;
 
         public List<AbstractModule> modules = new List<AbstractModule> { };
@@ -62,6 +63,8 @@ namespace Moondown.Player
 
         private void Start()
         {
+            DisplayHUD.Init(GameObject.FindGameObjectWithTag("hp bar"), GameObject.FindGameObjectWithTag("charge bar"));
+
             modules.Add(new BasePlayerModule());
 
             #region weapon
@@ -133,8 +136,11 @@ namespace Moondown.Player
                 gameObject.transform.position = LocalRespawn.position;
             }
 
-            if (Health <= 0)
+            if (health <= 0)
                 Die();
+
+            DisplayHUD.UpdateCharge(charge);
+            DisplayHUD.UpdateHealth(health);
 
         }
 

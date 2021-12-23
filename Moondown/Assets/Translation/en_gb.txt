@@ -3,10 +3,6 @@
 
 #-------hud-------;
 
-HP = health points: {0}/{1};
-
-CHARGE = charge: {0}/{1};
-
 CURRENT_MEELE_WEAPON = weapon: {0};
 
 PAUSED = Game Paused;

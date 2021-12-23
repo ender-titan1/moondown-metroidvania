@@ -41,9 +41,9 @@ namespace Moondown.Environment
 
         public void Activate()
         {
-            if (Player.Instance.Charge >= cost)
+            if (Player.Instance.charge >= cost)
             {
-                Player.Instance.Charge -= cost;
+                Player.Instance.charge -= cost;
                 Player.Instance.DeathRespawn = this;
             }
         }
