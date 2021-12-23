@@ -33,14 +33,19 @@ namespace Moondown.Player
         // singelton
         public static Player Instance { get; private set; }
 
-        public delegate void ActionDelegate(int amount);
+        public delegate void ActionDelegate<T>(T amount);
         public delegate void BlankDelegate();
 
-        public event ActionDelegate OnDamageTaken;
-        public event ActionDelegate OnHeal;
-        public event ActionDelegate OnCharge;
+        public event ActionDelegate<int> OnDamageTaken;
+        public event ActionDelegate<int> OnHeal;
+
+        public event ActionDelegate<int> OnCharge;
+
         public event BlankDelegate OnDeath;
         public event BlankDelegate OnRespawn;
+
+        public event BlankDelegate OnApplyLowHealth;
+        public event BlankDelegate OnClearVigette;
 
         public RespawnLocation LocalRespawn { get; set; }
         public RespawnLocation DeathRespawn { get; set; }
@@ -54,6 +59,9 @@ namespace Moondown.Player
         public List<AbstractModule> modules = new List<AbstractModule> { };
 
         [SerializeField] private Sprite baseSprite;
+
+        [SerializeField] private GameObject LowHealthPP;
+        public GameObject LowHealthPostProcessing => LowHealthPP;
 
         private void Awake()
         {
@@ -128,7 +136,14 @@ namespace Moondown.Player
                 if (modifiers.health > 0)
                     OnHeal(modifiers.health);
                 else
+                {
                     OnDamageTaken(modifiers.health);
+
+                    if (health == 1)
+                        OnApplyLowHealth();
+                    else
+                        OnClearVigette();
+                }
             }
 
             if (modifiers.hasBeenHit)

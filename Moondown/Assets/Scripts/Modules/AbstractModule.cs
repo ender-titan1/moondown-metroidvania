@@ -24,7 +24,7 @@ namespace Moondown.Player.Modules
 {
     public abstract class AbstractModule
     {
-        public void setup()
+        public virtual void setup()
         {
             Player.Instance.OnCharge += amount => OnCharge(amount);
             Player.Instance.OnHeal += amount => OnHeal(amount);

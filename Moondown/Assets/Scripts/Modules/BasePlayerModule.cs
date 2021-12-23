@@ -20,7 +20,7 @@ using UnityEngine;
 
 namespace Moondown.Player.Modules
 {
-    public class BasePlayerModule : AbstractModule
+    public class BasePlayerModule : GraphicsModule
     {
         public BasePlayerModule() => setup();
 
@@ -48,6 +48,16 @@ namespace Moondown.Player.Modules
         public override void OnDeath()
         {
             Player.Instance.gameObject.transform.position = Player.Instance.DeathRespawn.position;
+        }
+
+        public override void OnApplyLowHealth()
+        {
+            Player.Instance.LowHealthPostProcessing.SetActive(true);
+        }
+
+        public override void OnClearVigette()
+        {
+            Player.Instance.LowHealthPostProcessing.SetActive(false);
         }
     }
 }
