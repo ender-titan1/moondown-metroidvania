@@ -80,5 +80,15 @@ namespace Moondown.Utility
 
         public static bool Has<T>(this GameObject gameObject) where T : Component => gameObject.GetComponent<T>() != null;
         public static bool Has<T>(this Component component) where T : Component => component.GetComponent<T>() != null;
+
+        public static int ToAxis(this float @float, int previous)
+        {
+            if (@float > 0)
+                return 1;
+            else if (@float < 0)
+                return -1;
+            else
+                return previous;
+        }
     }
 }

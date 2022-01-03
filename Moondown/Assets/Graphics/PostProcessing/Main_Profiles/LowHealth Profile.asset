@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5485954d14dfb9a4c8ead8edb0ded5b1, type: 3}
   m_Name: LiftGammaGain
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   m_AdvancedMode: 0
   lift:
-    m_OverrideState: 1
-    m_Value: {x: 1, y: 0.6855647, z: 0.67634106, w: 0.011350648}
+    m_OverrideState: 0
+    m_Value: {x: 1, y: 0.9951727, z: 0.9951722, w: -0.0340523}
   gamma:
     m_OverrideState: 1
-    m_Value: {x: 0.94494575, y: 0.9652471, z: 1, w: -0.011350737}
+    m_Value: {x: 0.98068565, y: 1, z: 0.99999994, w: -0.14755957}
   gain:
-    m_OverrideState: 0
-    m_Value: {x: 1, y: 0.014614904, z: 0, w: 0}
+    m_OverrideState: 1
+    m_Value: {x: 0.98062074, y: 0.9420027, z: 1, w: -0.27241772}
 --- !u!114 &-2873213171546059264
 MonoBehaviour:
   m_ObjectHideFlags: 3

@@ -87,7 +87,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                     ""id"": ""fce4a817-8612-4e04-b93e-9052326cfa77"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""MultiTap"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -96,7 +96,16 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                     ""id"": ""7d189297-76d6-4459-bf7e-48eecbf0b4d9"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""MultiTap"",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash For Controller"",
+                    ""type"": ""Button"",
+                    ""id"": ""7c86b272-a81c-48c6-8bcb-818b215364a8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 }
             ],
@@ -125,11 +134,33 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""1941e348-10fd-46cb-9386-4e2aa3e0d2f6"",
+                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XBox controller"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""460ce0a9-e353-4030-9ccb-dbba737a81fe"",
                     ""path"": ""<Keyboard>/x"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""Attack Meele"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""05a75c23-a653-4e02-9322-4e0b6b41beb0"",
+                    ""path"": ""<XInputController>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XBox controller"",
                     ""action"": ""Attack Meele"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -169,11 +200,33 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""bb9cfe20-4652-4c13-84e4-b1da8404b280"",
+                    ""path"": ""<Gamepad>/leftStick/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XBox controller"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""db9cd67f-4072-407b-907c-61403b5b7c7c"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b5fc22d9-03b9-477f-bb73-0dfdfca56b02"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XBox controller"",
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -191,6 +244,17 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""a3b79775-6ed3-4fb7-9b6a-15dfc4987c42"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XBox controller"",
+                    ""action"": ""Open Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""88b3733e-0f2d-4d45-9a96-4d8b1f632160"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
@@ -202,9 +266,31 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""ccd3077f-15cc-43f5-9240-58d0e2566d04"",
+                    ""path"": ""<XInputController>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XBox controller;Keyboard & Mouse"",
+                    ""action"": ""Pause and exit UI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""18195db0-a9df-4c17-88da-870a32346035"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": ""MultiTap"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""Dash Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""4299cb3a-0a3d-4f15-b669-57cda459557a"",
                     ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
+                    ""interactions"": ""MultiTap"",
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
                     ""action"": ""Dash Right"",
@@ -213,12 +299,12 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""18195db0-a9df-4c17-88da-870a32346035"",
-                    ""path"": ""<Keyboard>/a"",
+                    ""id"": ""dddcec65-4407-4b36-883d-0b758e45eef2"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""Dash Left"",
+                    ""groups"": ""XBox controller"",
+                    ""action"": ""Dash For Controller"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -289,6 +375,17 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                     ""isOR"": false
                 }
             ]
+        },
+        {
+            ""name"": ""XBox controller"",
+            ""bindingGroup"": ""XBox controller"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<XInputController>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
         }
     ]
 }");
@@ -302,6 +399,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         m_Player_PauseandexitUI = m_Player.FindAction("Pause and exit UI", throwIfNotFound: true);
         m_Player_DashLeft = m_Player.FindAction("Dash Left", throwIfNotFound: true);
         m_Player_DashRight = m_Player.FindAction("Dash Right", throwIfNotFound: true);
+        m_Player_DashForController = m_Player.FindAction("Dash For Controller", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Click = m_UI.FindAction("Click", throwIfNotFound: true);
@@ -373,6 +471,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_PauseandexitUI;
     private readonly InputAction m_Player_DashLeft;
     private readonly InputAction m_Player_DashRight;
+    private readonly InputAction m_Player_DashForController;
     public struct PlayerActions
     {
         private @MainControls m_Wrapper;
@@ -385,6 +484,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         public InputAction @PauseandexitUI => m_Wrapper.m_Player_PauseandexitUI;
         public InputAction @DashLeft => m_Wrapper.m_Player_DashLeft;
         public InputAction @DashRight => m_Wrapper.m_Player_DashRight;
+        public InputAction @DashForController => m_Wrapper.m_Player_DashForController;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -418,6 +518,9 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 @DashRight.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashRight;
                 @DashRight.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashRight;
                 @DashRight.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashRight;
+                @DashForController.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashForController;
+                @DashForController.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashForController;
+                @DashForController.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashForController;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -446,6 +549,9 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 @DashRight.started += instance.OnDashRight;
                 @DashRight.performed += instance.OnDashRight;
                 @DashRight.canceled += instance.OnDashRight;
+                @DashForController.started += instance.OnDashForController;
+                @DashForController.performed += instance.OnDashForController;
+                @DashForController.canceled += instance.OnDashForController;
             }
         }
     }
@@ -500,6 +606,15 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_KeyboardMouseSchemeIndex];
         }
     }
+    private int m_XBoxcontrollerSchemeIndex = -1;
+    public InputControlScheme XBoxcontrollerScheme
+    {
+        get
+        {
+            if (m_XBoxcontrollerSchemeIndex == -1) m_XBoxcontrollerSchemeIndex = asset.FindControlSchemeIndex("XBox controller");
+            return asset.controlSchemes[m_XBoxcontrollerSchemeIndex];
+        }
+    }
     public interface IPlayerActions
     {
         void OnJump(InputAction.CallbackContext context);
@@ -510,6 +625,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         void OnPauseandexitUI(InputAction.CallbackContext context);
         void OnDashLeft(InputAction.CallbackContext context);
         void OnDashRight(InputAction.CallbackContext context);
+        void OnDashForController(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

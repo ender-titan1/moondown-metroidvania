@@ -18,6 +18,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Moondown.Utility;
+using System;
 
 namespace Moondown.Player.Movement
 {
@@ -47,7 +49,7 @@ namespace Moondown.Player.Movement
         private float playerSpeed;
 
         private bool isMovementPressed;
-        private float movementAxis;
+        private int movementAxis;
 
         private PhysicsMaterial2D groundMaterial;
         #endregion
@@ -77,9 +79,12 @@ namespace Moondown.Player.Movement
             rigidBody = gameObject.GetComponent<Rigidbody2D>();
 
             controls.Player.Jump.performed += _ => Jump();
+
             controls.Player.DashRight.performed += _ => Dash(1);
             controls.Player.DashLeft.performed += _ =>  Dash(-1);
-            controls.Player.Movement.performed += ctx => { isMovementPressed = true; movementAxis = ctx.ReadValue<float>(); };
+            controls.Player.DashForController.performed += _ => GamepadDash();
+
+            controls.Player.Movement.performed += ctx => { isMovementPressed = true; movementAxis = ctx.ReadValue<float>().ToAxis(movementAxis == 0 ? 1 : movementAxis); };
             controls.Player.Movement.canceled += _ => { isMovementPressed = false; MoveCancelled(); };
 
         }
@@ -94,8 +99,14 @@ namespace Moondown.Player.Movement
                 Move(movementAxis);
 
             // dashing
-            if (isDashing && gameObject.transform.position.y < playerYPos)
-              gameObject.transform.position = new Vector2(gameObject.transform.position.x, playerYPos);
+            if (isDashing)
+            {
+                if (gameObject.transform.position.y != playerYPos)
+                    gameObject.transform.position = new Vector2(gameObject.transform.position.x, playerYPos);
+            }
+
+            if (grounded)
+                canDash = true;
         }
 
         private void OnEnable() => controls.Enable();
@@ -130,11 +141,12 @@ namespace Moondown.Player.Movement
                 return;
 
             canDash = false;
-            facing = (Facing)direction;
             playerYPos = gameObject.transform.position.y;
             isDashing = true;
 
             rigidBody.AddForce(new Vector2(dashVelocity * (int)facing * 600, 0f));
+            controls.Disable();
+            facing = (Facing)direction;
 
             Invoke(nameof(CancelDash), dashDuration);
             Invoke(nameof(RefreshDash), dashCooldown);
@@ -143,12 +155,23 @@ namespace Moondown.Player.Movement
         void CancelDash()
         {
             rigidBody.velocity = Vector2.zero;
+            controls.Enable();
+
             isDashing = false;
         }
 
         void RefreshDash()
         {
-            canDash = true;
+            if (grounded)
+                canDash = true;
+        }
+
+        void GamepadDash()
+        {
+            if (facing == Facing.LEFT)
+                Dash(-1);
+            else
+                Dash(1);
         }
 
         #endregion
