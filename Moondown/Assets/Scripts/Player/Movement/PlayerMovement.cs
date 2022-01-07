@@ -164,7 +164,6 @@ namespace Moondown.Player.Movement
         void WallJump(Facing direction)
         {
             rigidBody.velocity = new Vector2(0, wallJumpVelocity);
-            facing = direction.Reverse();
         }
 
         #region Dash
@@ -243,7 +242,7 @@ namespace Moondown.Player.Movement
             Vector2 pos = new Vector2(transform.position.x, transform.position.y);
             
             RaycastHit2D[] hits = Physics2D.BoxCastAll(
-                pos - new Vector2(0.15f * (int)direction, 0),
+                pos - new Vector2(0.2f * (int)direction, 0),
                 collider.size,
                 0,
                 direction == Facing.LEFT ? Vector2.left : Vector2.right,
