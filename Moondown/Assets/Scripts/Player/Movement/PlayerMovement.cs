@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Moondown.Utility;
 using System;
+using System.Linq;
 
 namespace Moondown.Player.Movement
 {
@@ -35,13 +36,20 @@ namespace Moondown.Player.Movement
         public Facing facing;
 
         #region Jumping 
+        [Header("Jump & Wall Jump")]
+
         [SerializeField]
         private float jumpVelocity;
+
+        [SerializeField]
+        private float wallJumpVelocity;
 
         private bool grounded;
         #endregion
 
-        #region Walking
+        #region Movement
+        [Header("Movement")]
+
         [SerializeField]
         private LayerMask mask;
         
@@ -55,11 +63,13 @@ namespace Moondown.Player.Movement
         #endregion
 
         #region Dashing
+
         private bool canDash = true;
         private bool isDashing;
 
         private float playerYPos;
 
+        [Header("Dashing")]
         [SerializeField]
         private float dashVelocity;
         [SerializeField]
@@ -84,8 +94,17 @@ namespace Moondown.Player.Movement
             controls.Player.DashLeft.performed += _ =>  Dash(-1);
             controls.Player.DashForController.performed += _ => GamepadDash();
 
-            controls.Player.Movement.performed += ctx => { isMovementPressed = true; movementAxis = ctx.ReadValue<float>().ToAxis(movementAxis == 0 ? 1 : movementAxis); };
-            controls.Player.Movement.canceled += _ => { isMovementPressed = false; MoveCancelled(); };
+            controls.Player.Movement.performed += ctx => 
+            { 
+                isMovementPressed = true;
+                movementAxis = ctx.ReadValue<float>().ToAxis(movementAxis == 0 ? 1 : movementAxis); 
+            };
+
+            controls.Player.Movement.canceled += _ => 
+            { 
+                isMovementPressed = false; 
+                MoveCancelled(); 
+            };
 
         }
 
@@ -117,7 +136,14 @@ namespace Moondown.Player.Movement
         void Jump()
         {
             if (grounded)
+            {
                 rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y + jumpVelocity);
+                return;
+            }
+
+            bool wallJump = CanWallJump(facing);
+            if (wallJump)
+                WallJump(facing);
         }
 
         void Move(float direction)
@@ -134,6 +160,14 @@ namespace Moondown.Player.Movement
         {
             rigidBody.velocity = new Vector2(0f, rigidBody.velocity.y);
         }
+
+        void WallJump(Facing direction)
+        {
+            rigidBody.velocity = new Vector2(0, wallJumpVelocity);
+            facing = direction.Reverse();
+        }
+
+        #region Dash
 
         void Dash(float direction)
         {
@@ -176,6 +210,8 @@ namespace Moondown.Player.Movement
 
         #endregion
 
+        #endregion
+
         bool IsGrounded()
         {
             BoxCollider2D collider = gameObject.GetComponent<BoxCollider2D>();
@@ -188,12 +224,40 @@ namespace Moondown.Player.Movement
                 if (item.transform.CompareTag("Player"))
                     continue;
 
-                float angle = Mathf.Atan2(item.normal.x, item.normal.y) * (180 / Mathf.PI);
-                float fixedangle = Mathf.Abs(angle);
+                float fixedangle = Mathf.Abs(Mathf.Atan2(item.normal.x, item.normal.y) * (180 / Mathf.PI));
 
                 if (fixedangle < MAX_ANGLE)
                 {
                     groundMaterial = item.collider.sharedMaterial;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        bool CanWallJump(Facing direction)
+        {
+            BoxCollider2D collider = gameObject.GetComponent<BoxCollider2D>();
+
+            Vector2 pos = new Vector2(transform.position.x, transform.position.y);
+            
+            RaycastHit2D[] hits = Physics2D.BoxCastAll(
+                pos - new Vector2(0.15f * (int)direction, 0),
+                collider.size,
+                0,
+                direction == Facing.LEFT ? Vector2.left : Vector2.right,
+                collider.size.y,
+                mask
+            );
+
+            foreach (RaycastHit2D hit in hits)
+            {
+                if (hit.collider.CompareTag("Player"))
+                    continue;
+
+                if (hit.collider.CompareTag("can wall jump"))
+                {
                     return true;
                 }
             }

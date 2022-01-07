@@ -14,6 +14,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using Moondown.Player.Movement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -90,5 +91,7 @@ namespace Moondown.Utility
             else
                 return previous;
         }
+
+        public static Facing Reverse(this Facing facing) => (Facing)((int)facing * -1);
     }
 }
