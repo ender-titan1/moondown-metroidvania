@@ -31,8 +31,10 @@ namespace Moondown.Player.Modules
             Player.Instance.OnDamageTaken += amount => OnDamageTaken(amount);
             Player.Instance.OnRespawn += () => OnRespawn();
             Player.Instance.OnDeath += () => OnDeath();
+            Player.Instance.OnHazardRespawn += () => OnHazardRespawn();
         }
 
+        public abstract void OnHazardRespawn();
         public abstract void OnDamageTaken(int amount);
         public abstract void OnHeal(int amount);
         public abstract void OnCharge(int amount);

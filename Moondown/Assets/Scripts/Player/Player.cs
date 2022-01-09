@@ -24,6 +24,7 @@ using Moondown.Player.Modules;
 using Moondown.Environment;
 using Moondown.UI.Localization;
 using Moondown.UI;
+using System;
 
 namespace Moondown.Player
 {
@@ -33,16 +34,16 @@ namespace Moondown.Player
         // singelton
         public static Player Instance { get; private set; }
 
-        public delegate void ActionDelegate<T>(T amount);
         public delegate void BlankDelegate();
 
-        public event ActionDelegate<int> OnDamageTaken;
-        public event ActionDelegate<int> OnHeal;
+        public event Action<int> OnDamageTaken;
+        public event Action<int> OnHeal;
 
-        public event ActionDelegate<int> OnCharge;
+        public event Action<int> OnCharge;
 
         public event BlankDelegate OnDeath;
         public event BlankDelegate OnRespawn;
+        public event BlankDelegate OnHazardRespawn;
 
         public event BlankDelegate OnApplyLowHealth;
         public event BlankDelegate OnClearVignette;
@@ -148,6 +149,7 @@ namespace Moondown.Player
 
             if (modifiers.hasBeenHit)
             {
+                OnHazardRespawn();
                 gameObject.transform.position = LocalRespawn.position;
             }
 

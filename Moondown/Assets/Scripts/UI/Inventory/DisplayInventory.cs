@@ -24,8 +24,7 @@ using UnityEngine.UI;
 
 namespace Moondown.UI.Inventory
 {
-
-    public class InventoryDisplay
+    public class DisplayInventory
     {
         enum LastViewed
         {
@@ -35,7 +34,7 @@ namespace Moondown.UI.Inventory
             GENERAL
         }
 
-        public static InventoryDisplay Instance { get; private set; } = new InventoryDisplay();
+        public static DisplayInventory Instance { get; private set; } = new DisplayInventory();
 
         private LastViewed lastViewed = LastViewed.MEELE_WEAPON;
 

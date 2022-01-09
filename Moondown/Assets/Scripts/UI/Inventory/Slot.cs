@@ -39,7 +39,7 @@ namespace Moondown.UI.Inventory
 
             if (item.Type == ItemType.MEELE_WEAPON)
             {
-                GameObject s = InventoryDisplay.Instance.equipedWeaponSlot;
+                GameObject s = DisplayInventory.Instance.equipedWeaponSlot;
 
                 if (s == gameObject)
                 {
@@ -52,7 +52,7 @@ namespace Moondown.UI.Inventory
                     EquipmentManager.Instance.UnequipWeapon();
 
                     weapon.SlotNumber = EquipmentManager.Instance.NextFreeSlot;
-                    InventoryDisplay.Instance.Load();
+                    DisplayInventory.Instance.Load();
 
                     return;
                 }
@@ -60,7 +60,7 @@ namespace Moondown.UI.Inventory
                 Texture2D texture = item.Image.texture;
                 IInventoryItem selectedItem = item;
 
-                Slot[] slots = (from GameObject slot in InventoryDisplay.Instance.allSlots
+                Slot[] slots = (from GameObject slot in DisplayInventory.Instance.allSlots
                                 where slot.GetComponent<Slot>().item == item
                                 select slot.GetComponent<Slot>()
                                ).ToArray();
@@ -86,7 +86,7 @@ namespace Moondown.UI.Inventory
         {
             if (eventData.button == PointerEventData.InputButton.Right)
             {
-                OnClick(InventoryDisplay.Instance.baseSlotTexture);
+                OnClick(DisplayInventory.Instance.baseSlotTexture);
             }
         }
     }

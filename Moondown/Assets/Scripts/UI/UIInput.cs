@@ -43,8 +43,8 @@ namespace Moondown.UI
 
         private void Awake()
         {
-            InventoryDisplay.Instance.slots = slots;
-            InventoryDisplay.Instance.quickSelectSlots = quickBarSlots;
+            DisplayInventory.Instance.slots = slots;
+            DisplayInventory.Instance.quickSelectSlots = quickBarSlots;
 
             controls = new MainControls();
 
@@ -85,7 +85,7 @@ namespace Moondown.UI
         {
             if (!isInInventory)
             {
-                InventoryDisplay.Instance.Load(slots, quickBarSlots, baseSlotSprite, UI, equipedWeaponSlot);
+                DisplayInventory.Instance.Load(slots, quickBarSlots, baseSlotSprite, UI, equipedWeaponSlot);
                 isInInventory = true;
             }
             else

@@ -52,9 +52,9 @@ namespace Moondown.Inventory
                 }
 
 
-                for (int i = 0; i < InventoryDisplay.Instance.slots.Length; i++)
+                for (int i = 0; i < DisplayInventory.Instance.slots.Length; i++)
                 {
-                    GameObject slot = InventoryDisplay.Instance.slots[i];
+                    GameObject slot = DisplayInventory.Instance.slots[i];
 
 
                     if (slot.GetComponent<Slot>().item == null)
@@ -65,7 +65,7 @@ namespace Moondown.Inventory
             }
         }
 
-        public int InvSize => InventoryDisplay.Instance.slots.Length;
+        public int InvSize => DisplayInventory.Instance.slots.Length;
 
         public List<IInventoryItem> Inventory { get; set; } = new List<IInventoryItem> { };
 

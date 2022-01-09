@@ -17,6 +17,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Moondown.Environment.Effects;
+using static Moondown.Environment.Effects.LightingManager;
+using System.Threading.Tasks;
 
 namespace Moondown.Player.Modules
 {
@@ -55,9 +58,17 @@ namespace Moondown.Player.Modules
             Player.Instance.LowHealthPostProcessing.SetActive(true);
         }
 
-        public override void OnClearVigette()
+        public override void OnClearEffects()
         {
             Player.Instance.LowHealthPostProcessing.SetActive(false);
+        }
+
+        public override void OnHazardRespawn()
+        {
+            LightingManager lighting = GameObject.FindGameObjectWithTag("manager effects").GetComponent<LightingManager>();
+            LightingModes target = (LightingModes.BACKGROUND | LightingModes.GROUND);
+
+            lighting.SetIntensity(target, 0);
         }
     }
 }

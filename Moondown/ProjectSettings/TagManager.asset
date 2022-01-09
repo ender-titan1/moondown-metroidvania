@@ -8,6 +8,10 @@ TagManager:
   - hp bar
   - charge bar
   - can wall jump
+  - global light bg
+  - global light player
+  - global light ground
+  - manager effects
   layers:
   - Default
   - TransparentFX
