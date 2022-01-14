@@ -45,6 +45,7 @@ namespace Moondown.Player.Movement
         private float wallJumpVelocity;
 
         private bool grounded;
+        private bool isJumping;
         #endregion
 
         #region Movement
@@ -89,6 +90,14 @@ namespace Moondown.Player.Movement
             rigidBody = gameObject.GetComponent<Rigidbody2D>();
 
             controls.Player.Jump.performed += _ => Jump();
+            controls.Player.Jump.canceled += ctx =>
+            {
+                if (isJumping && ctx.control.path == "<XInputController>/buttonSouth")
+                {
+                    isJumping = false;
+                    rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
+                }
+            };
 
             controls.Player.DashRight.performed += _ => Dash(1);
             controls.Player.DashLeft.performed += _ =>  Dash(-1);
@@ -137,13 +146,20 @@ namespace Moondown.Player.Movement
         {
             if (grounded)
             {
+                isJumping = true;
                 rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y + jumpVelocity);
+                Invoke(nameof(CancelJump), 1);
                 return;
             }
 
             bool wallJump = CanWallJump(facing);
             if (wallJump)
                 WallJump(facing);
+        }
+
+        void CancelJump()
+        {
+            isJumping = true;
         }
 
         void Move(float direction)
