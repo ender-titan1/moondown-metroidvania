@@ -48,7 +48,7 @@ namespace Moondown.Environment.Effects
             return @out.ToArray();
         }
 
-        // TODO: Make it gradual
+        
         public void SetIntensity(LightingModes mode, float value)
         {
             float val = Mathf.Clamp(value, 0, 1);

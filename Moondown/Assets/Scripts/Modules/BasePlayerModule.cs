@@ -63,12 +63,13 @@ namespace Moondown.Player.Modules
             Player.Instance.LowHealthPostProcessing.SetActive(false);
         }
 
-        public override void OnHazardRespawn()
+        public override async void OnHazardRespawn(GameObject @object)
         {
-            LightingManager lighting = GameObject.FindGameObjectWithTag("manager effects").GetComponent<LightingManager>();
-            LightingModes target = (LightingModes.BACKGROUND | LightingModes.GROUND);
-
-            lighting.SetIntensity(target, 0);
+            await Player.Instance.AnimateHazardFade();
+            @object.transform.position = Player.Instance.LocalRespawn.position;
+            Camera.main.transform.position = @object.transform.position;
+            await Player.Instance.AnimateReverse();
         }
+
     }
 }

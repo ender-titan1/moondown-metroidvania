@@ -25,6 +25,8 @@ using Moondown.Environment;
 using Moondown.UI.Localization;
 using Moondown.UI;
 using System;
+using System.Threading.Tasks;
+using Moondown.Player.Movement;
 
 namespace Moondown.Player
 {
@@ -43,7 +45,7 @@ namespace Moondown.Player
 
         public event BlankDelegate OnDeath;
         public event BlankDelegate OnRespawn;
-        public event BlankDelegate OnHazardRespawn;
+        public event Action<GameObject> OnHazardRespawn;
 
         public event BlankDelegate OnApplyLowHealth;
         public event BlankDelegate OnClearVignette;
@@ -62,6 +64,9 @@ namespace Moondown.Player
         [SerializeField] private Sprite baseSprite;
 
         [SerializeField] private GameObject LowHealthPP;
+
+        [SerializeField] private Material shaderMaterial;
+
         public GameObject LowHealthPostProcessing => LowHealthPP;
 
         private void Awake()
@@ -124,7 +129,7 @@ namespace Moondown.Player
             OnRespawn();
         }
 
-        private void Update()
+        private async void Update()
         {
             EnvironmentInteraction.Modifiers modifiers = EnvironmentInteraction.Instance.CheckCollisions();
 
@@ -149,8 +154,7 @@ namespace Moondown.Player
 
             if (modifiers.hasBeenHit)
             {
-                OnHazardRespawn();
-                gameObject.transform.position = LocalRespawn.position;
+                OnHazardRespawn(gameObject);
             }
 
             if (health <= 0)
@@ -165,6 +169,40 @@ namespace Moondown.Player
         {
             OnDeath();
             OnRespawn();
+        }
+
+        public async Task AnimateHazardFade()
+        {
+            PlayerMovement.Instance.controls.Disable();
+            await Animate();
+            
+            Task delay = Task.Delay(2000);
+
+            await delay;
+            PlayerMovement.Instance.controls.Enable();
+
+        }
+
+        public async Task AnimateReverse()
+        {
+            float i = 1;
+            while (i > 0)
+            {
+                shaderMaterial.SetFloat("_FadeValue", i);
+                await Task.Delay(10);
+                i -= 0.01f;
+            }
+        }
+
+        private async Task Animate()
+        {
+            float i = 0;
+            while (i < 1)
+            {
+                shaderMaterial.SetFloat("_FadeValue", i);
+                await Task.Delay(10);
+                i += 0.01f;
+            }
         }
     }
 }

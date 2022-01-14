@@ -31,7 +31,7 @@ namespace Moondown.Player.Movement
 
         private const float MAX_ANGLE = 45f;
 
-        private MainControls controls;
+        public MainControls controls;
         private Rigidbody2D rigidBody;
         public Facing facing;
 
