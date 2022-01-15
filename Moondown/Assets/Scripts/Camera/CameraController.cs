@@ -28,7 +28,6 @@ namespace Moondown.Graphics {
         [SerializeField] private Vector3 pos;
         [SerializeField] private float speed;
 
-
         private void Update()
         {
             cam = Camera.main;
