@@ -45,7 +45,7 @@ namespace Moondown.Utility
         /// </remarks>
         /// <param name="sprites">The sprites that will be merged</param>
         /// <returns>The merged Sprite</returns>
-        public static Sprite MergeSprites(this Sprite[] sprites)
+        public static Sprite MergeSprites(this Sprite main, params Sprite[] overlay)
         {
             Resources.UnloadUnusedAssets();
             Texture2D newTexture = new Texture2D(320, 320);

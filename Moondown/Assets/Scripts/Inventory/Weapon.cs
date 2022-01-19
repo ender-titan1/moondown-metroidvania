@@ -48,7 +48,7 @@ namespace Moondown.WeaponSystem
             string spritePath = @"Assets/Graphics/Sprites/" + spriteName + ".png";
             this.Image = (Sprite)AssetDatabase.LoadAssetAtPath(spritePath, typeof(Sprite));
 
-            this.ImageWithSlot = sprite = sprite1.MergeSprites(sprite2)
+            this.ImageWithSlot = baseSprite.MergeSprites(Image)
 
             this.SlotNumber = slotNumber;
         }
