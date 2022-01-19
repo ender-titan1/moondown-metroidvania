@@ -41,7 +41,7 @@ namespace Moondown.Inventory
             string spritePath = @"Assets/Graphics/Sprites/" + spriteName + ".png";
             this.Image = (Sprite)AssetDatabase.LoadAssetAtPath(spritePath, typeof(Sprite));
 
-            this.ImageWithSlot = new Sprite[] { baseSprite, Image }.MergeSprites();
+             this.ImageWithSlot = baseSprite.MergeSprites(Image);
 
             this.SlotNumber = slotNumber;
         }
