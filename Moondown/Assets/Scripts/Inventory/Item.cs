@@ -31,17 +31,21 @@ namespace Moondown.Inventory
         public Sprite Image { get; set; }
         public Sprite ImageWithSlot { get; set; }
 
-        public Item(string name, string desc, string spriteName, ItemType type, Sprite baseSprite, int slotNumber)
+        public Item(string name, string desc, string spriteName, ItemType type, int slotNumber)
         {
             this.Name = name;
             this.Description = desc;
 
             this.Type = type;
 
-            string spritePath = @"Assets/Graphics/Sprites/" + spriteName + ".png";
-            this.Image = (Sprite)AssetDatabase.LoadAssetAtPath(spritePath, typeof(Sprite));
+            string spritePath = @"Graphics/Sprites/" + spriteName;
+            this.Image = Resources.Load(spritePath) as Sprite;
 
-             this.ImageWithSlot = baseSprite.MergeSprites(Image);
+            Debug.Log(Image.name);
+
+            Sprite baseSprite = Resources.Load<Sprite>(@"Graphics/Sprites/UI/Inventory/Slot");
+
+            this.ImageWithSlot = baseSprite.MergeSprites(Image);
 
             this.SlotNumber = slotNumber;
         }

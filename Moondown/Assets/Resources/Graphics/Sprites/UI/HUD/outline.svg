@@ -1,0 +1,4 @@
+<svg witdh="300px" height="100px">
+    <polyline points="300,0 250,100" style="fill:none;stroke:white;stroke-width:1;"/>
+    <polyline points="250,100 220,100" style="fill:none;stroke:white;stroke-width:1.5;"/>
+</svg>

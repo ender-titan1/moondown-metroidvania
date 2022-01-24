@@ -14,6 +14,9 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+//#define DEVELOPMENT
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,8 +24,9 @@ using UnityEditor;
 using System.Linq;
 using System.IO;
 
+
 namespace Moondown.UI.Localization
-{
+{ 
 
     public class LocalizationManager : MonoBehaviour
     {
@@ -31,6 +35,8 @@ namespace Moondown.UI.Localization
         [SerializeField]
         private TextAsset[] visibleTranslations;
 
+
+#if DEVELOPMENT
         [MenuItem("Moondown Tools/Refresh Translations")]
         public static void RefreshTranslations()
         {
@@ -65,6 +71,7 @@ namespace Moondown.UI.Localization
 
 
         }
+#endif
 
         private void Awake() => translations = visibleTranslations;
 

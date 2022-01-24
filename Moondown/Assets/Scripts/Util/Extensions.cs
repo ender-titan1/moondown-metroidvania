@@ -15,6 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using Moondown.Player.Movement;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,10 +44,19 @@ namespace Moondown.Utility
         /// <remarks>
         /// Not very preformant, should be only used during loading assets.
         /// </remarks>
-        /// <param name="sprites">The sprites that will be merged</param>
+        /// <param name="main">The base sprite</param>
+        /// <param name="overlay">The sprites to be merged</param>
         /// <returns>The merged Sprite</returns>
         public static Sprite MergeSprites(this Sprite main, params Sprite[] overlay)
         {
+            Sprite[] sprites = new Sprite[overlay.Length + 1];
+            sprites[0] = main;
+
+            for (int i = 0; i < overlay.Length; i++)
+            {
+                sprites[i + 1] = overlay[i];
+            }
+
             Resources.UnloadUnusedAssets();
             Texture2D newTexture = new Texture2D(320, 320);
 
@@ -93,5 +103,17 @@ namespace Moondown.Utility
         }
 
         public static Facing Reverse(this Facing facing) => (Facing)((int)facing * -1);
+
+        public static string Display<T>(this T[] arr)
+        {
+            string @out = "";
+
+            foreach (T element in arr)
+            {
+                @out += element.ToString() + ", ";
+            }
+
+            return @out;
+        }
     }
 }

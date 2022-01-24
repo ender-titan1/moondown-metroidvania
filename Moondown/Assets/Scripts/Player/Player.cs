@@ -90,7 +90,6 @@ namespace Moondown.Player
                 0.3f,
                 AttackMode.NORMAL,
                 ItemType.MEELE_WEAPON,
-                baseSprite,
                 EquipmentManager.Instance.NextFreeSlot
             );
 
@@ -102,7 +101,6 @@ namespace Moondown.Player
                 LocalizationManager.Get("MISC_DESC"),
                 "UI/Inventory/PlaceholderItem",
                 ItemType.ITEM,
-                baseSprite,
                 EquipmentManager.Instance.NextFreeSlot
             );
 
@@ -117,7 +115,6 @@ namespace Moondown.Player
                 0.2f,
                 AttackMode.DASH,
                 ItemType.MEELE_WEAPON,
-                baseSprite,
                 EquipmentManager.Instance.NextFreeSlot
             );
 

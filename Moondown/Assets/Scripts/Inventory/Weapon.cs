@@ -36,7 +36,7 @@ namespace Moondown.WeaponSystem
         public int Damage { get; set; }
         public AttackMode Mode { get; set; }
 
-        public Weapon(string name, string desc, string spriteName, int dmg, float range, AttackMode mode, ItemType type, Sprite baseSprite, int slotNumber)
+        public Weapon(string name, string desc, string spriteName, int dmg, float range, AttackMode mode, ItemType type, int slotNumber)
         {
             this.Name = name;
             this.Description = desc;
@@ -45,8 +45,11 @@ namespace Moondown.WeaponSystem
             this.Type = type;
             this.Range = range;
 
-            string spritePath = @"Assets/Graphics/Sprites/" + spriteName + ".png";
-            this.Image = (Sprite)AssetDatabase.LoadAssetAtPath(spritePath, typeof(Sprite));
+            string spritePath = @"Graphics/Sprites/" + spriteName;
+            this.Image = Resources.Load(spritePath) as Sprite;
+
+
+            Sprite baseSprite = Resources.Load<Sprite>(@"Graphics/Sprites/UI/Inventory/Slot");
 
             this.ImageWithSlot = baseSprite.MergeSprites(Image);
 
