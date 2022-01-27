@@ -60,27 +60,27 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Dash Left",
-                    "type": "Button",
-                    "id": "fce4a817-8612-4e04-b93e-9052326cfa77",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Dash Right",
-                    "type": "Button",
-                    "id": "7d189297-76d6-4459-bf7e-48eecbf0b4d9",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Dash For Controller",
+                    "name": "Dash",
                     "type": "Button",
                     "id": "7c86b272-a81c-48c6-8bcb-818b215364a8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Exit UI",
+                    "type": "Button",
+                    "id": "7de28021-ed27-4eb8-838b-cf6710ae8ffd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "91a9bb3c-44dd-4981-a99f-81e2060a9976",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -244,93 +244,45 @@
                 },
                 {
                     "name": "",
-                    "id": "ccd3077f-15cc-43f5-9240-58d0e2566d04",
-                    "path": "<XInputController>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "XBox controller;Keyboard & Mouse",
-                    "action": "Pause and exit UI",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "18195db0-a9df-4c17-88da-870a32346035",
-                    "path": "<Keyboard>/a",
-                    "interactions": "MultiTap",
-                    "processors": "",
-                    "groups": "Keyboard & Mouse",
-                    "action": "Dash Left",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4299cb3a-0a3d-4f15-b669-57cda459557a",
-                    "path": "<Keyboard>/d",
-                    "interactions": "MultiTap",
-                    "processors": "",
-                    "groups": "Keyboard & Mouse",
-                    "action": "Dash Right",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "dddcec65-4407-4b36-883d-0b758e45eef2",
                     "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "XBox controller",
-                    "action": "Dash For Controller",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "UI",
-            "id": "9cf605d6-2d05-4c9e-b06b-06cb6b8dd4b9",
-            "actions": [
-                {
-                    "name": "Click",
-                    "type": "Button",
-                    "id": "199dc9b6-3d4d-4458-b1bb-7744cc94ed47",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Right Click",
-                    "type": "Button",
-                    "id": "420490b9-8fc3-40ca-993c-ba474863ad44",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "b2c80630-cfe8-47fd-9b03-22a5925c9fe6",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Click",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "9035f79f-da44-49ad-aff2-7af701ce83d5",
-                    "path": "<Mouse>/rightButton",
+                    "id": "52e14864-169a-4cf8-b0eb-74aa12a92987",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard & Mouse",
-                    "action": "Right Click",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "749f46b3-927d-4a07-b197-74d036bb2ce6",
+                    "path": "<XInputController>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XBox controller",
+                    "action": "Exit UI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "69993fd7-d110-4c76-93f1-442adde88d0b",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XBox controller",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

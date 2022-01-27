@@ -82,27 +82,27 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Dash Left"",
-                    ""type"": ""Button"",
-                    ""id"": ""fce4a817-8612-4e04-b93e-9052326cfa77"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Dash Right"",
-                    ""type"": ""Button"",
-                    ""id"": ""7d189297-76d6-4459-bf7e-48eecbf0b4d9"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Dash For Controller"",
+                    ""name"": ""Dash"",
                     ""type"": ""Button"",
                     ""id"": ""7c86b272-a81c-48c6-8bcb-818b215364a8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Exit UI"",
+                    ""type"": ""Button"",
+                    ""id"": ""7de28021-ed27-4eb8-838b-cf6710ae8ffd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""91a9bb3c-44dd-4981-a99f-81e2060a9976"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -266,93 +266,45 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ccd3077f-15cc-43f5-9240-58d0e2566d04"",
-                    ""path"": ""<XInputController>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""XBox controller;Keyboard & Mouse"",
-                    ""action"": ""Pause and exit UI"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""18195db0-a9df-4c17-88da-870a32346035"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": ""MultiTap"",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""Dash Left"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4299cb3a-0a3d-4f15-b669-57cda459557a"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": ""MultiTap"",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""Dash Right"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""dddcec65-4407-4b36-883d-0b758e45eef2"",
                     ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""XBox controller"",
-                    ""action"": ""Dash For Controller"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""UI"",
-            ""id"": ""9cf605d6-2d05-4c9e-b06b-06cb6b8dd4b9"",
-            ""actions"": [
-                {
-                    ""name"": ""Click"",
-                    ""type"": ""Button"",
-                    ""id"": ""199dc9b6-3d4d-4458-b1bb-7744cc94ed47"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Right Click"",
-                    ""type"": ""Button"",
-                    ""id"": ""420490b9-8fc3-40ca-993c-ba474863ad44"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""b2c80630-cfe8-47fd-9b03-22a5925c9fe6"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Click"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9035f79f-da44-49ad-aff2-7af701ce83d5"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""id"": ""52e14864-169a-4cf8-b0eb-74aa12a92987"",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""Right Click"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""749f46b3-927d-4a07-b197-74d036bb2ce6"",
+                    ""path"": ""<XInputController>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XBox controller"",
+                    ""action"": ""Exit UI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""69993fd7-d110-4c76-93f1-442adde88d0b"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XBox controller"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -397,13 +349,9 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_OpenInventory = m_Player.FindAction("Open Inventory", throwIfNotFound: true);
         m_Player_PauseandexitUI = m_Player.FindAction("Pause and exit UI", throwIfNotFound: true);
-        m_Player_DashLeft = m_Player.FindAction("Dash Left", throwIfNotFound: true);
-        m_Player_DashRight = m_Player.FindAction("Dash Right", throwIfNotFound: true);
-        m_Player_DashForController = m_Player.FindAction("Dash For Controller", throwIfNotFound: true);
-        // UI
-        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
-        m_UI_Click = m_UI.FindAction("Click", throwIfNotFound: true);
-        m_UI_RightClick = m_UI.FindAction("Right Click", throwIfNotFound: true);
+        m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+        m_Player_ExitUI = m_Player.FindAction("Exit UI", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -469,9 +417,9 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_OpenInventory;
     private readonly InputAction m_Player_PauseandexitUI;
-    private readonly InputAction m_Player_DashLeft;
-    private readonly InputAction m_Player_DashRight;
-    private readonly InputAction m_Player_DashForController;
+    private readonly InputAction m_Player_Dash;
+    private readonly InputAction m_Player_ExitUI;
+    private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
         private @MainControls m_Wrapper;
@@ -482,9 +430,9 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @OpenInventory => m_Wrapper.m_Player_OpenInventory;
         public InputAction @PauseandexitUI => m_Wrapper.m_Player_PauseandexitUI;
-        public InputAction @DashLeft => m_Wrapper.m_Player_DashLeft;
-        public InputAction @DashRight => m_Wrapper.m_Player_DashRight;
-        public InputAction @DashForController => m_Wrapper.m_Player_DashForController;
+        public InputAction @Dash => m_Wrapper.m_Player_Dash;
+        public InputAction @ExitUI => m_Wrapper.m_Player_ExitUI;
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -512,15 +460,15 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 @PauseandexitUI.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseandexitUI;
                 @PauseandexitUI.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseandexitUI;
                 @PauseandexitUI.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseandexitUI;
-                @DashLeft.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashLeft;
-                @DashLeft.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashLeft;
-                @DashLeft.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashLeft;
-                @DashRight.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashRight;
-                @DashRight.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashRight;
-                @DashRight.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashRight;
-                @DashForController.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashForController;
-                @DashForController.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashForController;
-                @DashForController.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashForController;
+                @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @ExitUI.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExitUI;
+                @ExitUI.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExitUI;
+                @ExitUI.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExitUI;
+                @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -543,60 +491,19 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 @PauseandexitUI.started += instance.OnPauseandexitUI;
                 @PauseandexitUI.performed += instance.OnPauseandexitUI;
                 @PauseandexitUI.canceled += instance.OnPauseandexitUI;
-                @DashLeft.started += instance.OnDashLeft;
-                @DashLeft.performed += instance.OnDashLeft;
-                @DashLeft.canceled += instance.OnDashLeft;
-                @DashRight.started += instance.OnDashRight;
-                @DashRight.performed += instance.OnDashRight;
-                @DashRight.canceled += instance.OnDashRight;
-                @DashForController.started += instance.OnDashForController;
-                @DashForController.performed += instance.OnDashForController;
-                @DashForController.canceled += instance.OnDashForController;
+                @Dash.started += instance.OnDash;
+                @Dash.performed += instance.OnDash;
+                @Dash.canceled += instance.OnDash;
+                @ExitUI.started += instance.OnExitUI;
+                @ExitUI.performed += instance.OnExitUI;
+                @ExitUI.canceled += instance.OnExitUI;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
-
-    // UI
-    private readonly InputActionMap m_UI;
-    private IUIActions m_UIActionsCallbackInterface;
-    private readonly InputAction m_UI_Click;
-    private readonly InputAction m_UI_RightClick;
-    public struct UIActions
-    {
-        private @MainControls m_Wrapper;
-        public UIActions(@MainControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Click => m_Wrapper.m_UI_Click;
-        public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
-        public InputActionMap Get() { return m_Wrapper.m_UI; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
-        public void SetCallbacks(IUIActions instance)
-        {
-            if (m_Wrapper.m_UIActionsCallbackInterface != null)
-            {
-                @Click.started -= m_Wrapper.m_UIActionsCallbackInterface.OnClick;
-                @Click.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnClick;
-                @Click.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnClick;
-                @RightClick.started -= m_Wrapper.m_UIActionsCallbackInterface.OnRightClick;
-                @RightClick.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnRightClick;
-                @RightClick.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnRightClick;
-            }
-            m_Wrapper.m_UIActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @Click.started += instance.OnClick;
-                @Click.performed += instance.OnClick;
-                @Click.canceled += instance.OnClick;
-                @RightClick.started += instance.OnRightClick;
-                @RightClick.performed += instance.OnRightClick;
-                @RightClick.canceled += instance.OnRightClick;
-            }
-        }
-    }
-    public UIActions @UI => new UIActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -623,13 +530,8 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnOpenInventory(InputAction.CallbackContext context);
         void OnPauseandexitUI(InputAction.CallbackContext context);
-        void OnDashLeft(InputAction.CallbackContext context);
-        void OnDashRight(InputAction.CallbackContext context);
-        void OnDashForController(InputAction.CallbackContext context);
-    }
-    public interface IUIActions
-    {
-        void OnClick(InputAction.CallbackContext context);
-        void OnRightClick(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
+        void OnExitUI(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

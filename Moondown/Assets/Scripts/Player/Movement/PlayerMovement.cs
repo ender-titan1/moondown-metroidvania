@@ -99,9 +99,7 @@ namespace Moondown.Player.Movement
                 }
             };
 
-            controls.Player.DashRight.performed += _ => Dash(1);
-            controls.Player.DashLeft.performed += _ =>  Dash(-1);
-            controls.Player.DashForController.performed += _ => GamepadDash();
+            controls.Player.Dash.performed += _ => Dash(movementAxis == 0 ? 1 : movementAxis);
 
             controls.Player.Movement.performed += ctx => 
             { 
@@ -213,14 +211,6 @@ namespace Moondown.Player.Movement
         {
             if (grounded)
                 canDash = true;
-        }
-
-        void GamepadDash()
-        {
-            if (facing == Facing.LEFT)
-                Dash(-1);
-            else
-                Dash(1);
         }
 
         #endregion

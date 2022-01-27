@@ -51,6 +51,41 @@ namespace Moondown.UI
             controls.Player.Interact.performed += _ => Interact();
             controls.Player.OpenInventory.performed += _ => OpenInventoryUI();
             controls.Player.PauseandexitUI.performed += _ => PauseOrExitUI();
+            controls.Player.Pause.performed += _ =>
+            {
+                if (isInInventory)
+                {
+                    UI.SetActive(false);
+                    isInInventory = false;
+                }
+
+                if (!isInPasue)
+                {
+                    pauseUI.SetActive(true);
+                    Time.timeScale = 0;
+                    isInPasue = true;
+                }
+                else
+                {
+                    pauseUI.SetActive(false);
+                    Time.timeScale = 1;
+                    isInPasue = false;
+                }
+            };
+            controls.Player.ExitUI.performed += _ =>
+            {
+                if (isInInventory)
+                {
+                    UI.SetActive(false);
+                    isInInventory = false;
+                }
+                else if (isInPasue)
+                {
+                    pauseUI.SetActive(false);
+                    Time.timeScale = 1;
+                    isInPasue = false;
+                }
+            };
 
             controls.Enable();
         }

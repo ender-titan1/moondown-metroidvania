@@ -14,6 +14,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 using Moondown.Utility;
 using System.Collections;
 using System.Collections.Generic;
@@ -38,13 +39,10 @@ namespace Moondown.Inventory
 
             this.Type = type;
 
-            string spritePath = @"Graphics/Sprites/" + spriteName;
-            this.Image = Resources.Load(spritePath) as Sprite;
+            string spritePath = @"Assets/Graphics/Sprites/" + spriteName + ".png";
+            this.Image = AssetDatabase.LoadAssetAtPath<Sprite>(spritePath);
 
-            Debug.Log(Image.name);
-
-            Sprite baseSprite = Resources.Load<Sprite>(@"Graphics/Sprites/UI/Inventory/Slot");
-
+            Sprite baseSprite = AssetDatabase.LoadAssetAtPath<Sprite>(@"Assets/Graphics/Sprites/UI/Inventory/Inventory.png");
             this.ImageWithSlot = baseSprite.MergeSprites(Image);
 
             this.SlotNumber = slotNumber;
