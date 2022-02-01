@@ -27,6 +27,7 @@ using Moondown.UI;
 using System;
 using System.Threading.Tasks;
 using Moondown.Player.Movement;
+using Moondown.Utility;
 
 namespace Moondown.Player
 {
@@ -81,52 +82,15 @@ namespace Moondown.Player
 
             modules.Add(new BasePlayerModule());
 
-            #region weapon
-            Weapon weapon = new Weapon(
-                LocalizationManager.Get("BASIC_SWORD_NAME"),
-                LocalizationManager.Get("BASIC_SWORD_DESC"),
-                "UI/Inventory/Placeholder",
-                1,
-                0.3f,
-                AttackMode.NORMAL,
-                ItemType.MEELE_WEAPON,
-                EquipmentManager.Instance.NextFreeSlot
-            );
-
-            EquipmentManager.Instance.Inventory.Add(weapon);
-            #endregion
-            #region item
-            Item item = new Item(
-                LocalizationManager.Get("MISC_NAME"),
-                LocalizationManager.Get("MISC_DESC"),
-                "UI/Inventory/PlaceholderItem",
-                ItemType.ITEM,
-                EquipmentManager.Instance.NextFreeSlot
-            );
-
-            EquipmentManager.Instance.Inventory.Add(item);
-            #endregion
-            #region otherWeapon
-            Weapon otherWeapon = new Weapon(
-                LocalizationManager.Get("OTHER_SWORD_NAME"),
-                LocalizationManager.Get("OTHER_SWORD_DESC"),
-                "UI/Inventory/other placeholder",
-                2,
-                0.2f,
-                AttackMode.DASH,
-                ItemType.MEELE_WEAPON,
-                EquipmentManager.Instance.NextFreeSlot
-            );
-
-            EquipmentManager.Instance.Inventory.Add(otherWeapon);
-
-            #endregion
-
-            EquipmentManager.Instance.FirstLoading = false;
             OnRespawn();
+
+            for (int i = 0; i < 3; i++)
+            {
+                InventoryManager.Instance.Add(new Item(Resources.Load<ItemData>(@"Inventory/RareItem")));
+            }
         }
 
-        private async void Update()
+        private void Update()
         {
             EnvironmentInteraction.Modifiers modifiers = EnvironmentInteraction.Instance.CheckCollisions();
 

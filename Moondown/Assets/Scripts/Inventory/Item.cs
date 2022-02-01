@@ -15,6 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using Moondown.UI.Localization;
 using Moondown.Utility;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,30 +24,34 @@ using UnityEngine;
 
 namespace Moondown.Inventory
 {
-    public class Item : IInventoryItem
+    public class Item 
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public ItemType Type { get; set; }
-        public int SlotNumber { get; set; }
-        public Sprite Image { get; set; }
-        public Sprite ImageWithSlot { get; set; }
-
-        public Item(string name, string desc, string spriteName, ItemType type, int slotNumber)
+        public enum Rarity
         {
-            this.Name = name;
-            this.Description = desc;
-
-            this.Type = type;
-
-            string spritePath = @"Assets/Graphics/Sprites/" + spriteName + ".png";
-            this.Image = AssetDatabase.LoadAssetAtPath<Sprite>(spritePath);
-
-            Sprite baseSprite = AssetDatabase.LoadAssetAtPath<Sprite>(@"Assets/Graphics/Sprites/UI/Inventory/Inventory.png");
-            this.ImageWithSlot = baseSprite.MergeSprites(Image);
-
-            this.SlotNumber = slotNumber;
+            None = 0,
+            Uncommon = 1,
+            Rare = 2,
+            Uniqe = 3,
+            Special = 4
         }
 
+        [System.Flags]
+        public enum Properties
+        {
+            None = 0,
+            Flamable = 1,
+            Heavy = 2
+        }
+
+        public ItemData data;
+        public string Name { get; protected set; }
+        public string Desc { get; protected set; }
+
+        public Item(ItemData data)
+        {
+            this.data = data;
+            Name = LocalizationManager.Get(data.nameKey);
+            Desc = LocalizationManager.Get(data.descriptionKey);
+        }
     }
 }

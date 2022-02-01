@@ -12,6 +12,7 @@ TagManager:
   - global light player
   - global light ground
   - manager effects
+  - tooltip
   layers:
   - Default
   - TransparentFX

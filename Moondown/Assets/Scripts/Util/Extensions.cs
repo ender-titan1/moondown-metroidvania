@@ -14,6 +14,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using Moondown.Inventory;
 using Moondown.Player.Movement;
 using System;
 using System.Collections;
@@ -24,19 +25,6 @@ namespace Moondown.Utility
 {
     public static class Extensions
     {
-        public static void Overlay(this Sprite sprite, Color color, bool doTransparent)
-        {
-            for (int x = 0; x < sprite.texture.width; x++)
-            {
-                for (int y = 0; y < sprite.texture.height; y++)
-                {
-                    if (doTransparent || sprite.texture.GetPixel(x, y).a != 0)
-                        sprite.texture.SetPixel(x, y, sprite.texture.GetPixel(x, y) + color);
-                }
-            }
-
-            sprite.texture.Apply();
-        }
 
         /// <summary>
         /// A Sprite array extension method that merges two or more sprites
@@ -114,6 +102,57 @@ namespace Moondown.Utility
             }
 
             return @out;
+        }
+
+        public static List<ItemStack> MakeStacks(this List<Item> items)
+        {
+            HashSet<Item> set = new HashSet<Item>();
+            List<string> names = new List<string>();
+
+            foreach (Item item in items)
+            {
+                string name = item.data.nameKey;
+                if (!names.Contains(name))
+                {
+                    names.Add(name);
+                    set.Add(item);
+                }
+            }
+
+
+            Dictionary<Item, int> amounts = new Dictionary<Item, int>();
+
+            foreach (Item i in set)
+            {
+                int count = 0;
+
+                foreach (Item item in items)
+                {
+                    if (item.data.nameKey == i.data.nameKey)
+                        count++;
+                }
+
+                amounts[i] = count;
+            }
+
+
+            List<ItemStack> stacks = new List<ItemStack>();
+
+            foreach (Item item in amounts.Keys)
+            {
+                int amount = amounts[item];
+
+                while (amount >= item.data.stackSize)
+                {
+                    amount -= item.data.stackSize;
+                    stacks.Add(new ItemStack(item, item.data.stackSize));
+                }
+
+                if (amount != 0)
+                    stacks.Add(new ItemStack(item, amount));
+            }
+
+            return stacks;
         }
     }
 }

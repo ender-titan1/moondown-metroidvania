@@ -14,7 +14,6 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-using Moondown.UI.Inventory;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,8 +42,6 @@ namespace Moondown.UI
 
         private void Awake()
         {
-            DisplayInventory.Instance.slots = slots;
-            DisplayInventory.Instance.quickSelectSlots = quickBarSlots;
 
             controls = new MainControls();
 
@@ -120,7 +117,6 @@ namespace Moondown.UI
         {
             if (!isInInventory)
             {
-                DisplayInventory.Instance.Load(slots, quickBarSlots, baseSlotSprite, UI, equipedWeaponSlot);
                 isInInventory = true;
             }
             else
