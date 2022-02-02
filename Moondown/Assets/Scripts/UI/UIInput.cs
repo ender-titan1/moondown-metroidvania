@@ -20,6 +20,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
+using Moondown.UI.Inventory;
+
 namespace Moondown.UI
 {
 
@@ -28,11 +30,8 @@ namespace Moondown.UI
         private MainControls controls;
 
         [Header("Inventory")]
-        [SerializeField] private GameObject[] slots;
-        [SerializeField] private GameObject[] quickBarSlots;
-        [SerializeField] private GameObject equipedWeaponSlot;
-        [SerializeField] private Sprite baseSlotSprite;
         [SerializeField] private GameObject UI;
+        [SerializeField] private GameObject inventoryPostProcessing;
 
         [Header("Pause Menu")]
         [SerializeField] private GameObject pauseUI;
@@ -117,11 +116,17 @@ namespace Moondown.UI
         {
             if (!isInInventory)
             {
+                inventoryPostProcessing.SetActive(true);
+                UI.SetActive(true);
+                UI.GetComponentInChildren<DisplayInventory>().gameObject.SetActive(true);
+
                 isInInventory = true;
             }
             else
             {
+                inventoryPostProcessing.SetActive(false);
                 UI.SetActive(false);
+                UI.GetComponentInChildren<DisplayInventory>().gameObject.SetActive(false);
                 isInInventory = false;
             }
         }

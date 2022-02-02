@@ -1,4 +1,5 @@
 ﻿using Moondown.Inventory;
+using Moondown.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,26 +9,19 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Moondown.UI
+namespace Moondown.UI.Inventory
 {
     public class DisplayInventory : MonoBehaviour
     {
         string filter = "";
         List<GameObject> slots = new List<GameObject>();
 
-        public void Awake()
-        {
-            foreach (Transform slot in transform)
-            {
-                slots.Add(slot.gameObject);
-            }
-        }
-
         public void OnEnable()
         {
-            foreach (Transform slot in transform)
+            foreach (Transform transform in transform)
             {
-                slots.Add(slot.gameObject);
+                if (transform.gameObject.Has<Slot>())
+                    slots.Add(transform.gameObject);
             }
 
             LoadPage(InventoryManager.Instance.Resources);
@@ -65,6 +59,14 @@ namespace Moondown.UI
                 else
                     slot.GetComponentInChildren<TextMeshProUGUI>().text = "";
             }
+        }
+
+        public void OnSearchChange()
+        {
+            filter = gameObject.GetComponentInChildren<TMP_InputField>().text;
+            // reload the page
+            UnloadPage();
+            LoadPage(InventoryManager.Instance.Resources);
         }
     }
 }
