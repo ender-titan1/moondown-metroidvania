@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,8 +14,9 @@ namespace Moondown.UI.Inventory
 {
     public class DisplayInventory : MonoBehaviour
     {
-        string filter = "";
-        List<GameObject> slots = new List<GameObject>();
+        private string filter = "";
+        private readonly List<GameObject> slots = new List<GameObject>();
+        private List<Item> currentPage = InventoryManager.Instance.Resources;
 
         public void OnEnable()
         {
@@ -24,7 +26,7 @@ namespace Moondown.UI.Inventory
                     slots.Add(transform.gameObject);
             }
 
-            LoadPage(InventoryManager.Instance.Resources);
+            LoadPage();
         }
 
         public void OnDisable()
@@ -41,9 +43,9 @@ namespace Moondown.UI.Inventory
             }
         }
 
-        public void LoadPage(List<Item> items)
+        public void LoadPage()
         {
-            var stacks = InventoryManager.Instance.GetInventory(items, filter);
+            var stacks = InventoryManager.Instance.GetInventory(currentPage, filter);
 
             for (int i = 0; i < stacks.ToArray().Length; i++)
             {
@@ -66,7 +68,22 @@ namespace Moondown.UI.Inventory
             filter = gameObject.GetComponentInChildren<TMP_InputField>().text;
             // reload the page
             UnloadPage();
-            LoadPage(InventoryManager.Instance.Resources);
+            LoadPage();
+        }
+
+        public void OnSwitchPage(string name)
+        {
+            PropertyInfo prop = InventoryManager.Instance.GetType().GetProperty(name);
+
+            var page = currentPage;
+            
+            currentPage = (List<Item>)prop.GetValue(InventoryManager.Instance, null);
+
+            if (currentPage != page)
+            {
+                UnloadPage();
+                LoadPage();
+            }
         }
     }
 }

@@ -11,24 +11,33 @@ namespace Moondown.Inventory
     {
         public static InventoryManager Instance { get; set; } = new InventoryManager();
 
-        public List<Item> Resources = new List<Item>();
-        public List<Item> Weapons   = new List<Item>();
-        public List<Item> Armour    = new List<Item>();
-        public List<Item> Tools     = new List<Item>();
-        public List<Item> Modules   = new List<Item>();
+        public List<Item> Resources { get; set; }  = new List<Item>();
+        public List<Item> Weapons   { get; set; }  = new List<Item>();
+        public List<Item> Armour    { get; set; }  = new List<Item>();
+        public List<Item> Tools     { get; set; }  = new List<Item>();
+        public List<Item> Modules   { get; set; }  = new List<Item>();
         
         public void Add(Item item)
         {
-            if (item.data.type == ItemType.MEELE_WEAPON || item.data.type == ItemType.RANGED_WEAPON)
-                Weapons.Add(item);
-            else if (item.data.type == ItemType.TOOL)
-                Tools.Add(item);
-            else if (item.data.type == ItemType.ARMOUR)
-                Armour.Add(item);
-            else if (item.data.type == ItemType.MODULE)
-                Modules.Add(item);
-            else
-                Resources.Add(item);
+            switch (item.data.type)
+            {
+                case ItemType.MEELE_WEAPON:
+                case ItemType.RANGED_WEAPON:
+                    Weapons.Add(item);
+                    break;
+                case ItemType.TOOL:
+                    Tools.Add(item);
+                    break;
+                case ItemType.ARMOUR:
+                    Armour.Add(item);
+                    break;
+                case ItemType.MODULE:
+                    Modules.Add(item);
+                    break;
+                default:
+                    Resources.Add(item);
+                    break;
+            }
         }
 
         public List<ItemStack> GetInventory(List<Item> items, string filter)

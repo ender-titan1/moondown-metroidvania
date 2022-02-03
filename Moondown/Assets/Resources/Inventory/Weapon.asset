@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ebe89529226a8a944b56f2216ae65117, type: 3}
-  m_Name: TestItem
+  m_Name: Weapon
   m_EditorClassIdentifier: 
-  nameKey: TEST_ITEM
-  descriptionKey: TEST_ITEM_DESC
-  image: {fileID: 2800000, guid: 65cd76e748dcecb4ea9da0551c1aa602, type: 3}
-  type: 5
-  stackSize: 10
-  rarity: 1
+  nameKey: WEAPON
+  descriptionKey: WEAPON_DESC
+  image: {fileID: 2800000, guid: 384e90dc75c9e854bac1537a929a8ee0, type: 3}
+  type: 0
+  stackSize: 1
+  rarity: 2

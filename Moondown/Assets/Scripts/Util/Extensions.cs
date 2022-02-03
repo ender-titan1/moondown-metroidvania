@@ -26,59 +26,9 @@ namespace Moondown.Utility
     public static class Extensions
     {
 
-        /// <summary>
-        /// A Sprite array extension method that merges two or more sprites
-        /// </summary>
-        /// <remarks>
-        /// Not very preformant, should be only used during loading assets.
-        /// </remarks>
-        /// <param name="main">The base sprite</param>
-        /// <param name="overlay">The sprites to be merged</param>
-        /// <returns>The merged Sprite</returns>
-        public static Sprite MergeSprites(this Sprite main, params Sprite[] overlay)
-        {
-            Sprite[] sprites = new Sprite[overlay.Length + 1];
-            sprites[0] = main;
-
-            for (int i = 0; i < overlay.Length; i++)
-            {
-                sprites[i + 1] = overlay[i];
-            }
-
-            Resources.UnloadUnusedAssets();
-            Texture2D newTexture = new Texture2D(320, 320);
-
-            for (int y = 0; y < newTexture.height; y++)
-            {
-                for (int x = 0; x < newTexture.width; x++)
-                {
-                    newTexture.SetPixel(x, y, new Color(1, 1, 1, 0));
-                }
-            }
-
-            for (int i = 0; i < sprites.Length; i++)
-            {
-                for (int y = 0; y < newTexture.height; y++)
-                {
-                    for (int x = 0; x < newTexture.width; x++)
-                    {
-                        Color color = sprites[i].texture.GetPixel(x, y).a == 0 ?
-                            newTexture.GetPixel(x, y) :
-                            sprites[i].texture.GetPixel(x, y);
-
-                        newTexture.SetPixel(x, y, color);
-                    }
-                }
-            }
-
-            newTexture.Apply();
-            Sprite finalSprite = Sprite.Create(newTexture, new Rect(0, 0, newTexture.width, newTexture.height), new Vector2(0.5f, 0.5f));
-            finalSprite.name = "Inevntory slot";
-            return finalSprite;
-        }
-
         public static bool Has<T>(this GameObject gameObject) where T : Component => gameObject.GetComponent<T>() != null;
         public static bool Has<T>(this Component component) where T : Component => component.GetComponent<T>() != null;
+        public static bool ChildHas<T>(this GameObject gameObject) where T : Component => gameObject.GetComponentInChildren<T>() != null;
 
         public static int ToAxis(this float @float, int previous)
         {

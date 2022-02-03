@@ -47,9 +47,9 @@ namespace Moondown.Inventory
         public string Name { get; protected set; }
         public string Desc { get; protected set; }
 
-        public Item(ItemData data)
+        public Item(string name)
         {
-            this.data = data;
+            this.data = Resources.Load<ItemData>(@"Inventory\" + name);
             Name = LocalizationManager.Get(data.nameKey);
             Desc = LocalizationManager.Get(data.descriptionKey);
         }

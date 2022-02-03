@@ -5,8 +5,5 @@ PAUSED = Game Paused;
 
 ####################;
 
-TEST_ITEM = Test item;
-TEST_ITEM_DESC = Test item;
-
-RARE_ITEM = Rare item;
-RARE_ITEM_DESC = Rare item;
+WEAPON = Weapon;
+WEAPON_DESC = Weapon;

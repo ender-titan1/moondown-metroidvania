@@ -8,7 +8,7 @@ namespace Moondown.Inventory
 {
     public class Weapon : Item
     {
-        public Weapon(ItemData d) : base(d)
+        public Weapon(string n) : base(n)
         {
 
         }

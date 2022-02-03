@@ -118,15 +118,12 @@ namespace Moondown.UI
             {
                 inventoryPostProcessing.SetActive(true);
                 UI.SetActive(true);
-                UI.GetComponentInChildren<DisplayInventory>().gameObject.SetActive(true);
-
                 isInInventory = true;
             }
             else
             {
                 inventoryPostProcessing.SetActive(false);
                 UI.SetActive(false);
-                UI.GetComponentInChildren<DisplayInventory>().gameObject.SetActive(false);
                 isInInventory = false;
             }
         }

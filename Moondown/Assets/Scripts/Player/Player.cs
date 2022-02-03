@@ -84,10 +84,7 @@ namespace Moondown.Player
 
             OnRespawn();
 
-            for (int i = 0; i < 3; i++)
-            {
-                InventoryManager.Instance.Add(new Item(Resources.Load<ItemData>(@"Inventory/RareItem")));
-            }
+            InventoryManager.Instance.Add(new Item("Weapon"));
         }
 
         private void Update()
