@@ -23,6 +23,7 @@ using UnityEngine.UI;
 using UnityEditor;
 using System.Linq;
 using System.IO;
+using TMPro;
 
 
 namespace Moondown.UI.Localization
@@ -41,7 +42,7 @@ namespace Moondown.UI.Localization
         public static void RefreshTranslations()
         {
 
-            Text[] toCheck = GetText().ToArray();
+            TextMeshProUGUI[] toCheck = GetText().ToArray();
 
 
             Dictionary<string, Dictionary<string, string>> locales = GetLocales();
@@ -53,7 +54,7 @@ namespace Moondown.UI.Localization
                 string path = Application.dataPath + @"/Translation/" + name + @".txt";
 
 
-                foreach (Text text in toCheck)
+                foreach (TextMeshProUGUI text in toCheck)
                 {
                     if (!locale.ContainsKey(text.text))
                     {
@@ -82,14 +83,14 @@ namespace Moondown.UI.Localization
             Dictionary<string, Dictionary<string, string>> locales = GetLocales();
 
             // get all relevant text objects
-            List<Text> toTranslate = GetText();
+            List<TextMeshProUGUI> toTranslate = GetText();
 
             // get current locale
             Dictionary<string, string> currentLocale = locales["en_gb"];
 
 
             // translate
-            foreach (Text text in toTranslate)
+            foreach (TextMeshProUGUI text in toTranslate)
             {
 
                 if (currentLocale.ContainsKey(text.text))
@@ -138,23 +139,23 @@ namespace Moondown.UI.Localization
             return locales;
         }
 
-        private static List<Text> GetText()
+        private static List<TextMeshProUGUI> GetText()
         {
-            List<Text> toTranslate = new List<Text> { };
+            List<TextMeshProUGUI> toTranslate = new List<TextMeshProUGUI> { };
             foreach (Transform @object in GameObject.Find("Canvas").transform)
                 GetChildren(@object.gameObject, ref toTranslate);
             return toTranslate;
         }
 
-        private static void GetChildren(GameObject parent, ref List<Text> toTranslate)
+        private static void GetChildren(GameObject parent, ref List<TextMeshProUGUI> toTranslate)
         {
-            if (parent.GetComponent<Text>() != null)
-                toTranslate.Add(parent.GetComponent<Text>());
+            if (parent.GetComponent<TextMeshProUGUI>() != null)
+                toTranslate.Add(parent.GetComponent<TextMeshProUGUI>());
 
             foreach (Transform child in parent.transform)
             {
-                if (child.GetComponent<Text>() != null)
-                    toTranslate.Add(child.GetComponent<Text>());
+                if (child.GetComponent<TextMeshProUGUI>() != null)
+                    toTranslate.Add(child.GetComponent<TextMeshProUGUI>());
                 GetChildren(child.gameObject, ref toTranslate);
             }
         }

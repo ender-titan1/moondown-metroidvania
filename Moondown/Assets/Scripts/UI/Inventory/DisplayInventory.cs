@@ -45,6 +45,7 @@ namespace Moondown.UI.Inventory
 
         public void LoadPage()
         {
+
             var stacks = InventoryManager.Instance.GetInventory(currentPage, filter);
 
             for (int i = 0; i < stacks.ToArray().Length; i++)

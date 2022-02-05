@@ -68,11 +68,14 @@ namespace Moondown.UI
                     isInPasue = false;
                 }
             };
+
             controls.Player.ExitUI.performed += _ =>
             {
                 if (isInInventory)
                 {
                     UI.SetActive(false);
+                    inventoryPostProcessing.SetActive(false);
+                    DisplayHUD.Toggle();
                     isInInventory = false;
                 }
                 else if (isInPasue)
@@ -91,6 +94,8 @@ namespace Moondown.UI
             if (isInInventory)
             {
                 UI.SetActive(false);
+                inventoryPostProcessing.SetActive(false);
+                DisplayHUD.Toggle();
                 isInInventory = false;
             }
             else if (isInPasue)
@@ -118,12 +123,14 @@ namespace Moondown.UI
             {
                 inventoryPostProcessing.SetActive(true);
                 UI.SetActive(true);
+                DisplayHUD.Toggle();
                 isInInventory = true;
             }
             else
             {
                 inventoryPostProcessing.SetActive(false);
                 UI.SetActive(false);
+                DisplayHUD.Toggle();
                 isInInventory = false;
             }
         }

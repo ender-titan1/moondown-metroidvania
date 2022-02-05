@@ -222,7 +222,7 @@ namespace Moondown.Player.Movement
             BoxCollider2D collider = gameObject.GetComponent<BoxCollider2D>();
 
             Vector2 pos = new Vector2(transform.position.x, transform.position.y);
-            RaycastHit2D[] hits = Physics2D.BoxCastAll(pos - new Vector2(0, 0.05f), collider.size, 0, Vector2.down, collider.size.y, mask);
+            RaycastHit2D[] hits = Physics2D.BoxCastAll(pos - new Vector2(0, 0.001f), collider.size, 0, Vector2.down, collider.size.y, mask);
 
             foreach (RaycastHit2D item in hits)
             {

@@ -7,3 +7,14 @@ PAUSED = Game Paused;
 
 WEAPON = Weapon;
 WEAPON_DESC = Weapon;
+
+####################;
+
+WEAPONS = WEAPONS;
+RESOURCES = RESOURCES;
+TOOLS = TOOLS;
+MODULES = MODULES;
+ARMOUR = ARMOUR;
+SPECIAL = SPECIAL;
+
+####################;

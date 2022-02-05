@@ -27,6 +27,7 @@ namespace Moondown.UI
     {
         private static GameObject[] healthBar;
         private static GameObject[] chargeBar;
+        private static bool isEnabled = true;
 
         public static void Init(GameObject health, GameObject charge)
         {
@@ -64,6 +65,15 @@ namespace Moondown.UI
                 else
                     chargeBar[i].GetComponent<RawImage>().color = new Color(0, 0, 1, 0.2705882f);
             }
+        }
+
+        public static void Toggle()
+        {
+            isEnabled = !isEnabled;
+            foreach (GameObject @object in healthBar)
+                @object.SetActive(isEnabled);
+            foreach (GameObject @object in chargeBar)
+                @object.SetActive(isEnabled);
         }
     }
 }
