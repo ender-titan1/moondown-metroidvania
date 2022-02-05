@@ -1755,6 +1755,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visibleTranslations:
   - {fileID: 4900000, guid: 975601afd75667d4ab13f0c6b9743323, type: 3}
+  - {fileID: 4900000, guid: 605400d60922b084297b59a946277fa7, type: 3}
 --- !u!4 &299618935
 Transform:
   m_ObjectHideFlags: 0
@@ -4692,7 +4693,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Search Items...
+  m_text: SEARCH_ITEMS
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

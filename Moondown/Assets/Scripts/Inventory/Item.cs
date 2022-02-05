@@ -53,5 +53,11 @@ namespace Moondown.Inventory
             Name = LocalizationManager.Get(data.nameKey);
             Desc = LocalizationManager.Get(data.descriptionKey);
         }
+
+        public void RefreshName()
+        {
+            Name = LocalizationManager.Get(data.nameKey);
+            Desc = LocalizationManager.Get(data.descriptionKey);
+        }
     }
 }

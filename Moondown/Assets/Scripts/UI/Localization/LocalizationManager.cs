@@ -24,7 +24,7 @@ using UnityEditor;
 using System.Linq;
 using System.IO;
 using TMPro;
-
+using Moondown.Inventory;
 
 namespace Moondown.UI.Localization
 { 
@@ -35,6 +35,8 @@ namespace Moondown.UI.Localization
 
         [SerializeField]
         private TextAsset[] visibleTranslations;
+
+        public static string CurrentLocale { get; set; } = "en_gb";
 
 
 #if DEVELOPMENT
@@ -78,6 +80,17 @@ namespace Moondown.UI.Localization
 
         private void Start() => Translate();
 
+        public void ChangeLocale(string name)
+        {
+            CurrentLocale = name;
+            Translate();
+
+            foreach (Item item in InventoryManager.Instance.All)
+            {
+                item.RefreshName();
+            }
+        }
+
         private void Translate()
         {
             Dictionary<string, Dictionary<string, string>> locales = GetLocales();
@@ -86,7 +99,7 @@ namespace Moondown.UI.Localization
             List<TextMeshProUGUI> toTranslate = GetText();
 
             // get current locale
-            Dictionary<string, string> currentLocale = locales["en_gb"];
+            Dictionary<string, string> currentLocale = locales[CurrentLocale];
 
 
             // translate
@@ -160,7 +173,7 @@ namespace Moondown.UI.Localization
             }
         }
 
-        public static string Get(string key) => GetLocales()["en_gb"][key];
+        public static string Get(string key) => GetLocales()[CurrentLocale][key];
 
     }
 }

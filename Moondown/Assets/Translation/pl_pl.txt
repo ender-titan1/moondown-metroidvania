@@ -1,0 +1,19 @@
+﻿PAUSED = Pausa;
+
+####################;
+
+WEAPON = Broń;
+WEAPON_DESC = Broń;
+
+####################;
+
+WEAPONS = BRONIE;
+RESOURCES = ZASOBY;
+TOOLS = NARZĘDZIA;
+MODULES = MODUŁY;
+ARMOUR = ZBROJE;
+SPECIAL = SPECJALNE;
+
+SEARCH_ITEMS = Szukaj...;
+
+####################;

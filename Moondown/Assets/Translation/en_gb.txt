@@ -17,4 +17,6 @@ MODULES = MODULES;
 ARMOUR = ARMOUR;
 SPECIAL = SPECIAL;
 
+SEARCH_ITEMS = Search items...;
+
 ####################;

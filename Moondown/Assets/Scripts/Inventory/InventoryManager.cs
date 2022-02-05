@@ -17,6 +17,20 @@ namespace Moondown.Inventory
         public List<Item> Tools     { get; set; }  = new List<Item>();
         public List<Item> Modules   { get; set; }  = new List<Item>();
         
+        public List<Item> All
+        {
+            get
+            {
+                List<Item> items = new List<Item>();
+                items.AddRange(Resources);
+                items.AddRange(Weapons);
+                items.AddRange(Armour);
+                items.AddRange(Tools);
+                items.AddRange(Modules);
+                return items;
+            }
+        }
+
         public void Add(Item item)
         {
             switch (item.data.type)
