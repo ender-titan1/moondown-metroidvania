@@ -245,7 +245,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a3b79775-6ed3-4fb7-9b6a-15dfc4987c42"",
-                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""path"": ""<Gamepad>/select"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""XBox controller"",
