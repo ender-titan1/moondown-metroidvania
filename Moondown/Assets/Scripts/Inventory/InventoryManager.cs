@@ -31,26 +31,29 @@ namespace Moondown.Inventory
             }
         }
 
-        public void Add(Item item)
+        public void Add(Item item, int amount = 1)
         {
-            switch (item.data.type)
+            for (int i = 0; i < amount; i++)
             {
-                case ItemType.MEELE_WEAPON:
-                case ItemType.RANGED_WEAPON:
-                    Weapons.Add(item);
-                    break;
-                case ItemType.TOOL:
-                    Tools.Add(item);
-                    break;
-                case ItemType.ARMOUR:
-                    Armour.Add(item);
-                    break;
-                case ItemType.MODULE:
-                    Modules.Add(item);
-                    break;
-                default:
-                    Resources.Add(item);
-                    break;
+                switch (item.data.type)
+                {
+                    case ItemType.MEELE_WEAPON:
+                    case ItemType.RANGED_WEAPON:
+                        Weapons.Add(item);
+                        break;
+                    case ItemType.TOOL:
+                        Tools.Add(item);
+                        break;
+                    case ItemType.ARMOUR:
+                        Armour.Add(item);
+                        break;
+                    case ItemType.MODULE:
+                        Modules.Add(item);
+                        break;
+                    default:
+                        Resources.Add(item);
+                        break;
+                }
             }
         }
 

@@ -8,6 +8,12 @@ PAUSED = Game Paused;
 WEAPON = Weapon;
 WEAPON_DESC = Weapon;
 
+SCRAP = Scrap;
+SCRAP_DESC = Scrap;
+
+RARE = Rare item;
+RARE_DESC = Rare item;
+
 ####################;
 
 WEAPONS = WEAPONS;

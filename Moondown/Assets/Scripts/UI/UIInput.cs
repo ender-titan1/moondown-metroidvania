@@ -27,6 +27,8 @@ namespace Moondown.UI
 
     public class UIInput : MonoBehaviour
     {
+        public static UIInput Instance { get; private set; }
+
         private MainControls controls;
 
         [Header("Inventory")]
@@ -36,11 +38,15 @@ namespace Moondown.UI
         [Header("Pause Menu")]
         [SerializeField] private GameObject pauseUI;
 
-        private bool isInInventory;
+        public bool isInInventory;
         private bool isInPasue;
 
         private void Awake()
         {
+            if (Instance == null)
+                Instance  = this;
+            else
+                Destroy(gameObject);
 
             controls = new MainControls();
 

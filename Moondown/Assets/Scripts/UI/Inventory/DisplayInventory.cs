@@ -14,7 +14,7 @@ namespace Moondown.UI.Inventory
 {
     public class DisplayInventory : MonoBehaviour
     {
-        private string filter = "";
+        private string   filter = "";
         private readonly List<GameObject> slots = new List<GameObject>();
         private List<Item> currentPage = InventoryManager.Instance.Resources;
 
@@ -85,6 +85,17 @@ namespace Moondown.UI.Inventory
                 UnloadPage();
                 LoadPage();
             }
+        }
+
+        public void OnButtonEnter(Animator animator)
+        {
+            animator.enabled = true;
+            animator.SetBool("Mouse off", false);
+        }
+
+        public void OnButtonExit(Animator animator)
+        {
+            animator.SetBool("Mouse off", true);
         }
     }
 }

@@ -21,6 +21,7 @@ using UnityEngine;
 using Moondown.Utility;
 using System;
 using System.Linq;
+using Moondown.UI;
 
 namespace Moondown.Player.Movement
 {
@@ -121,7 +122,7 @@ namespace Moondown.Player.Movement
             grounded = IsGrounded();
 
             // moving
-            if (isMovementPressed)
+            if (isMovementPressed && !UIInput.Instance.isInInventory)
                 Move(movementAxis);
 
             // dashing
@@ -142,7 +143,7 @@ namespace Moondown.Player.Movement
 
         void Jump()
         {
-            if (grounded)
+            if (grounded && !UIInput.Instance.isInInventory)
             {
                 isJumping = true;
                 rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y + jumpVelocity);
@@ -151,7 +152,7 @@ namespace Moondown.Player.Movement
             }
 
             bool wallJump = CanWallJump(facing);
-            if (wallJump)
+            if (wallJump && !UIInput.Instance.isInInventory)
                 WallJump(facing);
         }
 
@@ -184,7 +185,7 @@ namespace Moondown.Player.Movement
 
         void Dash(float direction)
         {
-            if (!canDash)
+            if (!canDash || UIInput.Instance.isInInventory)
                 return;
 
             canDash = false;
@@ -248,7 +249,7 @@ namespace Moondown.Player.Movement
             Vector2 pos = new Vector2(transform.position.x, transform.position.y);
             
             RaycastHit2D[] hits = Physics2D.BoxCastAll(
-                pos - new Vector2(0.2f * (int)direction, 0),
+                pos - new Vector2(0.001f * (int)direction, 0),
                 collider.size,
                 0,
                 direction == Facing.LEFT ? Vector2.left : Vector2.right,
