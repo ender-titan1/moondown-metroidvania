@@ -33,7 +33,9 @@ namespace Moondown.UI.Inventory
 
         [SerializeField] private GameObject[] sideBar;
         private GameObject selected;
-        private int selectedIndex;
+        private int selectedIndex = 0;
+
+        private bool sideBarActive = true;
 
         private void Awake()
         {
@@ -45,34 +47,53 @@ namespace Moondown.UI.Inventory
             inputs.UI.Right.performed += _ => Move(Direction.Right);
         }
 
+        private void OnEnable()
+        {
+            Select(0, 5);
+            inputs.Enable();
+        }
+
+        private void OnDisable() => inputs.Disable();
+
         private void Move(Direction dir)
         {
-            if (selected == null)
+            if (sideBarActive)
             {
                 if (dir == Direction.Down)
                 {
                     if (sideBar[5] == selected)
-                        Select(0);
+                    {
+                        Select(0, 5);
+                        selectedIndex = 0;
+                    }
                     else
                     {
-                        Select(selectedIndex + 1);
+                        Select(selectedIndex += 1, selectedIndex - 1);
                     }
                 }
                 else if (dir ==  Direction.Up)
                 {
                     if (sideBar[0] == selected)
-                        Select(5);
+                    {
+                        Select(5, 0);
+                        selectedIndex = 5;
+                    }
                     else
                     {
-                        Select(selectedIndex - 1);
+                        Select(selectedIndex -= 1, selectedIndex + 1);
                     }
                 }
             }
         }
 
-        private void Select(int index)
+        private void Select(int index, int previousIndex)
         {
+            selected = sideBar[index];
 
+            DisplayInventory display = gameObject.GetComponent<DisplayInventory>();
+            display.OnButtonEnter(sideBar[index].GetComponentInChildren<Animator>());
+
+            display.OnButtonExit(sideBar[previousIndex].GetComponentInChildren<Animator>());
         }
     }
 }
