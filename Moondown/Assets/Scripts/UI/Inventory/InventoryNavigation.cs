@@ -65,12 +65,6 @@ namespace Moondown.UI.Inventory
 
             Clear(null);
 
-            try
-            {
-                selected.GetComponentInChildren<Animator>().Play("Base Layer.Side Bar Button Hide");
-            }
-            catch (NullReferenceException) {}
-
             selectedIndex = 0;
             Select(selectedIndex);
         }

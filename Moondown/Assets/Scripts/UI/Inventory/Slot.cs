@@ -16,11 +16,28 @@
 */
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VectorGraphics;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Moondown.UI.Inventory
 {
-    public class Slot : MonoBehaviour
+    public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            SetColor(1, 0.11461f, 0);
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            SetColor(1, 1, 1);
+        }
+
+        public void SetColor(float r, float g, float b)
+        {
+            gameObject.GetComponent<SVGImage>().color = new Color(r, g, b);
+        }
+
     }
 }
