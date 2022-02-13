@@ -30,6 +30,15 @@ namespace Moondown.Utility
         public static bool Has<T>(this Component component) where T : Component => component.GetComponent<T>() != null;
         public static bool ChildHas<T>(this GameObject gameObject) where T : Component => gameObject.GetComponentInChildren<T>() != null;
 
+        public static GameObject[] GetChildren(this GameObject gameObject)
+        {
+            List<GameObject> @out = new List<GameObject>();
+            foreach (Transform t in gameObject.transform)
+                @out.Add(t.gameObject);
+
+            return @out.ToArray();
+        }
+
         public static int ToAxis(this float @float, int previous)
         {
             if (@float > 0)

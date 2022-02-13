@@ -253,7 +253,7 @@ namespace Moondown.Player.Movement
                 collider.size,
                 0,
                 direction == Facing.LEFT ? Vector2.left : Vector2.right,
-                collider.size.y,
+                0.1f,
                 mask
             );
 
@@ -263,9 +263,7 @@ namespace Moondown.Player.Movement
                     continue;
 
                 if (hit.collider.CompareTag("can wall jump"))
-                {
                     return true;
-                }
             }
 
             return false;

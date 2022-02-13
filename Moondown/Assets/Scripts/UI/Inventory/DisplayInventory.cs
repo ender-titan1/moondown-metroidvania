@@ -16,7 +16,7 @@ namespace Moondown.UI.Inventory
     {
         private string   filter = "";
         private readonly List<GameObject> slots = new List<GameObject>();
-        private List<Item> currentPage = InventoryManager.Instance.Resources;
+        private List<Item> currentPage = InventoryManager.Instance.Weapons;
 
         public void OnEnable()
         {
@@ -90,12 +90,20 @@ namespace Moondown.UI.Inventory
         public void OnButtonEnter(Animator animator)
         {
             animator.enabled = true;
+            gameObject.GetComponent<InventoryNavigation>().Clear(animator.GetComponentInParent<RectTransform>().gameObject);
             animator.SetBool("Mouse off", false);
+
         }
 
         public void OnButtonExit(Animator animator)
         {
             animator.SetBool("Mouse off", true);
+            animator.GetComponent<TextMeshProUGUI>().color = Color.white;
+        }
+
+        public void SelectPage(GameObject @object)
+        {
+            // close the side bar
         }
     }
 }

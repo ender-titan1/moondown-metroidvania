@@ -87,6 +87,7 @@ namespace Moondown.Player
             InventoryManager.Instance.Add(new Item("Weapon"));
             InventoryManager.Instance.Add(new Item("Scrap"), 100);
             InventoryManager.Instance.Add(new Item("RareItem"));
+            InventoryManager.Instance.Add(new Item("Special"));
         }
 
         private void Update()

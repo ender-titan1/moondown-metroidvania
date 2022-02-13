@@ -11,11 +11,12 @@ namespace Moondown.Inventory
     {
         public static InventoryManager Instance { get; set; } = new InventoryManager();
 
-        public List<Item> Resources { get; set; }  = new List<Item>();
-        public List<Item> Weapons   { get; set; }  = new List<Item>();
-        public List<Item> Armour    { get; set; }  = new List<Item>();
-        public List<Item> Tools     { get; set; }  = new List<Item>();
-        public List<Item> Modules   { get; set; }  = new List<Item>();
+        public List<Item> Resources { get; set; } = new List<Item>();
+        public List<Item> Weapons   { get; set; } = new List<Item>();
+        public List<Item> Armour    { get; set; } = new List<Item>();
+        public List<Item> Tools     { get; set; } = new List<Item>();
+        public List<Item> Modules   { get; set; } = new List<Item>();
+        public List<Item> Special   { get; set; } = new List<Item>();
         
         public List<Item> All
         {
@@ -27,6 +28,7 @@ namespace Moondown.Inventory
                 items.AddRange(Armour);
                 items.AddRange(Tools);
                 items.AddRange(Modules);
+                items.AddRange(Special);
                 return items;
             }
         }
@@ -35,6 +37,12 @@ namespace Moondown.Inventory
         {
             for (int i = 0; i < amount; i++)
             {
+                if (item.data.rarity == Item.Rarity.Special)
+                {
+                    Special.Add(item);
+                    continue;
+                }
+
                 switch (item.data.type)
                 {
                     case ItemType.MEELE_WEAPON:
