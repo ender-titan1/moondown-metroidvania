@@ -26,7 +26,8 @@ namespace Moondown.UI.Inventory
     {
         public void OnPointerEnter(PointerEventData eventData)
         {
-            SetColor(1, 0.11461f, 0);
+            if (!InventoryNavigation.Instance.SideBarActive)
+                SetColor(1, 0.11461f, 0);
         }
 
         public void OnPointerExit(PointerEventData eventData)

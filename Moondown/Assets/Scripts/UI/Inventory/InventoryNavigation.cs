@@ -35,19 +35,32 @@ namespace Moondown.UI.Inventory
 
         private const int ROW_LENGTH = 7;
 
+        public static InventoryNavigation Instance { get; set; }
+
         private MainControls inputs;
 
         [SerializeField] private GameObject[] sideBar;
         private GameObject selected;
         private int selectedIndex = 0;
 
-        private bool sideBarActive = true;
+        public bool SideBarActive { get; private set; } = true;
+        
+        ////////////////////////////////////////////////////////
 
         private List<List<Slot>> slots = new List<List<Slot>>();
 
+        private int row = 0;
+        private int col = 0;
+
+        public Slot selectedSlot;
 
         private void Awake()
         {
+            if (Instance == null)
+                Instance = this;
+            else
+                Destroy(gameObject);
+
             inputs = new MainControls();
 
             inputs.UI.Down.performed +=   _ => Move(Direction.Down);
@@ -119,12 +132,15 @@ namespace Moondown.UI.Inventory
         private void SelectPage()
         {
             sideBar[selectedIndex].GetComponent<Button>().onClick.Invoke();
-            sideBarActive = false;
+            SideBarActive = false;
+
+            slots[0][0].OnPointerEnter(null);
+            selectedSlot = slots[0][0];
         }
 
         private void Move(Direction dir)
         {
-            if (sideBarActive)
+            if (SideBarActive)
             {
                 if (dir == Direction.Right)
                     SelectPage();
@@ -142,7 +158,7 @@ namespace Moondown.UI.Inventory
                         Select(selectedIndex);
                     }
                 }
-                else if (dir ==  Direction.Up)
+                else if (dir == Direction.Up)
                 {
                     if (sideBar[0] == selected)
                     {
@@ -159,8 +175,51 @@ namespace Moondown.UI.Inventory
             else
             {
 
+                switch (dir)
+                {
+                    case Direction.Up:
+                        row--;
+                        SelectSlot(row, col);
+                        break;
+                    case Direction.Down:
+                        row++;
+                        SelectSlot(row, col);
+                        break;
+                    case Direction.Left:
+                        col--;
+                        SelectSlot(row, col);
+                        break;
+                    default:
+                        col++;
+                        SelectSlot(row, col);
+                        break;
+                }
             }
         }
+
+        private void SelectSlot(int r, int c)
+        {
+            Slot slot = null;
+
+            try
+            { 
+                selectedSlot.OnPointerExit(null);
+                slot = selectedSlot;
+            }
+            catch (NullReferenceException) { }
+
+            try
+            {
+                selectedSlot = slots[r][c];
+                slots[r][c].OnPointerEnter(null);
+            }
+            catch (IndexOutOfRangeException)
+            {
+                selectedSlot = slot;
+                slot.OnPointerEnter(null);
+            }
+        }
+
 
         private void Select(int index)
         {
@@ -177,6 +236,11 @@ namespace Moondown.UI.Inventory
 
                 display.OnButtonExit(sideBar[i].GetComponentInChildren<Animator>());
             }
+        }
+
+        public void SelectCurrent()
+        {
+            SelectPage();
         }
     }
 }
