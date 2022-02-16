@@ -17,6 +17,7 @@
 using Moondown.Utility;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -43,7 +44,7 @@ namespace Moondown.UI.Inventory
         private GameObject selected;
         private int selectedIndex = 0;
 
-        public bool SideBarActive { get; private set; } = true;
+        public bool SideBarActive { get; set; } = true;
         
         ////////////////////////////////////////////////////////
 
@@ -136,14 +137,14 @@ namespace Moondown.UI.Inventory
 
             slots[0][0].OnPointerEnter(null);
             selectedSlot = slots[0][0];
+            row = 0;
+            col = 0;
         }
 
         private void Move(Direction dir)
         {
             if (SideBarActive)
             {
-                if (dir == Direction.Right)
-                    SelectPage();
 
                 if (dir == Direction.Down)
                 {
@@ -179,25 +180,25 @@ namespace Moondown.UI.Inventory
                 {
                     case Direction.Up:
                         row--;
-                        SelectSlot(row, col);
+                        SelectSlot(row, col, row + 1, col);
                         break;
                     case Direction.Down:
                         row++;
-                        SelectSlot(row, col);
+                        SelectSlot(row, col, row - 1, col);
                         break;
                     case Direction.Left:
                         col--;
-                        SelectSlot(row, col);
+                        SelectSlot(row, col, row, col + 1, true);
                         break;
                     default:
                         col++;
-                        SelectSlot(row, col);
+                        SelectSlot(row, col, row, col - 1);
                         break;
                 }
             }
         }
 
-        private void SelectSlot(int r, int c)
+        private void SelectSlot(int r, int c, int pr, int pc, bool left = false)
         {
             Slot slot = null;
 
@@ -213,10 +214,18 @@ namespace Moondown.UI.Inventory
                 selectedSlot = slots[r][c];
                 slots[r][c].OnPointerEnter(null);
             }
-            catch (IndexOutOfRangeException)
+            catch (ArgumentOutOfRangeException)
             {
                 selectedSlot = slot;
                 slot.OnPointerEnter(null);
+                row = pr; // previous row
+                col = pc; // previous column
+
+                if (left && col == 0)
+                {
+                    SideBarActive = true;
+                    selectedSlot.OnPointerExit(null);
+                }
             }
         }
 
@@ -236,11 +245,6 @@ namespace Moondown.UI.Inventory
 
                 display.OnButtonExit(sideBar[i].GetComponentInChildren<Animator>());
             }
-        }
-
-        public void SelectCurrent()
-        {
-            SelectPage();
         }
     }
 }
