@@ -106,6 +106,13 @@ namespace Moondown.UI
         {
             if (isInInventory)
             {
+                if (!InventoryNavigation.Instance.SideBarActive)
+                {
+                    InventoryNavigation.Instance.SideBarActive = true;
+                    InventoryNavigation.Instance.selectedSlot.OnPointerExit(null);
+                    return;
+                }
+
                 UI.SetActive(false);
                 inventoryPostProcessing.SetActive(false);
                 DisplayHUD.Toggle();

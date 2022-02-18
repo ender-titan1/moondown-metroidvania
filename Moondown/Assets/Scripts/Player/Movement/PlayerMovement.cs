@@ -22,6 +22,8 @@ using Moondown.Utility;
 using System;
 using System.Linq;
 using Moondown.UI;
+using UnityEngine.InputSystem.Users;
+using UnityEngine.InputSystem;
 
 namespace Moondown.Player.Movement
 {
@@ -91,14 +93,6 @@ namespace Moondown.Player.Movement
             rigidBody = gameObject.GetComponent<Rigidbody2D>();
 
             controls.Player.Jump.performed += _ => Jump();
-            controls.Player.Jump.canceled += ctx =>
-            {
-                if (isJumping && ctx.control.path == "<XInputController>/buttonSouth")
-                {
-                    isJumping = false;
-                    rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
-                }
-            };
 
             controls.Player.Dash.performed += _ => Dash(movementAxis == 0 ? 1 : movementAxis);
 
@@ -113,8 +107,8 @@ namespace Moondown.Player.Movement
                 isMovementPressed = false; 
                 MoveCancelled(); 
             };
-
         }
+
 
         private void FixedUpdate()
         {

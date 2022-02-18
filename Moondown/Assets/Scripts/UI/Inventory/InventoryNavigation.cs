@@ -48,7 +48,7 @@ namespace Moondown.UI.Inventory
         
         ////////////////////////////////////////////////////////
 
-        private List<List<Slot>> slots = new List<List<Slot>>();
+        public List<List<Slot>> slots = new List<List<Slot>>();
 
         private int row = 0;
         private int col = 0;
@@ -135,7 +135,7 @@ namespace Moondown.UI.Inventory
             sideBar[selectedIndex].GetComponent<Button>().onClick.Invoke();
             SideBarActive = false;
 
-            slots[0][0].OnPointerEnter(null);
+            slots[0][0].SetColor(1, 0.11461f, 0);
             selectedSlot = slots[0][0];
             row = 0;
             col = 0;
@@ -212,12 +212,12 @@ namespace Moondown.UI.Inventory
             try
             {
                 selectedSlot = slots[r][c];
-                slots[r][c].OnPointerEnter(null);
+                slots[r][c].SetColor(1, 0.11461f, 0);
             }
             catch (ArgumentOutOfRangeException)
             {
                 selectedSlot = slot;
-                slot.OnPointerEnter(null);
+                slot.SetColor(1, 0.11461f, 0);
                 row = pr; // previous row
                 col = pc; // previous column
 

@@ -20,11 +20,12 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Moondown.UI
 {
 
-    [RequireComponent(typeof(Text))]
+    [RequireComponent(typeof(TextMeshProUGUI))]
     public class DynamicText : MonoBehaviour
     {
         [SerializeField]
@@ -36,7 +37,7 @@ namespace Moondown.UI
 
         public void Replace(bool firstTime)
         {
-            Text text = gameObject.GetComponent<Text>();
+            TextMeshProUGUI text = gameObject.GetComponent<TextMeshProUGUI>();
 
             if (firstTime)
                 template = text.text;

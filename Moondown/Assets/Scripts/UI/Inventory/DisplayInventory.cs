@@ -40,6 +40,7 @@ namespace Moondown.UI.Inventory
             {
                 slot.GetComponentInChildren<RawImage>().enabled = false;
                 slot.GetComponentInChildren<TextMeshProUGUI>().text = "";
+                slot.GetComponent<Slot>().content = null;
             }
         }
 
@@ -55,6 +56,7 @@ namespace Moondown.UI.Inventory
 
                 slot.GetComponentInChildren<RawImage>().texture = s.item.data.image;
                 slot.GetComponentInChildren<RawImage>().enabled = true;
+                slot.GetComponent<Slot>().content = s;
 
 
                 if (s.amount > 1)
@@ -104,6 +106,7 @@ namespace Moondown.UI.Inventory
         public void SelectPage(GameObject @object)
         {
             // close the side bar
+            InventoryNavigation.Instance.SideBarActive = false;
         }
     }
 }
