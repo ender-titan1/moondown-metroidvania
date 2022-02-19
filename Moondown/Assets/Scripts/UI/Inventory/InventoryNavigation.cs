@@ -34,7 +34,7 @@ namespace Moondown.UI.Inventory
            Right
         }
 
-        private const int ROW_LENGTH = 7;
+        private const int ROW_LENGTH = 6;
 
         public static InventoryNavigation Instance { get; set; }
 
@@ -115,6 +115,7 @@ namespace Moondown.UI.Inventory
         private void OnDisable()
         {
             selected.GetComponentInChildren<Animator>().SetBool("Mouse off", true);
+            DataPanel.Hide();
 
             inputs.Disable();
         }
@@ -132,6 +133,10 @@ namespace Moondown.UI.Inventory
 
         private void SelectPage()
         {
+            if (!SideBarActive)
+                return;
+
+            // Side Bar
             sideBar[selectedIndex].GetComponent<Button>().onClick.Invoke();
             SideBarActive = false;
 
@@ -139,6 +144,21 @@ namespace Moondown.UI.Inventory
             selectedSlot = slots[0][0];
             row = 0;
             col = 0;
+
+            if (selectedSlot.content != null)
+            {
+                DataPanel.Title = selectedSlot.content.Value.item.Name;
+                DataPanel.Image = selectedSlot.content.Value.item.data.image;
+                DataPanel.SubHeading =
+                    selectedSlot.content.Value.item.data.rarity.ToString().ToLower().CapitalizeFirst() +
+                    " " +
+                    selectedSlot.content.Value.item.data.type.ToString().ToLower().Replace("_", " ");
+                DataPanel.Show();
+            }
+            else
+            {
+                DataPanel.Hide();
+            }
         }
 
         private void Move(Direction dir)
@@ -225,7 +245,23 @@ namespace Moondown.UI.Inventory
                 {
                     SideBarActive = true;
                     selectedSlot.OnPointerExit(null);
+                    DataPanel.Hide();
                 }
+            }
+
+            if (selectedSlot.content != null)
+            {
+                DataPanel.Title = selectedSlot.content.Value.item.Name;
+                DataPanel.Image = selectedSlot.content.Value.item.data.image;
+                DataPanel.SubHeading =
+                    selectedSlot.content.Value.item.data.rarity.ToString().ToLower().CapitalizeFirst() +
+                    " " +
+                    selectedSlot.content.Value.item.data.type.ToString().ToLower().Replace("_", " ");
+                DataPanel.Show();
+            }
+            else
+            {
+                DataPanel.Hide();
             }
         }
 

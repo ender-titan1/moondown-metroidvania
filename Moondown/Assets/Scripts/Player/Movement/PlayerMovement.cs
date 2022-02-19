@@ -48,7 +48,6 @@ namespace Moondown.Player.Movement
         private float wallJumpVelocity;
 
         private bool grounded;
-        private bool isJumping;
         #endregion
 
         #region Movement
@@ -133,15 +132,13 @@ namespace Moondown.Player.Movement
         private void OnEnable() => controls.Enable();
         private void OnDisable() => controls.Disable();
 
-        #region movement
+        #region Movement
 
         void Jump()
         {
             if (grounded && !UIInput.Instance.isInInventory)
             {
-                isJumping = true;
                 rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y + jumpVelocity);
-                Invoke(nameof(CancelJump), 1);
                 return;
             }
 
@@ -150,10 +147,6 @@ namespace Moondown.Player.Movement
                 WallJump(facing);
         }
 
-        void CancelJump()
-        {
-            isJumping = true;
-        }
 
         void Move(float direction)
         {

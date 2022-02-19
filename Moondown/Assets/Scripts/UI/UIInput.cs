@@ -108,6 +108,7 @@ namespace Moondown.UI
             {
                 if (!InventoryNavigation.Instance.SideBarActive)
                 {
+                    DataPanel.Hide();
                     InventoryNavigation.Instance.SideBarActive = true;
                     InventoryNavigation.Instance.selectedSlot.OnPointerExit(null);
                     return;

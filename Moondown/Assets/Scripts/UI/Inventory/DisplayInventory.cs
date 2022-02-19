@@ -18,6 +18,19 @@ namespace Moondown.UI.Inventory
         private readonly List<GameObject> slots = new List<GameObject>();
         private List<Item> currentPage = InventoryManager.Instance.Weapons;
 
+        [Header("Data Panel")]
+        [SerializeField] private GameObject      dataPanel;
+        [SerializeField] private TextMeshProUGUI dataPanelTitle;
+        [SerializeField] private TextMeshProUGUI dataPanelSubHeading;
+        [SerializeField] private RawImage        dataPanelImage;
+
+
+
+        private void Awake()
+        {
+            DataPanel.Init(dataPanel, dataPanelTitle, dataPanelSubHeading, dataPanelImage);
+        }
+
         public void OnEnable()
         {
             foreach (Transform transform in transform)

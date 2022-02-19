@@ -91,6 +91,7 @@ namespace Moondown.UI.Localization
             }
         }
 
+
         private void Translate()
         {
             Dictionary<string, Dictionary<string, string>> locales = GetLocales();

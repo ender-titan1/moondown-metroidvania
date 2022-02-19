@@ -28,7 +28,7 @@ namespace Moondown.Inventory
     {
         public enum Rarity
         {
-            None = 0,
+            Common = 0,
             Uncommon = 1,
             Rare = 2,
             Uniqe = 3,
