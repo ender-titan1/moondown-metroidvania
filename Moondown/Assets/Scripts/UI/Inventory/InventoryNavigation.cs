@@ -14,6 +14,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using Moondown.Inventory;
 using Moondown.Utility;
 using System;
 using System.Collections.Generic;
@@ -153,7 +154,13 @@ namespace Moondown.UI.Inventory
                     selectedSlot.content.Value.item.data.rarity.ToString().ToLower().CapitalizeFirst() +
                     " " +
                     selectedSlot.content.Value.item.data.type.ToString().ToLower().Replace("_", " ");
-                DataPanel.Show();
+
+                if (selectedSlot.content.Value.item.data.type == ItemType.MEELE_WEAPON)
+                    DataPanel.Equipable = true;
+                else
+                    DataPanel.Equipable = false;
+
+                DataPanel.Show(selectedSlot.content.Value);
             }
             else
             {
@@ -257,7 +264,13 @@ namespace Moondown.UI.Inventory
                     selectedSlot.content.Value.item.data.rarity.ToString().ToLower().CapitalizeFirst() +
                     " " +
                     selectedSlot.content.Value.item.data.type.ToString().ToLower().Replace("_", " ");
-                DataPanel.Show();
+
+                if (selectedSlot.content.Value.item.data.type == ItemType.MEELE_WEAPON)
+                    DataPanel.Equipable = true;
+                else
+                    DataPanel.Equipable = false;
+
+                DataPanel.Show(selectedSlot.content.Value);
             }
             else
             {

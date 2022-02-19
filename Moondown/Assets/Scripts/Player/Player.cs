@@ -28,6 +28,7 @@ using System;
 using System.Threading.Tasks;
 using Moondown.Player.Movement;
 using Moondown.Utility;
+using Moondown.UI.Inventory;
 
 namespace Moondown.Player
 {
@@ -164,6 +165,11 @@ namespace Moondown.Player
                 await Task.Delay(10);
                 i += 0.01f;
             }
+        }
+
+        public void EquipWeapon()
+        {
+            InventoryManager.Instance.Equip(DataPanel.Items.item);
         }
     }
 }

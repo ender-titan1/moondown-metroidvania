@@ -14,6 +14,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using Moondown.Inventory;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,6 +26,8 @@ namespace Moondown.UI.Inventory
         public static string Title { get; set; }
         public static string SubHeading { get; set; }
         public static Texture Image { get; set; }
+        public static ItemStack Items { get; set; }
+        public static bool Equipable { get; set; }
 
         private static GameObject panel;
 
@@ -33,27 +36,34 @@ namespace Moondown.UI.Inventory
         private static TextMeshProUGUI titleText;
         private static TextMeshProUGUI subHeadingText;
         private static RawImage        image;
+        private static Button          equipButton;
 
-        public static void Init(GameObject a_Panel, TextMeshProUGUI a_TitleText, TextMeshProUGUI a_SubHeadingText, RawImage a_Image)
-        {
+        public static void Init(GameObject a_Panel, TextMeshProUGUI a_TitleText, TextMeshProUGUI a_SubHeadingText, RawImage a_Image,
+                                Button a_equipButton)
+        { 
             panel = a_Panel;
             titleText = a_TitleText;
             subHeadingText = a_SubHeadingText;
             image = a_Image;
+            equipButton = a_equipButton;
             
         }
 
-        public static void Show()
+        public static void Show(ItemStack stack)
         {
             titleText.text = Title;
             subHeadingText.text = SubHeading;
             image.texture = Image;
+
+            if (Equipable)
+                equipButton.gameObject.SetActive(true);
 
             panel.SetActive(true);
         }
 
         public static void Hide()
         {
+            equipButton.gameObject.SetActive(false);
             panel.SetActive(false);
         }
 

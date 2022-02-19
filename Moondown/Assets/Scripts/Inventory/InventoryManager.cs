@@ -80,6 +80,10 @@ namespace Moondown.Inventory
 
         }
         
-        
+        public void Equip(Item item)
+        {
+
+        }
+
     }
 }

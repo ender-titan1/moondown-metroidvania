@@ -23,12 +23,13 @@ namespace Moondown.UI.Inventory
         [SerializeField] private TextMeshProUGUI dataPanelTitle;
         [SerializeField] private TextMeshProUGUI dataPanelSubHeading;
         [SerializeField] private RawImage        dataPanelImage;
+        [SerializeField] private Button          dataPanelEquipButton;
 
 
 
         private void Awake()
         {
-            DataPanel.Init(dataPanel, dataPanelTitle, dataPanelSubHeading, dataPanelImage);
+            DataPanel.Init(dataPanel, dataPanelTitle, dataPanelSubHeading, dataPanelImage, dataPanelEquipButton);
         }
 
         public void OnEnable()
