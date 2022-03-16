@@ -29,6 +29,7 @@ using System.Threading.Tasks;
 using Moondown.Player.Movement;
 using Moondown.Utility;
 using Moondown.UI.Inventory;
+using Moondown.WeaponSystem.Attacks;
 
 namespace Moondown.Player
 {
@@ -38,6 +39,7 @@ namespace Moondown.Player
         // singelton
         public static Player Instance { get; private set; }
 
+        #region events
         public delegate void BlankDelegate();
 
         public event Action<int> OnDamageTaken;
@@ -51,6 +53,7 @@ namespace Moondown.Player
 
         public event BlankDelegate OnApplyLowHealth;
         public event BlankDelegate OnClearVignette;
+        #endregion
 
         public RespawnLocation LocalRespawn { get; set; }
         public RespawnLocation DeathRespawn { get; set; }
@@ -63,18 +66,21 @@ namespace Moondown.Player
 
         public List<AbstractModule> modules = new List<AbstractModule> { };
 
-        [SerializeField] private Sprite baseSprite;
-
         [SerializeField] private GameObject LowHealthPP;
 
         [SerializeField] private Material shaderMaterial;
 
         public GameObject LowHealthPostProcessing => LowHealthPP;
 
+        private MeeleAttack attack;
+        [SerializeField] private LayerMask mask;
+
         private void Awake()
         {
             if (Instance == null)
                 Instance = this;
+
+            attack = new MeeleAttack(GetComponent<BoxCollider2D>(), transform, mask);
         }
 
         private void Start()
@@ -85,7 +91,7 @@ namespace Moondown.Player
 
             OnRespawn();
 
-            InventoryManager.Instance.Add(new Item("Weapon"));
+            InventoryManager.Instance.Add(new Weapon("Weapon"));
             InventoryManager.Instance.Add(new Item("Scrap"), 100);
             InventoryManager.Instance.Add(new Item("RareItem"));
             InventoryManager.Instance.Add(new Item("Special"));
@@ -170,6 +176,7 @@ namespace Moondown.Player
         public void EquipWeapon()
         {
             InventoryManager.Instance.Equip(DataPanel.Items.item);
+            UIInput.Instance.InventoryUI.GetComponentInChildren<DisplayInventory>().RefreshEquipment();
         }
     }
 }

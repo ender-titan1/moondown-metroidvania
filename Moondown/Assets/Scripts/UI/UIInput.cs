@@ -41,6 +41,8 @@ namespace Moondown.UI
         public bool isInInventory;
         private bool isInPasue;
 
+        public GameObject InventoryUI => UI;
+
         private void Awake()
         {
             if (Instance == null)

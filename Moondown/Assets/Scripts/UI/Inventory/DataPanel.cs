@@ -51,6 +51,8 @@ namespace Moondown.UI.Inventory
 
         public static void Show(ItemStack stack)
         {
+            Items = stack;
+
             titleText.text = Title;
             subHeadingText.text = SubHeading;
             image.texture = Image;
@@ -66,6 +68,5 @@ namespace Moondown.UI.Inventory
             equipButton.gameObject.SetActive(false);
             panel.SetActive(false);
         }
-
     }
 }

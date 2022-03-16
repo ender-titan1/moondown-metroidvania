@@ -1,4 +1,5 @@
-﻿using Moondown.Utility;
+﻿using Moondown.UI.Inventory;
+using Moondown.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,11 @@ namespace Moondown.Inventory
 {
     public class InventoryManager
     {
+        public struct PlayerEquipment
+        {
+            public Weapon meele;
+        }
+
         public static InventoryManager Instance { get; set; } = new InventoryManager();
 
         public List<Item> Resources { get; set; } = new List<Item>();
@@ -17,7 +23,9 @@ namespace Moondown.Inventory
         public List<Item> Tools     { get; set; } = new List<Item>();
         public List<Item> Modules   { get; set; } = new List<Item>();
         public List<Item> Special   { get; set; } = new List<Item>();
-        
+
+        public PlayerEquipment equiped = new PlayerEquipment();
+
         public List<Item> All
         {
             get
@@ -79,11 +87,11 @@ namespace Moondown.Inventory
             return inventory;
 
         }
-        
+
         public void Equip(Item item)
         {
-
+            if (item is Weapon weapon)
+                equiped.meele = weapon;
         }
-
     }
 }

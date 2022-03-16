@@ -52,11 +52,9 @@ namespace Moondown.WeaponSystem.Attacks
             if (!CanAttack)
                 return;
 
-            //EquipmentManager.Instance.ReactivateWeapon();
-
             RaycastHit2D[] hits = Physics2D.BoxCastAll(
                 new Vector2(
-                    transform.position.x + /*EquipmentManager.Instance.EquipedWeapon.Range*/ 1 * (int)PlayerMovement.Instance.facing,
+                    transform.position.x + InventoryManager.Instance.equiped.meele.Range * (int)PlayerMovement.Instance.facing,
                     transform.position.y
                 ),
                 collider.size,
@@ -74,7 +72,7 @@ namespace Moondown.WeaponSystem.Attacks
                 if (hit.collider.Has<EnvironmentBehaviour>() && hit.collider.GetComponent<EnvironmentBehaviour>().attackable)
                 {
                     EnvironmentBehaviour behaviour = hit.collider.GetComponent<EnvironmentBehaviour>();
-                    behaviour.healthPoints -= /*EquipmentManager.Instance.EquipedWeapon.Damage*/ 0;
+                    behaviour.healthPoints -= InventoryManager.Instance.equiped.meele.Damage;
                 }
                 else if (hit.collider.Has<RespawnLocation>() && hit.collider.GetComponent<RespawnLocation>().cost > 0)
                 {
@@ -85,7 +83,7 @@ namespace Moondown.WeaponSystem.Attacks
                 }
             }
 
-            CanAttack = false;
+            //CanAttack = false;
         }
 
     }

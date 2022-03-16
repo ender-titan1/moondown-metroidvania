@@ -25,7 +25,8 @@ namespace Moondown.UI.Inventory
         [SerializeField] private RawImage        dataPanelImage;
         [SerializeField] private Button          dataPanelEquipButton;
 
-
+        [Header("Equipment")]
+        [SerializeField] private GameObject      equiment;
 
         private void Awake()
         {
@@ -39,6 +40,8 @@ namespace Moondown.UI.Inventory
                 if (transform.gameObject.Has<Slot>())
                     slots.Add(transform.gameObject);
             }
+
+            RefreshEquipment();
 
             LoadPage();
         }
@@ -101,6 +104,15 @@ namespace Moondown.UI.Inventory
                 UnloadPage();
                 LoadPage();
             }
+
+            try
+            {
+                DataPanel.Hide();
+            }
+            catch (NullReferenceException)
+            {
+                //ignore
+            }
         }
 
         public void OnButtonEnter(Animator animator)
@@ -121,6 +133,18 @@ namespace Moondown.UI.Inventory
         {
             // close the side bar
             InventoryNavigation.Instance.SideBarActive = false;
+        }
+
+        public void RefreshEquipment()
+        {
+            if (InventoryManager.Instance.equiped.meele == null)
+            {
+                equiment.GetComponent<RawImage>().enabled = false;
+                return;
+            }
+
+            equiment.GetComponent<RawImage>().enabled = true;
+            equiment.GetComponent<RawImage>().texture = InventoryManager.Instance.equiped.meele.data.image;
         }
     }
 }
