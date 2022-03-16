@@ -1,0 +1,10 @@
+{
+  "rooms": [
+    {
+      "name": "TestRoom"
+    },
+    {
+      "name": "Field"
+    }
+  ]
+}
