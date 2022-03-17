@@ -15,6 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using Moondown.Player.Movement;
 using Moondown.Utility;
 using System;
 using UnityEditor;
@@ -24,8 +25,9 @@ namespace Moondown.AI
 {
     public class Unit : MonoBehaviour
     {
-        private bool engaged;
+        private bool engaged = true;
         private Controller controller;
+        private Facing facing;
 
         [SerializeField] private Vector2 zoneLeft;
         [SerializeField] private Vector2 zoneRight;
@@ -34,6 +36,8 @@ namespace Moondown.AI
 
         // should be put into a game manager later
         [SerializeField] private LayerMask mask;
+
+        public Facing Facing => facing;
 
         private void Awake()
         {
@@ -44,8 +48,18 @@ namespace Moondown.AI
 
         private void Update()
         {
-            Pathfind();
+            if (engaged)
+                Pathfind();
+            else
+                Patrol();
         }
+
+        private void Patrol()
+        {
+            // follow a patrol path
+            // if the player enters a vision cone, engage
+        }
+
 
         private void Pathfind()
         {
@@ -58,9 +72,12 @@ namespace Moondown.AI
             // Later the movement sholud be handled by the enemy class
             // check if grounded is required
             float playerX = Mathf.Clamp(Player.Player.Instance.transform.position.x, zoneLeft.x, zoneRight.x);
+            float movementAxis = (playerX - transform.position.x).ToAxis(0);
+
+            facing = (Facing)movementAxis;
 
             GetComponent<Rigidbody2D>().velocity = new Vector2(
-                (playerX - transform.position.x).ToAxis(0) * speed,
+                 movementAxis * speed,
                 0
             );
 
@@ -90,6 +107,10 @@ namespace Moondown.AI
             }
 
             return false;
+        }
+
+        public void PlayerSpotted()
+        {
         }
 
 #if UNITY_EDITOR
