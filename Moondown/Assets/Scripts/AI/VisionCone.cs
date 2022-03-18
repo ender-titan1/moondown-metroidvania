@@ -15,6 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using UnityEditor;
 using UnityEngine;
 
 namespace Moondown.AI
@@ -43,7 +44,10 @@ namespace Moondown.AI
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            unit.PlayerSpotted();
+            Debug.Log(collision.name);
+
+            if (collision.CompareTag("Player"))
+                unit.PlayerSpotted();
         }
     }
 }

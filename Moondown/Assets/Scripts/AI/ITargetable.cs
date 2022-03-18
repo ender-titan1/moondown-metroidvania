@@ -16,16 +16,12 @@
 */
 
 
+using UnityEngine;
+
 namespace Moondown.AI
 {
-    public class Controller 
+    public interface ITargetable
     {
-        public void SetTarget(ITargetable target, params Unit[] units)
-        {
-            foreach (Unit unit in units)
-            {
-                unit.SetTarget(target);
-            }
-        }
+        GameObject GetGameObject();
     }
 }

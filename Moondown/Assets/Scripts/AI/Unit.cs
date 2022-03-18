@@ -15,9 +15,11 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using Moondown.AI.Event;
 using Moondown.Player.Movement;
 using Moondown.Utility;
 using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -25,9 +27,12 @@ namespace Moondown.AI
 {
     public class Unit : MonoBehaviour
     {
-        private bool engaged = true;
+        private bool engaged;
         private Controller controller;
         private Facing facing;
+        private MoondownEvent currentEvent;
+        private ControllerGroup group;
+        private ITargetable target;
 
         [SerializeField] private Vector2 zoneLeft;
         [SerializeField] private Vector2 zoneRight;
@@ -38,6 +43,21 @@ namespace Moondown.AI
         [SerializeField] private LayerMask mask;
 
         public Facing Facing => facing;
+        public Controller Controller
+        {
+            get => controller;
+
+            set => controller = value;
+        }
+        public ControllerGroup Group => group;
+
+        private void OnEnable()
+        {
+            group = new ControllerGroup()
+            {
+                units = new List<Unit>() { this }
+            };
+        }
 
         private void Awake()
         {
@@ -111,7 +131,14 @@ namespace Moondown.AI
 
         public void PlayerSpotted()
         {
+            currentEvent = MoondownEvent.Of(this);   
         }
+
+        public void SetTarget(ITargetable target)
+        {
+            this.target = target;
+        }
+
 
 #if UNITY_EDITOR
         private void OnDrawGizmos()

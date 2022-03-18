@@ -15,17 +15,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Moondown.AI
 {
-    public class Controller 
+    public struct ControllerGroup
     {
-        public void SetTarget(ITargetable target, params Unit[] units)
-        {
-            foreach (Unit unit in units)
-            {
-                unit.SetTarget(target);
-            }
-        }
+        public List<Unit> units;
     }
 }

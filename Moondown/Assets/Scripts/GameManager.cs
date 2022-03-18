@@ -15,17 +15,20 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System.Collections.Generic;
+using UnityEngine;
 
-namespace Moondown.AI
+namespace Moondown
 {
-    public class Controller 
+    public class GameManager : MonoBehaviour
     {
-        public void SetTarget(ITargetable target, params Unit[] units)
+        public static GameManager Instance { get; private set; }
+        public List<AI.Event.MoondownEvent> Events { get; set; } = new List<AI.Event.MoondownEvent>();
+
+        private void Awake()
         {
-            foreach (Unit unit in units)
-            {
-                unit.SetTarget(target);
-            }
+            if (Instance == null)
+                Instance  = this;
         }
     }
 }

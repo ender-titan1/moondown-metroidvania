@@ -15,17 +15,14 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 namespace Moondown.AI
 {
-    public class Controller 
+    public enum EventResolution
     {
-        public void SetTarget(ITargetable target, params Unit[] units)
-        {
-            foreach (Unit unit in units)
-            {
-                unit.SetTarget(target);
-            }
-        }
+        PlayerEliminated,
+        Failed,
+        Escaped,
+        Timeout,
+        Overriden
     }
 }
