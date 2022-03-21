@@ -1,4 +1,4 @@
-﻿/*
+/*
     Copyright (C) 2021 Moondown Project
 
     This program is free software: you can redistribute it and/or modify
@@ -15,21 +15,36 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using Moondown;
 using Moondown.AI;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
-namespace Moondown
+public class AIDebugger : EditorWindow
 {
-    public class GameManager : MonoBehaviour
+    [MenuItem("Window/Moonown/AI Debugger")]
+    public static void ShowWindow()
     {
-        public static GameManager Instance { get; private set; }
-        public List<Controller> Controllers { get; set; } = new List<Controller>();
+        GetWindow<AIDebugger>("AI Debugger");
+    }
 
-        private void Awake()
-        {
-            if (Instance == null)
-                Instance  = this;
-        }
+    private void OnGUI()
+    {
+        GUILayout.Label("Moondown AI Debugger");
+        GUILayout.Space(10);
+
+        GenControllers();
+    }
+
+    private void GenControllers()
+    {
+        if (GameManager.Instance == null)
+            return;
+
+        foreach (Controller controller in GameManager.Instance.Controllers)
+            GUILayout.Label("Controller", EditorStyles.boldLabel);
     }
 }

@@ -30,11 +30,12 @@ using Moondown.Player.Movement;
 using Moondown.Utility;
 using Moondown.UI.Inventory;
 using Moondown.WeaponSystem.Attacks;
+using Moondown.AI;
 
 namespace Moondown.Player
 {
     [RequireComponent(typeof(BoxCollider2D))]
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviour, ITargetable
     {
         // singelton
         public static Player Instance { get; private set; }
@@ -177,6 +178,11 @@ namespace Moondown.Player
         {
             InventoryManager.Instance.Equip(DataPanel.Items.item);
             UIInput.Instance.InventoryUI.GetComponentInChildren<DisplayInventory>().RefreshEquipment();
+        }
+
+        public GameObject GetGameObject()
+        {
+            return gameObject;
         }
     }
 }

@@ -15,13 +15,27 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System.Threading.Tasks;
 
 namespace Moondown.AI
 {
+    using Moondown.Player;
+
     public class Controller 
     {
+        private ControllerGroup group;
+
+        public Controller(ControllerGroup group)
+        {
+            this.group = group;
+            SetTarget(null, group.units.ToArray());
+            GameManager.Instance.Controllers.Add(this);
+        }
+
         public void SetTarget(ITargetable target, params Unit[] units)
         {
+            target ??= Player.Instance;
+
             foreach (Unit unit in units)
             {
                 unit.SetTarget(target);

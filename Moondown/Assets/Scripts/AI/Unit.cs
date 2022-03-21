@@ -15,7 +15,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using Moondown.AI.Event;
 using Moondown.Player.Movement;
 using Moondown.Utility;
 using System;
@@ -30,7 +29,6 @@ namespace Moondown.AI
         private bool engaged;
         private Controller controller;
         private Facing facing;
-        private MoondownEvent currentEvent;
         private ControllerGroup group;
         private ITargetable target;
 
@@ -43,12 +41,7 @@ namespace Moondown.AI
         [SerializeField] private LayerMask mask;
 
         public Facing Facing => facing;
-        public Controller Controller
-        {
-            get => controller;
-
-            set => controller = value;
-        }
+        public Controller Controller => controller;
         public ControllerGroup Group => group;
 
         private void OnEnable()
@@ -91,8 +84,8 @@ namespace Moondown.AI
 
             // Later the movement sholud be handled by the enemy class
             // check if grounded is required
-            float playerX = Mathf.Clamp(Player.Player.Instance.transform.position.x, zoneLeft.x, zoneRight.x);
-            float movementAxis = (playerX - transform.position.x).ToAxis(0);
+            float targetX = Mathf.Clamp(target.GetGameObject().transform.position.x, zoneLeft.x, zoneRight.x);
+            float movementAxis = (targetX - transform.position.x).ToAxis(0);
 
             facing = (Facing)movementAxis;
 
@@ -108,7 +101,7 @@ namespace Moondown.AI
             RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, 10, Vector2.zero);
             foreach (RaycastHit2D hit in hits)
             {
-                if (hit.collider.CompareTag("Player"))
+                if (hit.collider.CompareTag(target.GetGameObject().tag))
                 {
                     RaycastHit2D check = Physics2D.Raycast(transform.position, hit.transform.position - transform.position, 10, layerMask: mask);
 
@@ -117,7 +110,7 @@ namespace Moondown.AI
                     if (check.collider == null)
                         return false;
                     
-                    if (check.collider.CompareTag("Player"))
+                    if (check.collider.CompareTag(target.GetGameObject().tag))
                     {
                         Debug.Log("Player Found!");
                         return true;
@@ -131,7 +124,22 @@ namespace Moondown.AI
 
         public void PlayerSpotted()
         {
-            currentEvent = MoondownEvent.Of(this);   
+            if (this.controller != null)
+                return;
+
+            Controller controller = new Controller(group);
+
+            foreach (Unit unit in group.units)
+            {
+                unit.SetController(controller);
+                unit.engaged = true;
+            }
+
+        }
+
+        public void SetController(Controller controller)
+        {
+            this.controller = controller;
         }
 
         public void SetTarget(ITargetable target)
