@@ -26,6 +26,8 @@ namespace Moondown
         public static GameManager Instance { get; private set; }
         public List<Controller> Controllers { get; set; } = new List<Controller>();
 
+        public LayerMask maskAI;
+
         private void Awake()
         {
             if (Instance == null)

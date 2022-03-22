@@ -39,7 +39,6 @@ public class AIDebugger : EditorWindow
     {
         Label("Moondown AI Debugger");
         Space(10);
-
         BeginHorizontal();
 
         GenControllers();
@@ -61,7 +60,7 @@ public class AIDebugger : EditorWindow
         Space(5);
 
         Label("Controller:", EditorStyles.boldLabel);
-        Label(current.Controller.Name);
+        Label(current.Controller != null ? current.Controller.Name : "None");
         Space(5);
 
         Label("Facing:", EditorStyles.boldLabel);

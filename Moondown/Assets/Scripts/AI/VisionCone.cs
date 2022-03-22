@@ -47,7 +47,12 @@ namespace Moondown.AI
             Debug.Log(collision.name);
 
             if (collision.CompareTag("Player"))
-                unit.PlayerSpotted();
+            {
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, collision.transform.position - transform.position, 10, layerMask: GameManager.Instance.maskAI);
+
+                if (hit.collider != null && hit.collider.CompareTag("Player"))
+                    unit.PlayerSpotted();
+            }
         }
     }
 }

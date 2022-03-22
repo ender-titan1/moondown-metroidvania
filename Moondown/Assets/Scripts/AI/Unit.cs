@@ -37,9 +37,6 @@ namespace Moondown.AI
         [SerializeField] private BoxCollider2D zone;
         [SerializeField] private float speed = 5;
 
-        // should be put into a game manager later
-        [SerializeField] private LayerMask mask;
-
         public Facing Facing => facing;
         public Controller Controller => controller;
         public ControllerGroup Group => group;
@@ -104,7 +101,7 @@ namespace Moondown.AI
             {
                 if (hit.collider.CompareTag(target.GetGameObject().tag))
                 {
-                    RaycastHit2D check = Physics2D.Raycast(transform.position, hit.transform.position - transform.position, 10, layerMask: mask);
+                    RaycastHit2D check = Physics2D.Raycast(transform.position, hit.transform.position - transform.position, 10, layerMask: GameManager.Instance.maskAI);
 
                     DrawDebugLine(hit);
 
@@ -113,7 +110,6 @@ namespace Moondown.AI
 
                     if (check.collider.CompareTag(target.GetGameObject().tag))
                     {
-                        Debug.Log("Player Found!");
                         return true;
                     }
                 }
