@@ -25,6 +25,9 @@ namespace Moondown.AI
     {
         private ControllerGroup group;
 
+        public string Name => group.name;
+        public Unit[] Units => group.units.ToArray();
+
         public Controller(ControllerGroup group)
         {
             this.group = group;

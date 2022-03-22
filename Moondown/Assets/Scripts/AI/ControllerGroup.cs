@@ -23,5 +23,6 @@ namespace Moondown.AI
     public struct ControllerGroup
     {
         public List<Unit> units;
+        public string name;
     }
 }

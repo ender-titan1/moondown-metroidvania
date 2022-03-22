@@ -30,6 +30,7 @@ namespace Moondown
         {
             if (Instance == null)
                 Instance  = this;
+
         }
     }
 }

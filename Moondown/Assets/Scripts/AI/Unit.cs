@@ -48,7 +48,8 @@ namespace Moondown.AI
         {
             group = new ControllerGroup()
             {
-                units = new List<Unit>() { this }
+                units = new List<Unit>() { this },
+                name  = zone.name
             };
         }
 

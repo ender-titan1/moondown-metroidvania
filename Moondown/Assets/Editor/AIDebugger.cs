@@ -25,6 +25,8 @@ using UnityEngine;
 
 public class AIDebugger : EditorWindow
 {
+    private Dictionary<string, bool> clicked = new Dictionary<string, bool>();
+
     [MenuItem("Window/Moonown/AI Debugger")]
     public static void ShowWindow()
     {
@@ -45,6 +47,31 @@ public class AIDebugger : EditorWindow
             return;
 
         foreach (Controller controller in GameManager.Instance.Controllers)
-            GUILayout.Label("Controller", EditorStyles.boldLabel);
+        {
+            Button(controller.Name, OnDropdownClicked);
+
+            foreach (Unit unit in controller.Units)
+            {
+                if (clicked.ContainsKey(controller.Name) && clicked[controller.Name])
+                    GUILayout.Label("    " + unit.name);
+            }
+        }
     }
+
+    private void OnDropdownClicked(string content)
+    {
+        if (clicked.ContainsKey(content))
+            clicked[content] = !clicked[content];
+        else
+            clicked.Add(content, true);
+    }
+
+    private void Button(string text, Action<string> callback)
+    {
+        if (GUILayout.Button(text, EditorStyles.label))
+        {
+            callback(text);
+        }
+    }
+
 }
