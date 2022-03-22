@@ -18,14 +18,16 @@
 using Moondown;
 using Moondown.AI;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using static UnityEngine.GUILayout;
 
 public class AIDebugger : EditorWindow
 {
     private Dictionary<string, bool> clicked = new Dictionary<string, bool>();
+
+    private Unit current;
 
     [MenuItem("Window/Moonown/AI Debugger")]
     public static void ShowWindow()
@@ -35,27 +37,66 @@ public class AIDebugger : EditorWindow
 
     private void OnGUI()
     {
-        GUILayout.Label("Moondown AI Debugger");
-        GUILayout.Space(10);
+        Label("Moondown AI Debugger");
+        Space(10);
+
+        BeginHorizontal();
 
         GenControllers();
+
+        GenData();
+
+        EndHorizontal();
+    }
+
+    private void GenData()
+    {
+        if (current == null)
+            return;
+
+        BeginVertical();
+
+        Label("Name:", EditorStyles.boldLabel);
+        Label(current.name);
+        Space(5);
+
+        Label("Controller:", EditorStyles.boldLabel);
+        Label(current.Controller.Name);
+        Space(5);
+
+        Label("Facing:", EditorStyles.boldLabel);
+        Label(current.Facing.ToString());
+        Space(5);
+
+        EndVertical();
     }
 
     private void GenControllers()
     {
+        BeginVertical();
+
         if (GameManager.Instance == null)
             return;
 
         foreach (Controller controller in GameManager.Instance.Controllers)
         {
-            Button(controller.Name, OnDropdownClicked);
+            CallbackButton(controller.Name, OnDropdownClicked);
 
             foreach (Unit unit in controller.Units)
             {
                 if (clicked.ContainsKey(controller.Name) && clicked[controller.Name])
-                    GUILayout.Label("    " + unit.name);
+                    CallbackButton(
+                        "    " + unit.name, 
+                        (text) => 
+                        {
+                            current = unit;
+                            Selection.activeGameObject = unit.gameObject;
+                        }
+                    );
             }
         }
+
+        EndVertical();
     }
 
     private void OnDropdownClicked(string content)
@@ -66,7 +107,7 @@ public class AIDebugger : EditorWindow
             clicked.Add(content, true);
     }
 
-    private void Button(string text, Action<string> callback)
+    private void CallbackButton(string text, Action<string> callback)
     {
         if (GUILayout.Button(text, EditorStyles.label))
         {

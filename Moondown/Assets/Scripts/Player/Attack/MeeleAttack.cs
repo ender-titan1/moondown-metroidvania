@@ -59,7 +59,7 @@ namespace Moondown.WeaponSystem.Attacks
                 ),
                 collider.size,
                 0f,
-                PlayerMovement.Instance.facing == Facing.LEFT ? Vector2.left : Vector2.right,
+                PlayerMovement.Instance.facing == Facing.Left ? Vector2.left : Vector2.right,
                 collider.size.x,
                 mask
             );

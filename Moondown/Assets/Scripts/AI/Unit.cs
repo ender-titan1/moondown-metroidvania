@@ -106,11 +106,11 @@ namespace Moondown.AI
                 {
                     RaycastHit2D check = Physics2D.Raycast(transform.position, hit.transform.position - transform.position, 10, layerMask: mask);
 
-                    Debug.DrawLine(transform.position, hit.transform.position, Color.green);
+                    DrawDebugLine(hit);
 
                     if (check.collider == null)
                         return false;
-                    
+
                     if (check.collider.CompareTag(target.GetGameObject().tag))
                     {
                         Debug.Log("Player Found!");
@@ -152,8 +152,23 @@ namespace Moondown.AI
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
+            if (Selection.activeGameObject != gameObject)
+                return;
+
             Handles.color = Color.green;
             Handles.DrawWireDisc(transform.position, Vector3.back, 10);
+        }
+
+        private void DrawDebugLine(RaycastHit2D hit)
+        {
+            if (Selection.activeGameObject != gameObject)
+                return;
+
+            Debug.DrawLine(transform.position, hit.transform.position, Color.green);
+        }
+#else
+        private void DrawDebugLine(RaycastHit2D hit)
+        {
         }
 #endif
     }

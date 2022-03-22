@@ -11106,7 +11106,7 @@ GameObject:
   - component: {fileID: 1967708414}
   - component: {fileID: 1967708413}
   m_Layer: 0
-  m_Name: TestZone TEMP
+  m_Name: TestZone 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

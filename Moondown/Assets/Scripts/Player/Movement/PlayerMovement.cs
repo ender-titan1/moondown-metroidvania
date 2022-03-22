@@ -239,7 +239,7 @@ namespace Moondown.Player.Movement
                 pos - new Vector2(0.001f * (int)direction, 0),
                 collider.size,
                 0,
-                direction == Facing.LEFT ? Vector2.left : Vector2.right,
+                direction == Facing.Left ? Vector2.left : Vector2.right,
                 0.1f,
                 mask
             );
