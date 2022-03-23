@@ -28,9 +28,12 @@ namespace Moondown.AI
     {
         private bool engaged;
         private Controller controller;
-        private Facing facing;
+        private Facing facing = Facing.Left;
         private ControllerGroup group;
         private ITargetable target;
+
+        [SerializeField] private float patrolLeft;
+        [SerializeField] private float patrolRight;
 
         [SerializeField] private Vector2 zoneLeft;
         [SerializeField] private Vector2 zoneRight;
@@ -67,14 +70,30 @@ namespace Moondown.AI
 
         private void Patrol()
         {
-            // follow a patrol path
-            // if the player enters a vision cone, engage
-        }
+            if (transform.position.x == patrolLeft)
+            {
+                facing = Facing.Right;
+            }
+            else if (transform.position.x == patrolRight)
+            {
+                facing = Facing.Left;
+            }
 
+            float targetX = facing == Facing.Left ? patrolLeft : patrolRight;
+            float movementAxis = (targetX - transform.position.x).ToAxis(0);
+
+            facing = (Facing)movementAxis;
+
+            GetComponent<Rigidbody2D>().velocity = new Vector2(
+                 movementAxis * speed,
+                0
+            );
+
+        }
 
         private void Pathfind()
         {
-            if (CheckPlayer())
+            if (CheckTarget())
             {
                 GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 return;
@@ -94,7 +113,7 @@ namespace Moondown.AI
 
         }
 
-        private bool CheckPlayer()
+        private bool CheckTarget()
         {
             RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, 10, Vector2.zero);
             foreach (RaycastHit2D hit in hits)
