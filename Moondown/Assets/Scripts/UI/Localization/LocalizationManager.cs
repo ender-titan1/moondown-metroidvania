@@ -15,8 +15,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#define DEVELOPMENT
-
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,7 +37,7 @@ namespace Moondown.UI.Localization
         public static string CurrentLocale { get; set; } = "en_gb";
 
 
-#if DEVELOPMENT
+#if UNITY_EDITOR
         [MenuItem("Moondown Tools/Refresh Translations")]
         public static void RefreshTranslations()
         {
@@ -64,7 +62,7 @@ namespace Moondown.UI.Localization
                         using (StreamWriter sw = File.AppendText(path))
                         {
                             sw.WriteLine("\n# To translate;");
-                            sw.WriteLine(text.text + " =  ;");
+                            sw.WriteLine(text.text + " = Temporary translation;");
                         }
                     }
                 }
