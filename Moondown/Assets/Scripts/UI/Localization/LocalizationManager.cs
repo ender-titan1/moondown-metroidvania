@@ -98,7 +98,13 @@ namespace Moondown.UI.Localization
             List<TextMeshProUGUI> toTranslate = GetText();
 
             // get current locale
-            Dictionary<string, string> currentLocale = locales[CurrentLocale];
+
+            Dictionary<string, string> currentLocale = new Dictionary<string, string>();
+
+            if (locales.ContainsKey(CurrentLocale))
+                currentLocale = locales[CurrentLocale];
+            else
+                currentLocale = locales["en_bg"];
 
 
             // translate
@@ -141,7 +147,7 @@ namespace Moondown.UI.Localization
                     var l = line.Replace(" = ", "=");
 
                     string key = l.Split(char.Parse("="))[0].Replace("\n", "").Replace("\r", "");
-                    string value = l.Split(char.Parse("="))[1];
+                    string value = l.Split(char.Parse("="))[1].Replace("<semicolon />", ";");
 
                     locales[locale.name].Add(key, value);
                     i++;
@@ -172,7 +178,7 @@ namespace Moondown.UI.Localization
             }
         }
 
-        public static string Get(string key) => GetLocales()[CurrentLocale][key];
+        public static string Get(string key) => GetLocales().ContainsKey(CurrentLocale) ? GetLocales()[CurrentLocale][key] : GetLocales()["en_gb"][key];
 
     }
 }

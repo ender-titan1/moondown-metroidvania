@@ -1,7 +1,5 @@
 # This translation file contains default translations
-  It should be used for debugging;
-
-PAUSED = Game Paused;
+  It can be used for debugging;
 
 ####################;
 
@@ -29,3 +27,8 @@ SPECIAL = SPECIAL;
 SEARCH_ITEMS = Search items...;
 
 ####################;
+
+PAUSED = Game Paused;
+PAUSE_RESUME = Resume;
+PAUSE_SETTINGS = Settings;
+PAUSE_QUIT = Quit to menu;
