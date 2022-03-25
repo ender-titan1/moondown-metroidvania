@@ -176,7 +176,7 @@ namespace Moondown.Player
         public void EquipWeapon()
         {
             InventoryManager.Instance.Equip(DataPanel.Items.item);
-            UIInput.Instance.InventoryUI.GetComponentInChildren<DisplayInventory>().RefreshEquipment();
+            UIManager.Instance.InventoryUI.GetComponentInChildren<DisplayInventory>().RefreshEquipment();
         }
     }
 }

@@ -21,13 +21,14 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 using Moondown.UI.Inventory;
+using System;
 
 namespace Moondown.UI
 {
 
-    public class UIInput : MonoBehaviour
+    public class UIManager : MonoBehaviour
     {
-        public static UIInput Instance { get; private set; }
+        public static UIManager Instance { get; private set; }
 
         private MainControls controls;
 
@@ -104,7 +105,7 @@ namespace Moondown.UI
             controls.Enable();
         }
 
-        void PauseOrExitUI()
+        private void PauseOrExitUI()
         {
             if (isInInventory)
             {
@@ -123,24 +124,27 @@ namespace Moondown.UI
             }
             else if (isInPasue)
             {
-                pauseUI.SetActive(false);
-                Time.timeScale = 1;
-                isInPasue = false;
+                TogglePause(false);
             }
             else
             {
-                pauseUI.SetActive(true);
-                Time.timeScale = 0;
-                isInPasue = true;
+                TogglePause(true);
             }
         }
 
-        void Interact()
+        private void TogglePause(bool value)
+        {
+            pauseUI.SetActive(value);
+            Time.timeScale = Convert.ToInt32(!value);
+            isInPasue = value;
+        }
+
+        private void Interact()
         {
 
         }
 
-        void OpenInventoryUI()
+        private void OpenInventoryUI()
         {
             if (!isInInventory)
             {
@@ -157,5 +161,25 @@ namespace Moondown.UI
                 isInInventory = false;
             }
         }
+
+        #region Pause Menu
+
+        public void PauseQuit()
+        {
+            //TODO: add confirmation window
+            Application.Quit();
+        }
+
+        public void OpenSettings()
+        {
+            //TODO: add settings
+        }
+
+        public void Resume()
+        {
+            TogglePause(false);
+        }
+
+        #endregion
     }
 }

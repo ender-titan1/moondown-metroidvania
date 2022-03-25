@@ -115,7 +115,7 @@ namespace Moondown.Player.Movement
             grounded = IsGrounded();
 
             // moving
-            if (isMovementPressed && !UIInput.Instance.isInInventory)
+            if (isMovementPressed && !UIManager.Instance.isInInventory)
                 Move(movementAxis);
 
             // dashing
@@ -136,14 +136,14 @@ namespace Moondown.Player.Movement
 
         void Jump()
         {
-            if (grounded && !UIInput.Instance.isInInventory)
+            if (grounded && !UIManager.Instance.isInInventory)
             {
                 rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y + jumpVelocity);
                 return;
             }
 
             bool wallJump = CanWallJump(facing);
-            if (wallJump && !UIInput.Instance.isInInventory)
+            if (wallJump && !UIManager.Instance.isInInventory)
                 WallJump(facing);
         }
 
@@ -172,7 +172,7 @@ namespace Moondown.Player.Movement
 
         void Dash(float direction)
         {
-            if (!canDash || UIInput.Instance.isInInventory)
+            if (!canDash || UIManager.Instance.isInInventory)
                 return;
 
             canDash = false;
