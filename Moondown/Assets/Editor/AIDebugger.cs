@@ -17,6 +17,7 @@
 
 using Moondown;
 using Moondown.AI;
+using Moondown.Utility;
 using System;
 using System.Collections.Generic;
 using UnityEditor;
@@ -39,21 +40,21 @@ public class AIDebugger : EditorWindow
     {
         Label("Moondown AI Debugger");
         Space(10);
-        BeginHorizontal();
 
-        GenControllers();
+        MoondownWindowUtility.HorizontalLayout(
+            () =>
+            {
+                MoondownWindowUtility.VerticalLayout(GenControllers);
 
-        GenData();
-
-        EndHorizontal();
+                MoondownWindowUtility.VerticalLayout(GenData);
+            }
+        );
     }
 
     private void GenData()
     {
         if (current == null)
             return;
-
-        BeginVertical();
 
         Label("Name:", EditorStyles.boldLabel);
         Label(current.name);
@@ -66,25 +67,22 @@ public class AIDebugger : EditorWindow
         Label("Facing:", EditorStyles.boldLabel);
         Label(current.Facing.ToString());
         Space(5);
-
-        EndVertical();
     }
 
     private void GenControllers()
     {
-        BeginVertical();
 
         if (GameManager.Instance == null)
             return;
 
         foreach (Controller controller in GameManager.Instance.Controllers)
         {
-            CallbackButton(controller.Name, OnDropdownClicked);
+            MoondownWindowUtility.CallbackButton(controller.Name, OnDropdownClicked);
 
             foreach (Unit unit in controller.Units)
             {
                 if (clicked.ContainsKey(controller.Name) && clicked[controller.Name])
-                    CallbackButton(
+                    MoondownWindowUtility.CallbackButton(
                         "    " + unit.name, 
                         (text) => 
                         {
@@ -94,8 +92,6 @@ public class AIDebugger : EditorWindow
                     );
             }
         }
-
-        EndVertical();
     }
 
     private void OnDropdownClicked(string content)
@@ -106,12 +102,5 @@ public class AIDebugger : EditorWindow
             clicked.Add(content, true);
     }
 
-    private void CallbackButton(string text, Action<string> callback)
-    {
-        if (GUILayout.Button(text, EditorStyles.label))
-        {
-            callback(text);
-        }
-    }
 
 }

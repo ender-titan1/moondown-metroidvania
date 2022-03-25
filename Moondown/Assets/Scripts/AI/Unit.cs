@@ -71,13 +71,9 @@ namespace Moondown.AI
         private void Patrol()
         {
             if (transform.position.x == patrolLeft)
-            {
                 facing = Facing.Right;
-            }
             else if (transform.position.x == patrolRight)
-            {
                 facing = Facing.Left;
-            }
 
             float targetX = facing == Facing.Left ? patrolLeft : patrolRight;
             float movementAxis = (targetX - transform.position.x).ToAxis(0);
