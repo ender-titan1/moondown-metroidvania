@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-
 using Moondown.UI.Inventory;
 using System;
 
@@ -34,7 +33,7 @@ namespace Moondown.UI
 
         [Header("Inventory")]
         [SerializeField] private GameObject UI;
-        [SerializeField] private GameObject inventoryPostProcessing;
+        [SerializeField] private GameObject UIPostProcessing;
 
         [Header("Pause Menu")]
         [SerializeField] private GameObject pauseUI;
@@ -64,18 +63,7 @@ namespace Moondown.UI
                     isInInventory = false;
                 }
 
-                if (!isInPasue)
-                {
-                    pauseUI.SetActive(true);
-                    Time.timeScale = 0;
-                    isInPasue = true;
-                }
-                else
-                {
-                    pauseUI.SetActive(false);
-                    Time.timeScale = 1;
-                    isInPasue = false;
-                }
+                TogglePause(!isInPasue);
             };
 
             controls.Player.ExitUI.performed += _ =>
@@ -90,15 +78,13 @@ namespace Moondown.UI
                     }
 
                     UI.SetActive(false);
-                    inventoryPostProcessing.SetActive(false);
+                    UIPostProcessing.SetActive(false);
                     DisplayHUD.Toggle();
                     isInInventory = false;
                 }
                 else if (isInPasue)
                 {
-                    pauseUI.SetActive(false);
-                    Time.timeScale = 1;
-                    isInPasue = false;
+                    TogglePause(false);
                 }
             };
 
@@ -118,17 +104,13 @@ namespace Moondown.UI
                 }
 
                 UI.SetActive(false);
-                inventoryPostProcessing.SetActive(false);
+                UIPostProcessing.SetActive(false);
                 DisplayHUD.Toggle();
                 isInInventory = false;
             }
-            else if (isInPasue)
-            {
-                TogglePause(false);
-            }
             else
             {
-                TogglePause(true);
+                TogglePause(!isInPasue);
             }
         }
 
@@ -137,6 +119,7 @@ namespace Moondown.UI
             pauseUI.SetActive(value);
             Time.timeScale = Convert.ToInt32(!value);
             isInPasue = value;
+            UIPostProcessing.SetActive(value);
         }
 
         private void Interact()
@@ -148,14 +131,14 @@ namespace Moondown.UI
         {
             if (!isInInventory)
             {
-                inventoryPostProcessing.SetActive(true);
+                UIPostProcessing.SetActive(true);
                 UI.SetActive(true);
                 DisplayHUD.Toggle();
                 isInInventory = true;
             }
             else
             {
-                inventoryPostProcessing.SetActive(false);
+                UIPostProcessing.SetActive(false);
                 UI.SetActive(false);
                 DisplayHUD.Toggle();
                 isInInventory = false;

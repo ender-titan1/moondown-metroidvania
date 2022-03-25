@@ -114,9 +114,6 @@ namespace Moondown.UI.Localization
                 if (currentLocale.ContainsKey(text.text))
                 {
                     text.text = currentLocale[text.text];
-
-                    if (text.gameObject.GetComponent<DynamicText>() != null)
-                        text.gameObject.GetComponent<DynamicText>().Replace(true);
                 }
             }
 
