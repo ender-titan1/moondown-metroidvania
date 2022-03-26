@@ -18,8 +18,9 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Moondown.AI
+namespace Moondown.AI.Enemy
 {
+
     public class VisionCone : MonoBehaviour
     {
         private Unit unit;

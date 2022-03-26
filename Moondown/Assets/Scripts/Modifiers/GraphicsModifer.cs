@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Moondown.Player.Modules {
-    public abstract class GraphicsModule : AbstractModule
+namespace Moondown.Player.Modifiers 
+{
+    public abstract class GraphicsModifer : AbstractModifier
     {
         public override void setup()
         {

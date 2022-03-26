@@ -20,9 +20,9 @@ using UnityEngine;
 using Moondown.Player;
 
 
-namespace Moondown.Player.Modules
+namespace Moondown.Player.Modifiers
 {
-    public abstract class AbstractModule
+    public abstract class AbstractModifier
     {
         public virtual void setup()
         {

@@ -21,11 +21,11 @@ using Moondown.Environment.Effects;
 using static Moondown.Environment.Effects.LightingManager;
 using System.Threading.Tasks;
 
-namespace Moondown.Player.Modules
+namespace Moondown.Player.Modifiers
 {
-    public class BasePlayerModule : GraphicsModule
+    public class BasePlayerModifier : GraphicsModifer
     {
-        public BasePlayerModule() => setup();
+        public BasePlayerModifier() => setup();
 
         public override void OnHeal(int amount)
         {

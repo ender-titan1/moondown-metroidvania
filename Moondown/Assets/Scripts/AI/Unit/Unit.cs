@@ -17,10 +17,12 @@
 
 using Moondown.Player.Movement;
 using Moondown.Utility;
+using Moondown.AI.Enemy;
 using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+
 
 namespace Moondown.AI
 {

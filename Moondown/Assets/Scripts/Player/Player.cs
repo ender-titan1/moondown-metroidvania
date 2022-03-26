@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Moondown.WeaponSystem;
 using Moondown.Inventory;
-using Moondown.Player.Modules;
+using Moondown.Player.Modifiers;
 using Moondown.Environment;
 using Moondown.UI.Localization;
 using Moondown.UI;
@@ -65,7 +65,7 @@ namespace Moondown.Player
         public int charge;
         public int MaxCharge { get; set; } = 3;
 
-        public List<AbstractModule> modules = new List<AbstractModule> { };
+        public List<AbstractModifier> modules = new List<AbstractModifier> { };
 
         [SerializeField] private GameObject LowHealthPP;
 
@@ -88,7 +88,7 @@ namespace Moondown.Player
         {
             DisplayHUD.Init(GameObject.FindGameObjectWithTag("hp bar"), GameObject.FindGameObjectWithTag("charge bar"));
 
-            modules.Add(new BasePlayerModule());
+            modules.Add(new BasePlayerModifier());
 
             OnRespawn();
 
