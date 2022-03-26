@@ -14,15 +14,18 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-namespace Moondown.Utility
+namespace Moondown.AI.Enemy.Modules.Sensor
 {
-    public enum Facing
+    public struct SensorResult
     {
-        Left = -1,
-        Right = 1
+        public bool found;
+        public float amount;
+
+        public SensorResult(bool found, float amount)
+        {
+            this.found = found;
+            this.amount = amount;
+        }
     }
 }

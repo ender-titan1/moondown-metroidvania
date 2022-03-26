@@ -14,15 +14,16 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-using System.Collections;
-using System.Collections.Generic;
+
+using Moondown.AI.Enemy.Modules.Sensor;
 using UnityEngine;
 
-namespace Moondown.Utility
+namespace Moondown.AI.Enemy.Modules
 {
-    public enum Facing
+    public interface ISensor
     {
-        Left = -1,
-        Right = 1
+        SensorResult Search(GameObject collison);
+
+        void Toggle(bool value);
     }
 }

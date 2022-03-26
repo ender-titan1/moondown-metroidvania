@@ -15,14 +15,27 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using Moondown.Player.Movement;
+using Moondown.Utility;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Moondown.AI.Enemy
 {
-    public class GroundedEnemy : MonoBehaviour
+    public class GroundedEnemy : Unit
     {
+        protected override void Move(float target)
+        {
+            float targetX = Mathf.Clamp(target, zoneLeft.x, zoneRight.x);
+            float movementAxis = (targetX - transform.position.x).ToAxis(0);
 
+            facing = (Facing)movementAxis;
+
+            GetComponent<Rigidbody2D>().velocity = new Vector2(
+                 movementAxis * speed,
+                0
+            );
+        }
     }
 }

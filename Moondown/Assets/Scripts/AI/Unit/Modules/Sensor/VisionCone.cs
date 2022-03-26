@@ -15,6 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using Moondown.AI.Enemy.Modules.Sensor;
 using UnityEditor;
 using UnityEngine;
 
@@ -23,36 +24,20 @@ namespace Moondown.AI.Enemy
 
     public class VisionCone : MonoBehaviour
     {
+        private VisualSensor sensor;
         private Unit unit;
 
         private void OnEnable()
         {
-            unit = GetComponentInParent<Unit>();
-        }
-
-        private void Update()
-        {
-            Vector3 playerPos = Player.Player.Instance.transform.position;
-            playerPos.z = 0f;
-
-            Vector3 objectPos = transform.position;
-            playerPos.x -= objectPos.x;
-            playerPos.y -= objectPos.y;
-
-            float angle = Mathf.Atan2(playerPos.y, playerPos.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            sensor = GetComponentInParent<VisualSensor>();
+            unit = GetComponentInParent<VisualSensor>().GetComponentInParent<Unit>();
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            Debug.Log(collision.name);
-
             if (collision.CompareTag("Player"))
             {
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, collision.transform.position - transform.position, 10, layerMask: GameManager.Instance.maskAI);
-
-                if (hit.collider != null && hit.collider.CompareTag("Player"))
-                    unit.PlayerSpotted();
+                unit.CheckIfSpotted(sensor.Search(collision.gameObject));   
             }
         }
     }

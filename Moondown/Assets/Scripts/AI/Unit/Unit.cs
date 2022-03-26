@@ -15,14 +15,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using Moondown.Player.Movement;
 using Moondown.Utility;
 using Moondown.AI.Enemy;
+using Moondown.AI.Enemy.Modules.Sensor;
 using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-
 
 namespace Moondown.AI
 {
@@ -30,17 +29,19 @@ namespace Moondown.AI
     {
         private bool engaged;
         private Controller controller;
-        private Facing facing = Facing.Left;
         private ControllerGroup group;
         private ITargetable target;
+        protected Facing facing = Facing.Left;
 
         [SerializeField] private float patrolLeft;
         [SerializeField] private float patrolRight;
 
-        [SerializeField] private Vector2 zoneLeft;
-        [SerializeField] private Vector2 zoneRight;
-        [SerializeField] private BoxCollider2D zone;
-        [SerializeField] private float speed = 5;
+        [SerializeField] protected Vector2 zoneLeft;
+        [SerializeField] protected Vector2 zoneRight;
+        [SerializeField] protected BoxCollider2D zone;
+        [SerializeField] protected float speed = 5;
+
+        private float playerFound = 0;
 
         public Facing Facing => facing;
         public Controller Controller => controller;
@@ -72,21 +73,7 @@ namespace Moondown.AI
 
         private void Patrol()
         {
-            if (transform.position.x == patrolLeft)
-                facing = Facing.Right;
-            else if (transform.position.x == patrolRight)
-                facing = Facing.Left;
-
-            float targetX = facing == Facing.Left ? patrolLeft : patrolRight;
-            float movementAxis = (targetX - transform.position.x).ToAxis(0);
-
-            facing = (Facing)movementAxis;
-
-            GetComponent<Rigidbody2D>().velocity = new Vector2(
-                 movementAxis * speed,
-                0
-            );
-
+            Move(facing == Facing.Left ? patrolLeft : patrolRight);
         }
 
         private void Pathfind()
@@ -97,17 +84,11 @@ namespace Moondown.AI
                 return;
             }
 
-            // Later the movement sholud be handled by the enemy class
-            // check if grounded is required
-            float targetX = Mathf.Clamp(target.GetGameObject().transform.position.x, zoneLeft.x, zoneRight.x);
-            float movementAxis = (targetX - transform.position.x).ToAxis(0);
+            Move(target.GetGameObject().transform.position.x);
+        }
 
-            facing = (Facing)movementAxis;
-
-            GetComponent<Rigidbody2D>().velocity = new Vector2(
-                 movementAxis * speed,
-                0
-            );
+        protected virtual void Move(float target)
+        {
 
         }
 
@@ -136,7 +117,21 @@ namespace Moondown.AI
             return false;
         }
 
-        public void PlayerSpotted()
+        public void CheckIfSpotted(SensorResult result)
+        {
+            if (result.found)
+            {
+                playerFound += result.amount;
+            }
+
+            if (playerFound >= 1)
+            {
+                playerFound = 0;
+                PlayerSpotted();
+            }
+        } 
+
+        private void PlayerSpotted()
         {
             if (this.controller != null)
                 return;
