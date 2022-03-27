@@ -74,6 +74,13 @@ namespace Moondown.AI
         private void Patrol()
         {
             Move(facing == Facing.Left ? patrolLeft : patrolRight);
+            Flip(facing);
+        }
+
+        protected void Flip(Facing direction)
+        {
+            Vector2 newScale = transform.localScale * (int)direction;
+            transform.localScale = newScale;
         }
 
         private void Pathfind()

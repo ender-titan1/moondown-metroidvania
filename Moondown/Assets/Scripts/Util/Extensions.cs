@@ -113,7 +113,7 @@ namespace Moondown.Utility
 
             return stacks;
         }
-
+        
         public static string CapitalizeFirst(this string input)
         {
             return input switch
@@ -122,6 +122,27 @@ namespace Moondown.Utility
                 "" => throw new ArgumentException($"{nameof(input)} cannot be empty", nameof(input)),
                 _ => input[0].ToString().ToUpper() + input.Substring(1)
             };
+        }
+
+        public static bool In(this Cone cone, Predicate<Collider2D> check, GameObject coneObject)
+        {
+            ContactFilter2D filter = new ContactFilter2D()
+            {
+                layerMask = GameManager.Instance.maskAI,
+                useLayerMask = true
+            };
+
+            List<Collider2D> results = new List<Collider2D>();
+
+            coneObject.GetComponent<Collider2D>().OverlapCollider(filter, results);
+
+            foreach (Collider2D collider in results)
+            {
+                if (check(collider))
+                    return true;
+            }
+
+            return false;
         }
     }
 }

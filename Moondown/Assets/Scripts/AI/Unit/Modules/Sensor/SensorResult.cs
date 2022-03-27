@@ -19,6 +19,8 @@ namespace Moondown.AI.Enemy.Modules.Sensor
 {
     public struct SensorResult
     {
+        public static SensorResult failed = new SensorResult(false, 0);
+
         public bool found;
         public float amount;
 

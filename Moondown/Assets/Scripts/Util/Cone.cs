@@ -15,30 +15,40 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using Moondown.AI.Enemy.Modules.Sensor;
-using UnityEditor;
 using UnityEngine;
 
-namespace Moondown.AI.Enemy
+namespace Moondown.Utility
 {
-
-    public class VisionCone : MonoBehaviour
+    [System.Serializable]
+    public struct Cone
     {
-        private VisualSensor sensor;
-        private Unit unit;
+        public float range;
+        public float size;
+        public Vector2 origin;
 
-        private void OnEnable()
+        public Vector2 Sample1
         {
-            sensor = GetComponentInParent<VisualSensor>();
-            unit = GetComponentInParent<VisualSensor>().GetComponentInParent<Unit>();
-        }
-
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (collision.CompareTag("Player"))
+            get
             {
-                unit.CheckIfSpotted(sensor.Search(collision.gameObject));   
+                return new Vector2(SampleCenter.x, SampleCenter.y + size / 2);
             }
         }
+
+        public Vector2 Sample2
+        {
+            get
+            {
+                return new Vector2(SampleCenter.x, SampleCenter.y - size / 2);
+            }
+        }
+
+        public Vector2 SampleCenter
+        {
+            get
+            {
+                return new Vector2(origin.x + range, origin.y);
+            }
+        }
+
     }
 }
