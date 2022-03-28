@@ -19,6 +19,7 @@ using Moondown.Player.Movement;
 using Moondown.Utility;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace Moondown.AI.Enemy
@@ -27,12 +28,11 @@ namespace Moondown.AI.Enemy
     {
         protected override void Move(float target)
         {
-            
             float targetX = Mathf.Clamp(target, zoneLeft.x, zoneRight.x);
             float movementAxis = (targetX - transform.position.x).ToAxis(0);
 
             facing = (Facing)movementAxis;
-            Debug.Log(facing);
+            transform.transform.localScale = (int)facing * -1 * originalSize;
 
             GetComponent<Rigidbody2D>().velocity = new Vector2(
                  movementAxis * speed,

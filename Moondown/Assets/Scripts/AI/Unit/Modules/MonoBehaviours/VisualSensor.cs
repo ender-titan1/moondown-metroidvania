@@ -1,18 +1,21 @@
 ﻿using Moondown.Utility;
 using System.Collections;
 using UnityEngine;
+using System;
+using UnityEditor;
 
 namespace Moondown.AI.Enemy.Modules.Sensor
 {
     using Moondown.Player;
-    using System;
-    using UnityEditor;
 
     public class VisualSensor : MonoBehaviour, ISensor
     {
         private Unit unit;
 
         [SerializeField] private Cone cone;
+        [SerializeField] private bool debugMode;
+
+        private float originalRange;
 
         private void Awake()
         {
@@ -20,7 +23,7 @@ namespace Moondown.AI.Enemy.Modules.Sensor
 
             cone.origin = transform.position;
 
-            GameObject area = new GameObject($"{name} Area");
+            GameObject area = new GameObject($"{name}Area");
             area.transform.SetParent(transform);
 
             PolygonCollider2D collider = area.AddComponent<PolygonCollider2D>();
@@ -35,6 +38,8 @@ namespace Moondown.AI.Enemy.Modules.Sensor
             collider.pathCount = 1;
             collider.SetPath(0, points);
             collider.isTrigger = true;
+
+            originalRange = cone.range;
         }
 
         private void Update()
@@ -43,7 +48,7 @@ namespace Moondown.AI.Enemy.Modules.Sensor
 
             cone.origin = transform.position;
 
-            cone.range *= (int)unit.Facing;
+            cone.range = ((int)unit.Facing) * originalRange;
         }
 
         public SensorResult Search()
@@ -73,5 +78,29 @@ namespace Moondown.AI.Enemy.Modules.Sensor
         {
             gameObject.SetActive(value);
         }
+
+
+#if UNITY_EDITOR
+
+        private void OnDrawGizmos()
+        {
+            if (GetComponentInParent<Unit>().gameObject != Selection.activeGameObject && gameObject != Selection.activeGameObject && !debugMode)
+                return;
+
+            Cone visibleCone = new Cone()
+            {
+                origin = transform.position,
+                size = cone.size,
+                range = cone.range 
+            };
+
+            Handles.color = Color.cyan;
+            Handles.DrawPolyLine(visibleCone.origin, visibleCone.Sample1, visibleCone.Sample2, visibleCone.origin);
+
+            Handles.color = new Color(0, 1, 1, 0.25f);
+            Handles.DrawLine(visibleCone.origin, visibleCone.SampleCenter);
+        }
+
+#endif
     }
 }

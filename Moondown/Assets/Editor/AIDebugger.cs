@@ -71,7 +71,6 @@ public class AIDebugger : EditorWindow
 
     private void GenControllers()
     {
-
         if (GameManager.Instance == null)
             return;
 

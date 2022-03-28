@@ -47,6 +47,8 @@ namespace Moondown.AI
         public Controller Controller => controller;
         public ControllerGroup Group => group;
 
+        protected Vector2 originalSize;
+
         private void OnEnable()
         {
             group = new ControllerGroup()
@@ -61,6 +63,8 @@ namespace Moondown.AI
             Bounds zoneBounds = zone.bounds;
             zoneRight = new Vector2(zoneBounds.center.x + zoneBounds.extents.x, zoneBounds.center.y + zoneBounds.extents.y);
             zoneLeft = new Vector2(zoneBounds.center.x - zoneBounds.extents.x, zoneBounds.center.y - zoneBounds.extents.y);
+
+            originalSize = transform.localScale;
         }
 
         private void Update()
@@ -74,14 +78,8 @@ namespace Moondown.AI
         private void Patrol()
         {
             Move(facing == Facing.Left ? patrolLeft : patrolRight);
-            Flip(facing);
         }
 
-        protected void Flip(Facing direction)
-        {
-            Vector2 newScale = transform.localScale * (int)direction;
-            transform.localScale = newScale;
-        }
 
         private void Pathfind()
         {
