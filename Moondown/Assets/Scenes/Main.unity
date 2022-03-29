@@ -11957,7 +11957,7 @@ MonoBehaviour:
   zoneLeft: {x: 0, y: 0}
   zoneRight: {x: 0, y: 0}
   zone: {fileID: 587830542}
-  speed: 5
+  data: {fileID: 11400000, guid: 6981197dbf5c03940b61c2b8c83c5cd3, type: 2}
 --- !u!212 &2136486643
 SpriteRenderer:
   m_ObjectHideFlags: 0

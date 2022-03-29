@@ -26,7 +26,7 @@ namespace Moondown.WeaponSystem.Attacks
 {
     using Moondown.Player;
     
-    public sealed class MeeleAttack
+    public sealed class MeleeAttack
     {
         private readonly MainControls controls;
         private readonly BoxCollider2D collider;
@@ -35,7 +35,7 @@ namespace Moondown.WeaponSystem.Attacks
 
         public bool CanAttack { get; set; } = true;
 
-        public MeeleAttack(BoxCollider2D collider, Transform transform, LayerMask mask)
+        public MeleeAttack(BoxCollider2D collider, Transform transform, LayerMask mask)
         {
             controls = new MainControls();
 
@@ -54,7 +54,7 @@ namespace Moondown.WeaponSystem.Attacks
 
             RaycastHit2D[] hits = Physics2D.BoxCastAll(
                 new Vector2(
-                    transform.position.x + InventoryManager.Instance.equiped.meele.Range * (int)PlayerMovement.Instance.facing,
+                    transform.position.x + InventoryManager.Instance.equiped.melee.Range * (int)PlayerMovement.Instance.facing,
                     transform.position.y
                 ),
                 collider.size,
@@ -72,7 +72,7 @@ namespace Moondown.WeaponSystem.Attacks
                 if (hit.collider.Has<EnvironmentBehaviour>() && hit.collider.GetComponent<EnvironmentBehaviour>().attackable)
                 {
                     EnvironmentBehaviour behaviour = hit.collider.GetComponent<EnvironmentBehaviour>();
-                    behaviour.healthPoints -= InventoryManager.Instance.equiped.meele.Damage;
+                    behaviour.healthPoints -= InventoryManager.Instance.equiped.melee.Damage;
                 }
                 else if (hit.collider.Has<RespawnLocation>() && hit.collider.GetComponent<RespawnLocation>().cost > 0)
                 {

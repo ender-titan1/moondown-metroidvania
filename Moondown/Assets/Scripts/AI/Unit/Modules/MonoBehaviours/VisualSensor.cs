@@ -13,7 +13,6 @@ namespace Moondown.AI.Enemy.Modules.Sensor
         private Unit unit;
 
         [SerializeField] private Cone cone;
-        [SerializeField] private bool debugMode;
 
         private float originalRange;
 
@@ -44,8 +43,6 @@ namespace Moondown.AI.Enemy.Modules.Sensor
 
         private void Update()
         {
-            Search();
-
             cone.origin = transform.position;
 
             cone.range = ((int)unit.Facing) * originalRange;
@@ -78,29 +75,5 @@ namespace Moondown.AI.Enemy.Modules.Sensor
         {
             gameObject.SetActive(value);
         }
-
-
-#if UNITY_EDITOR
-
-        private void OnDrawGizmos()
-        {
-            if (GetComponentInParent<Unit>().gameObject != Selection.activeGameObject && gameObject != Selection.activeGameObject && !debugMode)
-                return;
-
-            Cone visibleCone = new Cone()
-            {
-                origin = transform.position,
-                size = cone.size,
-                range = cone.range 
-            };
-
-            Handles.color = Color.cyan;
-            Handles.DrawPolyLine(visibleCone.origin, visibleCone.Sample1, visibleCone.Sample2, visibleCone.origin);
-
-            Handles.color = new Color(0, 1, 1, 0.25f);
-            Handles.DrawLine(visibleCone.origin, visibleCone.SampleCenter);
-        }
-
-#endif
     }
 }

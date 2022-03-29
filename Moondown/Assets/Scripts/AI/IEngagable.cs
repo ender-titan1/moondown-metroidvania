@@ -20,8 +20,11 @@ using UnityEngine;
 
 namespace Moondown.AI
 {
-    public interface ITargetable
+    public interface IEngagable
     {
         GameObject GetGameObject();
+
+        float MeleeStrength { get; }
+        float RangedStrength { get; }
     }
 }

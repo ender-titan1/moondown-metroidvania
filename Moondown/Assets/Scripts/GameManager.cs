@@ -28,6 +28,8 @@ namespace Moondown
 
         public LayerMask maskAI;
 
+        public float playerStrengthMultiplier = 2;
+
         private void Awake()
         {
             if (Instance == null)

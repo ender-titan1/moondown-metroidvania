@@ -14,19 +14,19 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
-namespace Moondown.Inventory
+namespace Moondown.AI.Enemy
 {
-    public enum ItemType
+    [CreateAssetMenu(fileName = "EnemyData", menuName = "Enemies/EnemyData", order = 100)]
+    public class EnemyData : ScriptableObject
     {
-        MELEE_WEAPON,
-        RANGED_WEAPON,
-        ARMOUR,
-        MODULE,
-        TOOL,
-        ITEM
+        public string nameKey;
+        public string descKey;
+
+        public float meleeStrength;
+        public float rangedStrength;
+        public float speed;
     }
 }

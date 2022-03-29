@@ -15,7 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using Moondown.Player.Movement;
+using Moondown.AI.Enemy.Modules.Sensor;
 using Moondown.Utility;
 using System.Collections;
 using System.Collections.Generic;
@@ -35,9 +35,17 @@ namespace Moondown.AI.Enemy
             transform.transform.localScale = (int)facing * -1 * originalSize;
 
             GetComponent<Rigidbody2D>().velocity = new Vector2(
-                 movementAxis * speed,
+                 movementAxis * data.speed,
                 0
             );
+        }
+
+        private new void Update()
+        {
+            Debug.Log(GetComponentInChildren<VisualSensor>().Search().found);
+            CheckIfSpotted(GetComponentInChildren<VisualSensor>().Search());
+
+            base.Update();
         }
     }
 }

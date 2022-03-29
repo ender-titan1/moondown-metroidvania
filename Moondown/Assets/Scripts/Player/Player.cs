@@ -35,7 +35,7 @@ using Moondown.AI;
 namespace Moondown.Player
 {
     [RequireComponent(typeof(BoxCollider2D))]
-    public class Player : MonoBehaviour, ITargetable
+    public class Player : MonoBehaviour, IEngagable
     {
         // singelton
         public static Player Instance { get; private set; }
@@ -73,7 +73,11 @@ namespace Moondown.Player
 
         public GameObject LowHealthPostProcessing => LowHealthPP;
 
-        private MeeleAttack attack;
+        public float MeleeStrength => InventoryManager.Instance.equiped.melee.Damage * GameManager.Instance.playerStrengthMultiplier;
+
+        public float RangedStrength => throw new NotImplementedException();
+
+        private MeleeAttack attack;
         [SerializeField] private LayerMask mask;
 
         private void Awake()
@@ -81,7 +85,7 @@ namespace Moondown.Player
             if (Instance == null)
                 Instance = this;
 
-            attack = new MeeleAttack(GetComponent<BoxCollider2D>(), transform, mask);
+            attack = new MeleeAttack(GetComponent<BoxCollider2D>(), transform, mask);
         }
 
         private void Start()

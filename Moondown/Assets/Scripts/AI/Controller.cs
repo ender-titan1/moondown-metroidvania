@@ -16,10 +16,12 @@
 */
 
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace Moondown.AI
 {
     using Moondown.Player;
+    using UnityEngine;
 
     public class Controller 
     {
@@ -28,21 +30,37 @@ namespace Moondown.AI
         public string Name => group.name;
         public Unit[] Units => group.units.ToArray();
 
+        public Timer timer;
+
         public Controller(ControllerGroup group)
         {
             this.group = group;
             SetTarget(null, group.units.ToArray());
             GameManager.Instance.Controllers.Add(this);
+
+            timer = new Timer(500);
+            timer.AutoReset = true;
+
+            timer.Elapsed += (sender, args) => ControllerTick();
         }
 
-        public void SetTarget(ITargetable target, params Unit[] units)
+        ~Controller()
+        {
+            timer.Dispose();
+        }
+
+        public void ControllerTick()
+        {
+            Debug.Log("Tick");
+        }
+
+        public void SetTarget(IEngagable target, params Unit[] units)
         {
             target ??= Player.Instance;
 
             foreach (Unit unit in units)
-            {
                 unit.SetTarget(target);
-            }
+
         }
     }
 }

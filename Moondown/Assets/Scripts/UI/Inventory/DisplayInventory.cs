@@ -137,14 +137,14 @@ namespace Moondown.UI.Inventory
 
         public void RefreshEquipment()
         {
-            if (InventoryManager.Instance.equiped.meele == null)
+            if (InventoryManager.Instance.equiped.melee == null)
             {
                 equiment.GetComponent<RawImage>().enabled = false;
                 return;
             }
 
             equiment.GetComponent<RawImage>().enabled = true;
-            equiment.GetComponent<RawImage>().texture = InventoryManager.Instance.equiped.meele.data.image;
+            equiment.GetComponent<RawImage>().texture = InventoryManager.Instance.equiped.melee.data.image;
         }
     }
 }

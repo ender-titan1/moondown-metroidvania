@@ -12,7 +12,7 @@ namespace Moondown.Inventory
     {
         public struct PlayerEquipment
         {
-            public Weapon meele;
+            public Weapon melee;
         }
 
         public static InventoryManager Instance { get; set; } = new InventoryManager();
@@ -53,7 +53,7 @@ namespace Moondown.Inventory
 
                 switch (item.data.type)
                 {
-                    case ItemType.MEELE_WEAPON:
+                    case ItemType.MELEE_WEAPON:
                     case ItemType.RANGED_WEAPON:
                         Weapons.Add(item);
                         break;
@@ -91,7 +91,7 @@ namespace Moondown.Inventory
         public void Equip(Item item)
         {
             if (item is Weapon weapon)
-                equiped.meele = weapon;
+                equiped.melee = weapon;
         }
     }
 }

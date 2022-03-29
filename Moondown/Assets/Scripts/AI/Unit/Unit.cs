@@ -25,12 +25,12 @@ using UnityEngine;
 
 namespace Moondown.AI
 {
-    public class Unit : MonoBehaviour
+    public class Unit : MonoBehaviour, IEngagable
     {
         private bool engaged;
         private Controller controller;
         private ControllerGroup group;
-        private ITargetable target;
+        private IEngagable target;
         protected Facing facing = Facing.Left;
 
         [SerializeField] private float patrolLeft;
@@ -39,13 +39,16 @@ namespace Moondown.AI
         [SerializeField] protected Vector2 zoneLeft;
         [SerializeField] protected Vector2 zoneRight;
         [SerializeField] protected BoxCollider2D zone;
-        [SerializeField] protected float speed = 5;
-
+        [SerializeField] protected EnemyData data;
+ 
         private float playerFound = 0;
 
         public Facing Facing => facing;
         public Controller Controller => controller;
         public ControllerGroup Group => group;
+
+        public float MeleeStrength => data.meleeStrength;
+        public float RangedStrength => data.rangedStrength;
 
         protected Vector2 originalSize;
 
@@ -67,7 +70,7 @@ namespace Moondown.AI
             originalSize = transform.localScale;
         }
 
-        private void Update()
+        protected void Update()
         {
             if (engaged)
                 Pathfind();
@@ -79,7 +82,6 @@ namespace Moondown.AI
         {
             Move(facing == Facing.Left ? patrolLeft : patrolRight);
         }
-
 
         private void Pathfind()
         {
@@ -125,9 +127,8 @@ namespace Moondown.AI
         public void CheckIfSpotted(SensorResult result)
         {
             if (result.found)
-            {
                 playerFound += result.amount;
-            }
+
 
             if (playerFound >= 1)
             {
@@ -156,11 +157,12 @@ namespace Moondown.AI
             this.controller = controller;
         }
 
-        public void SetTarget(ITargetable target)
+        public void SetTarget(IEngagable target)
         {
             this.target = target;
         }
 
+        public GameObject GetGameObject() => gameObject;
 
 #if UNITY_EDITOR
         private void OnDrawGizmos()
