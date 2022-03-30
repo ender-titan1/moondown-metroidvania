@@ -23,6 +23,11 @@ namespace Moondown
 {
     public class GameManager : MonoBehaviour
     {
+    
+        private delegate void BlankDelegate();
+    
+        public event BlankDelegate tick;
+    
         public static GameManager Instance { get; private set; }
         public List<Controller> Controllers { get; set; } = new List<Controller>();
 
@@ -35,6 +40,11 @@ namespace Moondown
             if (Instance == null)
                 Instance  = this;
 
+        }
+        
+        private void Update()
+        {
+            tick();
         }
     }
 }
