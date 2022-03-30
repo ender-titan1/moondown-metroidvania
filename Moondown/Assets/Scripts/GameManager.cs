@@ -16,6 +16,7 @@
 */
 
 using Moondown.AI;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,12 +24,10 @@ namespace Moondown
 {
     public class GameManager : MonoBehaviour
     {
-    
-        private delegate void BlankDelegate();
-    
-        public event BlankDelegate tick;
-    
         public static GameManager Instance { get; private set; }
+        
+        public static event Action Tick;
+    
         public List<Controller> Controllers { get; set; } = new List<Controller>();
 
         public LayerMask maskAI;
@@ -40,11 +39,13 @@ namespace Moondown
             if (Instance == null)
                 Instance  = this;
 
+
+            InvokeRepeating(nameof(ControllerTick), 0, 0.5f);
         }
-        
-        private void Update()
+       
+        private void ControllerTick()
         {
-            tick();
+            Tick?.Invoke();
         }
     }
 }

@@ -21,6 +21,7 @@ using System.Timers;
 namespace Moondown.AI
 {
     using Moondown.Player;
+    using System.Collections.Generic;
     using UnityEngine;
 
     public class Controller 
@@ -30,28 +31,24 @@ namespace Moondown.AI
         public string Name => group.name;
         public Unit[] Units => group.units.ToArray();
 
-        public Timer timer;
+        public List<IEngagable> potentialTargets = new List<IEngagable>();
+
 
         public Controller(ControllerGroup group)
         {
             this.group = group;
+
+            potentialTargets.Add(Player.Instance);
+
             SetTarget(null, group.units.ToArray());
             GameManager.Instance.Controllers.Add(this);
 
-            timer = new Timer(500);
-            timer.AutoReset = true;
-
-            timer.Elapsed += (sender, args) => ControllerTick();
+            GameManager.Tick += Tick;
         }
 
-        ~Controller()
+        private void Tick()
         {
-            timer.Dispose();
-        }
 
-        public void ControllerTick()
-        {
-            Debug.Log("Tick");
         }
 
         public void SetTarget(IEngagable target, params Unit[] units)

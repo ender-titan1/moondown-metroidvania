@@ -24,5 +24,31 @@ namespace Moondown.AI
     {
         public List<Unit> units;
         public string name;
+
+        public float TotalMeleeStrength
+        {
+            get
+            {
+                float value = 0;
+
+                foreach (Unit unit in units)
+                    value += unit.MeleeStrength;
+
+                return value;
+            }
+        }
+
+        public float TotalRangedStrength
+        {
+            get
+            {
+                float value = 0;
+
+                foreach (Unit unit in units)
+                    value += unit.RangedStrength;
+
+                return value;
+            }
+        }
     }
 }
