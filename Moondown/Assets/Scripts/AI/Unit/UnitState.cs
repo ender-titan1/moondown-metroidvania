@@ -15,36 +15,28 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using Moondown.AI.Enemy.Modules.Sensor;
 using Moondown.Utility;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
 
 namespace Moondown.AI.Enemy
 {
-    public class GroundedEnemy : Unit
+    public abstract class UnitState
     {
-        public override void Move(float target)
+        public abstract void Execute(Unit unit);
+
+        public class Idle : UnitState
         {
-            float targetX = Mathf.Clamp(target, zoneLeft.x, zoneRight.x);
-            float movementAxis = (targetX - transform.position.x).ToAxis(0);
-
-            facing = (Facing)movementAxis;
-            transform.transform.localScale = (int)facing * -1 * originalSize;
-
-            GetComponent<Rigidbody2D>().velocity = new Vector2(
-                 movementAxis * data.speed,
-                0
-            );
+            public override void Execute(Unit unit)
+            {
+                unit.Move(unit.Facing == Facing.Left ? unit.patrolLeft : unit.patrolRight);
+            }
         }
 
-        private new void Update()
+        public class Engaged : UnitState
         {
-            CheckIfSpotted(GetComponentInChildren<VisualSensor>().Search());
-
-            base.Update();
+            public override void Execute(Unit unit)
+            {
+                unit.Move(unit.Target.GetGameObject().transform.position.x);
+            }
         }
     }
 }

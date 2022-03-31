@@ -17,12 +17,13 @@
 
 using System.Threading.Tasks;
 using System.Timers;
+using Moondown.AI.Enemy.Modules.Sensor;
+using Moondown.Player;
+using System.Collections.Generic;
 
 namespace Moondown.AI
 {
     using Moondown.Player;
-    using System.Collections.Generic;
-    using UnityEngine;
 
     public class Controller 
     {
@@ -48,7 +49,20 @@ namespace Moondown.AI
 
         private void Tick()
         {
+            bool hasLineOfSight = false;
 
+            foreach (Unit unit in Units)
+            {
+                if (hasLineOfSight)
+                    break;
+
+                hasLineOfSight = unit.GetComponentInChildren<VisualSensor>().Search().found;
+            }
+
+            if (hasLineOfSight)
+            {
+
+            }
         }
 
         public void SetTarget(IEngagable target, params Unit[] units)

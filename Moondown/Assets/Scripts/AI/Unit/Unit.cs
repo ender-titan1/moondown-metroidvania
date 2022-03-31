@@ -27,14 +27,15 @@ namespace Moondown.AI
 {
     public class Unit : MonoBehaviour, IEngagable
     {
-        private bool engaged;
+        private UnitState state = new UnitState.Idle();
+
         private Controller controller;
         private ControllerGroup group;
         private IEngagable target;
         protected Facing facing = Facing.Left;
 
-        [SerializeField] private float patrolLeft;
-        [SerializeField] private float patrolRight;
+        public float patrolLeft;
+        public float patrolRight;
 
         [SerializeField] protected Vector2 zoneLeft;
         [SerializeField] protected Vector2 zoneRight;
@@ -49,6 +50,8 @@ namespace Moondown.AI
 
         public float MeleeStrength => data.meleeStrength;
         public float RangedStrength => data.rangedStrength;
+
+        public IEngagable Target => target;
 
         protected Vector2 originalSize;
 
@@ -70,59 +73,12 @@ namespace Moondown.AI
             originalSize = transform.localScale;
         }
 
-        protected void Update()
+        private void Update()
         {
-            if (engaged)
-                Pathfind();
-            else
-                Patrol();
+            state.Execute(this);
         }
 
-        private void Patrol()
-        {
-            Move(facing == Facing.Left ? patrolLeft : patrolRight);
-        }
-
-        private void Pathfind()
-        {
-            if (CheckTarget())
-            {
-                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                return;
-            }
-
-            Move(target.GetGameObject().transform.position.x);
-        }
-
-        protected virtual void Move(float target)
-        {
-
-        }
-
-        private bool CheckTarget()
-        {
-            RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, 10, Vector2.zero);
-            foreach (RaycastHit2D hit in hits)
-            {
-                if (hit.collider.CompareTag(target.GetGameObject().tag))
-                {
-                    RaycastHit2D check = Physics2D.Raycast(transform.position, hit.transform.position - transform.position, 10, layerMask: GameManager.Instance.maskAI);
-
-                    DrawDebugLine(hit);
-
-                    if (check.collider == null)
-                        return false;
-
-                    if (check.collider.CompareTag(target.GetGameObject().tag))
-                    {
-                        return true;
-                    }
-                }
-
-            }
-
-            return false;
-        }
+        public virtual void Move(float target) { }
 
         public void CheckIfSpotted(SensorResult result)
         {
@@ -147,7 +103,7 @@ namespace Moondown.AI
             foreach (Unit unit in group.units)
             {
                 unit.SetController(controller);
-                unit.engaged = true;
+                state = new UnitState.Engaged();
             }
 
         }
@@ -172,18 +128,6 @@ namespace Moondown.AI
 
             Handles.color = Color.green;
             Handles.DrawWireDisc(transform.position, Vector3.back, 10);
-        }
-
-        private void DrawDebugLine(RaycastHit2D hit)
-        {
-            if (Selection.activeGameObject != gameObject)
-                return;
-
-            Debug.DrawLine(transform.position, hit.transform.position, Color.green);
-        }
-#else
-        private void DrawDebugLine(RaycastHit2D hit)
-        {
         }
 #endif
     }
