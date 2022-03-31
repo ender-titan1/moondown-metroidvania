@@ -25,9 +25,11 @@ using UnityEngine;
 
 namespace Moondown.AI
 {
+    using Moondown.Player;
+
     public class Unit : MonoBehaviour, IEngagable
     {
-        private UnitState state = new UnitState.Idle();
+        protected UnitState state = new UnitState.Idle();
 
         private Controller controller;
         private ControllerGroup group;
@@ -55,6 +57,8 @@ namespace Moondown.AI
 
         protected Vector2 originalSize;
 
+        public Vector2 playerPos;
+
         private void OnEnable()
         {
             group = new ControllerGroup()
@@ -73,7 +77,7 @@ namespace Moondown.AI
             originalSize = transform.localScale;
         }
 
-        private void Update()
+        protected void Update()
         {
             state.Execute(this);
         }
@@ -98,6 +102,8 @@ namespace Moondown.AI
             if (this.controller != null)
                 return;
 
+            playerPos = Player.Instance.GetGameObject().transform.position;
+
             Controller controller = new Controller(group);
 
             foreach (Unit unit in group.units)
@@ -108,15 +114,11 @@ namespace Moondown.AI
 
         }
 
-        public void SetController(Controller controller)
-        {
-            this.controller = controller;
-        }
+        public void SetController(Controller controller) => this.controller = controller;
 
-        public void SetTarget(IEngagable target)
-        {
-            this.target = target;
-        }
+        public void SetTarget(IEngagable target) => this.target = target;
+
+        public void SetState<T>() where T : UnitState, new() => state = new T();
 
         public GameObject GetGameObject() => gameObject;
 

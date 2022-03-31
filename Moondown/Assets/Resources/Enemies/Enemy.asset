@@ -16,4 +16,4 @@ MonoBehaviour:
   descKey: ENEMY_DESC
   meleeStrength: 10
   rangedStrength: 0
-  speed: 5
+  speed: 10

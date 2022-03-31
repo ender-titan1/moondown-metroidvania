@@ -23,6 +23,7 @@ using System.Collections.Generic;
 
 namespace Moondown.AI
 {
+    using Moondown.AI.Enemy;
     using Moondown.Player;
 
     public class Controller 
@@ -59,9 +60,19 @@ namespace Moondown.AI
                 hasLineOfSight = unit.GetComponentInChildren<VisualSensor>().Search().found;
             }
 
-            if (hasLineOfSight)
+            if (!hasLineOfSight)
             {
+                InitiateSearch(Units);
+            }
+        }
 
+        public void InitiateSearch(params Unit[] units)
+        {
+            foreach (Unit unit in units)
+            {
+                unit.
+
+                unit.SetState<UnitState.Searching>();
             }
         }
 

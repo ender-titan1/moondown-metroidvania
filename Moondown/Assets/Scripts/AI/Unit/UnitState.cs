@@ -38,5 +38,13 @@ namespace Moondown.AI.Enemy
                 unit.Move(unit.Target.GetGameObject().transform.position.x);
             }
         }
+
+        public class Searching : UnitState
+        {
+            public override void Execute(Unit unit)
+            {
+                unit.Move();
+            }
+        }
     }
 }
