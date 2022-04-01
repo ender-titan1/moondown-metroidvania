@@ -17,6 +17,7 @@
 
 using Moondown.Utility;
 using Moondown.AI.Enemy;
+using Moondown.AI.Enemy.Modules;
 using Moondown.AI.Enemy.Modules.Sensor;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace Moondown.AI
 {
     using Moondown.Player;
 
-    public class Unit : MonoBehaviour, IEngagable
+    public class Unit : MonoBehaviour, IEngagable, ISensor
     {
         protected UnitState state = new UnitState.Idle();
 
@@ -42,6 +43,8 @@ namespace Moondown.AI
         private IEngagable target;
 
         private float playerFound = 0;
+
+        [SerializeField] private float intelRadius; 
         #endregion
 
         #region Movement
@@ -140,6 +143,39 @@ namespace Moondown.AI
 
         public GameObject GetGameObject() => gameObject;
 
+        #region Sensor
+
+        /// <summary>
+        /// Intel search, 
+        /// used to check if the unit should go into search mode
+        /// </summary>
+        /// <returns>The result of the search</returns>
+        public SensorResult Search()
+        {
+            RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, intelRadius, Vector2.zero, GameManager.Instance.maskAI);
+
+            foreach (RaycastHit2D h in hits)
+            {
+                if (h.collider.CompareTag("Player"))
+                {
+                    RaycastHit2D hit = Physics2D.Raycast(transform.position, Player.Instance.gameObject.transform.position - transform.position);
+
+                    if (hit.collider.CompareTag("Player"))
+                        return new SensorResult
+                        {
+                            found = true,
+                            amount = 1
+                        };
+                }
+            }
+
+            return SensorResult.failed;
+        }
+
+        public void Toggle(bool value) { }
+
+        #endregion
+
         #region Editor
 #if UNITY_EDITOR
         private void OnDrawGizmos()
@@ -147,8 +183,11 @@ namespace Moondown.AI
             if (Selection.activeGameObject != gameObject)
                 return;
 
-            Handles.color = Color.green;
-            Handles.DrawWireDisc(transform.position, Vector3.back, 10);
+            Handles.color = Color.white;
+            Handles.DrawWireDisc(transform.position, Vector3.back, intelRadius);
+
+            Handles.color = Color.gray;
+            Handles.DrawLine(transform.position, Player.Instance.gameObject.transform.position);
         }
 #endif
         #endregion

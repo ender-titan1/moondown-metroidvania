@@ -15,15 +15,14 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System.Threading.Tasks;
-using System.Timers;
+using Moondown.AI.Enemy;
 using Moondown.AI.Enemy.Modules.Sensor;
 using System.Collections.Generic;
 
 namespace Moondown.AI
 {
-    using Moondown.AI.Enemy;
     using Moondown.Player;
+    using UnityEngine;
 
     public class Controller 
     {
@@ -57,7 +56,8 @@ namespace Moondown.AI
                 if (hasLineOfSight)
                     break;
 
-                hasLineOfSight = unit.GetComponentInChildren<VisualSensor>().Search().found;
+                hasLineOfSight = unit.Search().found;
+                Debug.Log(hasLineOfSight);
             }
 
             Searching = !hasLineOfSight;
@@ -65,6 +65,13 @@ namespace Moondown.AI
             if (!hasLineOfSight)
             {
                 InitiateSearch(Units);
+            }
+            else
+            {
+                foreach (Unit unit in Units)
+                {
+                    unit.SetState<UnitState.Engaged>();
+                }
             }
         }
 
