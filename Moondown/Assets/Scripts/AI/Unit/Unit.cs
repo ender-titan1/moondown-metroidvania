@@ -39,8 +39,23 @@ namespace Moondown.AI
         public float patrolLeft;
         public float patrolRight;
 
-        [SerializeField] protected Vector2 zoneLeft;
-        [SerializeField] protected Vector2 zoneRight;
+        public Vector2 ZoneLeft
+        {
+            get
+            {
+                Bounds zoneBounds = zone.bounds;
+                return new Vector2(zoneBounds.center.x - zoneBounds.extents.x, zoneBounds.center.y - zoneBounds.extents.y);
+            }
+        }
+        public Vector2 ZoneRight
+        {
+            get
+            {
+                Bounds zoneBounds = zone.bounds;
+                return new Vector2(zoneBounds.center.x + zoneBounds.extents.x, zoneBounds.center.y + zoneBounds.extents.y);
+            }
+        }
+
         [SerializeField] protected BoxCollider2D zone;
         [SerializeField] protected EnemyData data;
  
@@ -71,8 +86,7 @@ namespace Moondown.AI
         private void Awake()
         {
             Bounds zoneBounds = zone.bounds;
-            zoneRight = new Vector2(zoneBounds.center.x + zoneBounds.extents.x, zoneBounds.center.y + zoneBounds.extents.y);
-            zoneLeft = new Vector2(zoneBounds.center.x - zoneBounds.extents.x, zoneBounds.center.y - zoneBounds.extents.y);
+            ZoneRight = new Vector2(zoneBounds.center.x + zoneBounds.extents.x, zoneBounds.center.y + zoneBounds.extents.y);
 
             originalSize = transform.localScale;
         }

@@ -28,7 +28,7 @@ namespace Moondown.AI.Enemy
     {
         public override void Move(float target)
         {
-            float targetX = Mathf.Clamp(target, zoneLeft.x, zoneRight.x);
+            float targetX = Mathf.Clamp(target, ZoneLeft.x, ZoneRight.x);
             float movementAxis = (targetX - transform.position.x).ToAxis(0);
 
             facing = (Facing)movementAxis;

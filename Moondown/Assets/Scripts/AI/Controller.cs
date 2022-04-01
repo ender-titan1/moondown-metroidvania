@@ -69,9 +69,7 @@ namespace Moondown.AI
         public void InitiateSearch(params Unit[] units)
         {
             foreach (Unit unit in units)
-            {
-                unit.
-
+            { 
                 unit.SetState<UnitState.Searching>();
             }
         }

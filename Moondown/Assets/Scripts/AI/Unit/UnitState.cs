@@ -16,11 +16,15 @@
 */
 
 using Moondown.Utility;
+using UnityEngine;
 
 namespace Moondown.AI.Enemy
 {
     public abstract class UnitState
     {
+        //TODO: make this a variable
+        private const float DISTANCE = 10f;
+
         public abstract void Execute(Unit unit);
 
         public class Idle : UnitState
@@ -43,7 +47,18 @@ namespace Moondown.AI.Enemy
         {
             public override void Execute(Unit unit)
             {
-                unit.Move();
+                // last sighted position
+                float playerX = unit.playerPos.x;
+
+                // variation
+                float leftVariation = Random.Range(-5, 5);
+                float rightVariation = Random.Range(-5, 5);
+
+                // points
+                float left = Mathf.Clamp(playerX - DISTANCE + leftVariation, unit.ZoneLeft.x, unit.ZoneRight.x);
+                float right = Mathf.Clamp(playerX + DISTANCE + rightVariation, unit.ZoneLeft.x, unit.ZoneRight.x);
+
+                unit.Move(unit.Facing == Facing.Left ? left : right);
             }
         }
     }
