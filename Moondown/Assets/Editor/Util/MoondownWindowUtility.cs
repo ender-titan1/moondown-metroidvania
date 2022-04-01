@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
+using static UnityEngine.GUILayout;
 
 namespace Moondown.Utility
 {
@@ -29,7 +30,7 @@ namespace Moondown.Utility
     {
         public static void CallbackButton(string text, Action<string> callback)
         {
-            if (GUILayout.Button(text, EditorStyles.label))
+            if (Button(text, EditorStyles.label))
             {
                 callback(text);
             }
@@ -37,16 +38,30 @@ namespace Moondown.Utility
 
         public static void VerticalLayout(Action action)
         {
-            GUILayout.BeginVertical();
+            BeginVertical();
             action();
-            GUILayout.EndVertical();
+            EndVertical();
         }
 
         public static void HorizontalLayout(Action action)
         {
-            GUILayout.BeginHorizontal();
+            BeginHorizontal();
             action();
-            GUILayout.BeginHorizontal();
+            BeginHorizontal();
+        }
+
+        public static void TextBlock(string title, string content, int space = 5)
+        {
+            Label(title, EditorStyles.boldLabel);
+            Label(content);
+            Space(space);
+        }
+
+        public static void VerticalSpace()
+        {
+            BeginVertical();
+            Label("        ");
+            EndVertical();
         }
     }
 }

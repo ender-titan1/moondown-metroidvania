@@ -45,10 +45,25 @@ public class AIDebugger : EditorWindow
             () =>
             {
                 MoondownWindowUtility.VerticalLayout(GenControllers);
+                MoondownWindowUtility.VerticalSpace();
 
                 MoondownWindowUtility.VerticalLayout(GenData);
+                MoondownWindowUtility.VerticalSpace();
+
+                MoondownWindowUtility.VerticalLayout(GenControllerData);
             }
         );
+    }
+
+    private void GenControllerData()
+    {
+        if (current == null || current.Controller == null)
+            return;
+
+        Label("Controller Data:", EditorStyles.boldLabel);
+        Space(10);
+
+        MoondownWindowUtility.TextBlock("State:", current.Controller.Searching ? "Searching" : "Engaged");
     }
 
     private void GenData()
@@ -56,17 +71,13 @@ public class AIDebugger : EditorWindow
         if (current == null)
             return;
 
-        Label("Name:", EditorStyles.boldLabel);
-        Label(current.name);
-        Space(5);
+        Label("Unit Data:", EditorStyles.boldLabel);
+        Space(10);
 
-        Label("Controller:", EditorStyles.boldLabel);
-        Label(current.Controller != null ? current.Controller.Name : "None");
-        Space(5);
-
-        Label("Facing:", EditorStyles.boldLabel);
-        Label(current.Facing.ToString());
-        Space(5);
+        MoondownWindowUtility.TextBlock("Name:", current.name);
+        MoondownWindowUtility.TextBlock("Controller:", current.Controller != null ? current.Controller.Name : "None");
+        MoondownWindowUtility.TextBlock("Facing:", current.Facing.ToString(), 8);
+        MoondownWindowUtility.TextBlock("State:", current.State.GetType().Name);
     }
 
     private void GenControllers()

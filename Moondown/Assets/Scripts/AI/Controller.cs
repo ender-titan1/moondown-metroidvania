@@ -18,7 +18,6 @@
 using System.Threading.Tasks;
 using System.Timers;
 using Moondown.AI.Enemy.Modules.Sensor;
-using Moondown.Player;
 using System.Collections.Generic;
 
 namespace Moondown.AI
@@ -35,6 +34,7 @@ namespace Moondown.AI
 
         public List<IEngagable> potentialTargets = new List<IEngagable>();
 
+        public bool Searching { get; private set; }
 
         public Controller(ControllerGroup group)
         {
@@ -59,6 +59,8 @@ namespace Moondown.AI
 
                 hasLineOfSight = unit.GetComponentInChildren<VisualSensor>().Search().found;
             }
+
+            Searching = !hasLineOfSight;
 
             if (!hasLineOfSight)
             {

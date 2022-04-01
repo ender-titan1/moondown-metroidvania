@@ -31,11 +31,21 @@ namespace Moondown.AI
     {
         protected UnitState state = new UnitState.Idle();
 
+        protected Vector2 originalSize;
+        public Vector2 playerPos;
+
+        [SerializeField] protected EnemyData data;
+        
+        #region AI
         private Controller controller;
         private ControllerGroup group;
         private IEngagable target;
-        protected Facing facing = Facing.Left;
 
+        private float playerFound = 0;
+        #endregion
+
+        #region Movement
+        protected Facing facing = Facing.Left;
         public float patrolLeft;
         public float patrolRight;
 
@@ -55,12 +65,10 @@ namespace Moondown.AI
                 return new Vector2(zoneBounds.center.x + zoneBounds.extents.x, zoneBounds.center.y + zoneBounds.extents.y);
             }
         }
-
         [SerializeField] protected BoxCollider2D zone;
-        [SerializeField] protected EnemyData data;
- 
-        private float playerFound = 0;
+        #endregion
 
+        #region Properties
         public Facing Facing => facing;
         public Controller Controller => controller;
         public ControllerGroup Group => group;
@@ -68,11 +76,10 @@ namespace Moondown.AI
         public float MeleeStrength => data.meleeStrength;
         public float RangedStrength => data.rangedStrength;
 
+        public UnitState State => state;
+
         public IEngagable Target => target;
-
-        protected Vector2 originalSize;
-
-        public Vector2 playerPos;
+        #endregion
 
         private void OnEnable()
         {
@@ -85,9 +92,6 @@ namespace Moondown.AI
 
         private void Awake()
         {
-            Bounds zoneBounds = zone.bounds;
-            ZoneRight = new Vector2(zoneBounds.center.x + zoneBounds.extents.x, zoneBounds.center.y + zoneBounds.extents.y);
-
             originalSize = transform.localScale;
         }
 
@@ -136,6 +140,7 @@ namespace Moondown.AI
 
         public GameObject GetGameObject() => gameObject;
 
+        #region Editor
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
@@ -146,5 +151,6 @@ namespace Moondown.AI
             Handles.DrawWireDisc(transform.position, Vector3.back, 10);
         }
 #endif
+        #endregion
     }
 }
