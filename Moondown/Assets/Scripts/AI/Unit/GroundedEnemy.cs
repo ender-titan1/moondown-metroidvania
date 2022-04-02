@@ -17,9 +17,6 @@
 
 using Moondown.AI.Enemy.Modules.Sensor;
 using Moondown.Utility;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 namespace Moondown.AI.Enemy

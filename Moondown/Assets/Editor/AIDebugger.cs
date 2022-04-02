@@ -36,6 +36,12 @@ public class AIDebugger : EditorWindow
         GetWindow<AIDebugger>("AI Debugger");
     }
 
+
+    private void Update()
+    {
+        Repaint();
+    }
+
     private void OnGUI()
     {
         Label("Moondown AI Debugger");
@@ -64,11 +70,12 @@ public class AIDebugger : EditorWindow
         Space(10);
 
         MoondownWindowUtility.TextBlock("State:", current.Controller.Searching ? "Searching" : "Engaged");
+        MoondownWindowUtility.TextBlock("Action:", current.Controller.CurrentAction.ToString());
     }
 
     private void GenData()
     {
-        if (current == null)
+        if (current == null || current.State == null)
             return;
 
         Label("Unit Data:", EditorStyles.boldLabel);

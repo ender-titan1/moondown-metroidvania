@@ -26,19 +26,21 @@ namespace Moondown.AI
 
     public class Controller 
     {
-        private enum Action
+        public enum Action
         {
             Attack,
             Retreat
         }
-        
 
         private ControllerGroup group;
         private Action action;
 
         public string Name => group.name;
         public Unit[] Units => group.units.ToArray();
+        public Action CurrentAction => action;
         public bool Searching { get; private set; }
+
+        private bool hasLineOfSight = false;
 
         public Controller(ControllerGroup group)
         {
@@ -52,8 +54,19 @@ namespace Moondown.AI
 
         private void Tick()
         {
+            Debug.Log(hasLineOfSight);
+
             CheckSearch();
             SetAction();
+            SetCommands();
+        }
+
+        private void SetCommands()
+        {
+            if (action == Action.Attack && hasLineOfSight)
+            {
+                SetStates(new UnitState.Engaged(null), Units);
+            }
         }
 
         private void SetAction()
@@ -62,12 +75,11 @@ namespace Moondown.AI
                 action = Action.Attack;
             else
                 action = Action.Retreat;
-
         }
 
         private void CheckSearch()
         {
-            bool hasLineOfSight = false;
+            hasLineOfSight = false;
 
             foreach (Unit unit in Units)
             {
@@ -75,27 +87,25 @@ namespace Moondown.AI
                     break;
 
                 hasLineOfSight = unit.Search().found;
+                Debug.Log($"               {hasLineOfSight}");
             }
 
             Searching = !hasLineOfSight;
 
             if (!hasLineOfSight)
-            {
-                InitiateSearch(Units);
-            }
-            else
-            {
-                foreach (Unit unit in Units)
-                {
-                    unit.SetState(new UnitState.Engaged(unit));
-                }
-            }
+                SetStates(new UnitState.Searching(null), Units);
+
         }
 
-        public void InitiateSearch(params Unit[] units)
+        public void SetStates(UnitState state, params Unit[] units)
         {
             foreach (Unit unit in units)
-                unit.SetState(new UnitState.Searching(unit));
+            {
+                if (unit.State.GetType().Name == state.GetType().Name)
+                    continue;
+
+                unit.SetState(state.SetUnit(unit));
+            }
         }
 
         public void SetTarget(IEngagable target, params Unit[] units)
@@ -104,7 +114,6 @@ namespace Moondown.AI
 
             foreach (Unit unit in units)
                 unit.SetTarget(target);
-
         }
     }
 }

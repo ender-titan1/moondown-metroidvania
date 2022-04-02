@@ -27,6 +27,8 @@ namespace Moondown.AI.Enemy
         private const float DISTANCE = 10f;
 
         public abstract void Execute();
+        public abstract UnitState SetUnit(Unit unit);
+
         public virtual void DrawGizmos() { }
 
         public UnitState(Unit unit) { }
@@ -41,6 +43,12 @@ namespace Moondown.AI.Enemy
             {
                 unit.Move(unit.Facing == Facing.Left ? unit.patrolLeft : unit.patrolRight);
             }
+
+            public override UnitState SetUnit(Unit unit)
+            {
+                this.unit = unit;
+                return this;
+            }
         }
 
         public class Engaged : UnitState
@@ -53,6 +61,11 @@ namespace Moondown.AI.Enemy
             {
                 unit.Move(unit.Target.GetGameObject().transform.position.x);
             }
+            public override UnitState SetUnit(Unit unit)
+            {
+                this.unit = unit;
+                return this;
+            }
         }
 
         public class Searching : UnitState
@@ -60,10 +73,19 @@ namespace Moondown.AI.Enemy
             float left, right;
             Unit unit;
 
+            #region Creation
             public Searching(Unit unit) : base(unit)
             {
                 this.unit = unit;
 
+                if (unit == null)
+                    return;
+
+                Construct(unit);
+            }
+
+            private void Construct(Unit unit)
+            {
                 // last sighted position
                 float playerX = unit.playerPos.x;
 
@@ -75,6 +97,13 @@ namespace Moondown.AI.Enemy
                 left = Mathf.Clamp(playerX - DISTANCE + leftVariation, unit.ZoneLeft.x, unit.ZoneRight.x);
                 right = Mathf.Clamp(playerX + DISTANCE + rightVariation, unit.ZoneLeft.x, unit.ZoneRight.x);
             }
+            public override UnitState SetUnit(Unit unit)
+            {
+                this.unit = unit;
+                Construct(unit);
+                return this;
+            }
+            #endregion
 
             public override void Execute()
             {
@@ -95,5 +124,6 @@ namespace Moondown.AI.Enemy
                 Handles.DrawLine(new Vector2(left, unitY), new Vector2(right, unitY));
             }
         }
+
     }
 }

@@ -67,6 +67,7 @@ namespace Moondown.AI
                 return new Vector2(zoneBounds.center.x + zoneBounds.extents.x, zoneBounds.center.y + zoneBounds.extents.y);
             }
         }
+
         [SerializeField] protected BoxCollider2D zone;
         #endregion
 
@@ -131,7 +132,6 @@ namespace Moondown.AI
             foreach (Unit unit in group.units)
             {
                 unit.SetController(controller);
-                state = new UnitState.Engaged(this);
             }
 
         }
