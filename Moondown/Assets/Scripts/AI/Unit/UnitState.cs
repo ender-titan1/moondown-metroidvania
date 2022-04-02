@@ -26,9 +26,15 @@ namespace Moondown.AI.Enemy
         private const float DISTANCE = 10f;
 
         public abstract void Execute(Unit unit);
+        public UnitState(Unit unit) { }
 
         public class Idle : UnitState
         {
+            public Idle(Unit u) : base(u)
+            {
+
+            }
+
             public override void Execute(Unit unit)
             {
                 unit.Move(unit.Facing == Facing.Left ? unit.patrolLeft : unit.patrolRight);
@@ -37,6 +43,11 @@ namespace Moondown.AI.Enemy
 
         public class Engaged : UnitState
         {
+            public Engaged(Unit u) : base(u)
+            {
+
+            }
+
             public override void Execute(Unit unit)
             {
                 unit.Move(unit.Target.GetGameObject().transform.position.x);
@@ -45,7 +56,9 @@ namespace Moondown.AI.Enemy
 
         public class Searching : UnitState
         {
-            public override void Execute(Unit unit)
+            float left, right;
+
+            public Searching(Unit unit) : base(unit)
             {
                 // last sighted position
                 float playerX = unit.playerPos.x;
@@ -55,9 +68,12 @@ namespace Moondown.AI.Enemy
                 float rightVariation = Random.Range(-5, 5);
 
                 // points
-                float left = Mathf.Clamp(playerX - DISTANCE + leftVariation, unit.ZoneLeft.x, unit.ZoneRight.x);
-                float right = Mathf.Clamp(playerX + DISTANCE + rightVariation, unit.ZoneLeft.x, unit.ZoneRight.x);
+                left = Mathf.Clamp(playerX - DISTANCE + leftVariation, unit.ZoneLeft.x, unit.ZoneRight.x);
+                right = Mathf.Clamp(playerX + DISTANCE + rightVariation, unit.ZoneLeft.x, unit.ZoneRight.x);
+            }
 
+            public override void Execute(Unit unit)
+            {
                 unit.Move(unit.Facing == Facing.Left ? left : right);
             }
         }

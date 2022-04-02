@@ -70,7 +70,7 @@ namespace Moondown.AI
             {
                 foreach (Unit unit in Units)
                 {
-                    unit.SetState<UnitState.Engaged>();
+                    unit.SetState(new UnitState.Engaged(unit));
                 }
             }
         }
@@ -79,7 +79,7 @@ namespace Moondown.AI
         {
             foreach (Unit unit in units)
             { 
-                unit.SetState<UnitState.Searching>();
+                unit.SetState(new UnitState.Searching(unit));
             }
         }
 

@@ -30,7 +30,7 @@ namespace Moondown.AI
 
     public class Unit : MonoBehaviour, IEngagable, ISensor
     {
-        protected UnitState state = new UnitState.Idle();
+        protected UnitState state;
 
         protected Vector2 originalSize;
         public Vector2 playerPos;
@@ -95,6 +95,8 @@ namespace Moondown.AI
 
         private void Awake()
         {
+            state = new UnitState.Idle(this);
+
             originalSize = transform.localScale;
         }
 
@@ -130,7 +132,7 @@ namespace Moondown.AI
             foreach (Unit unit in group.units)
             {
                 unit.SetController(controller);
-                state = new UnitState.Engaged();
+                state = new UnitState.Engaged(this);
             }
 
         }
@@ -139,7 +141,7 @@ namespace Moondown.AI
 
         public void SetTarget(IEngagable target) => this.target = target;
 
-        public void SetState<T>() where T : UnitState, new() => state = new T();
+        public void SetState(UnitState state) => this.state = state;
 
         public GameObject GetGameObject() => gameObject;
 
@@ -154,11 +156,14 @@ namespace Moondown.AI
         {
             RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, intelRadius, Vector2.zero, GameManager.Instance.maskAI);
 
+            Debug.Log(hits.Length);
+
             foreach (RaycastHit2D h in hits)
             {
                 if (h.collider.CompareTag("Player"))
                 {
-                    RaycastHit2D hit = Physics2D.Raycast(transform.position, Player.Instance.gameObject.transform.position - transform.position);
+
+                    RaycastHit2D hit = Physics2D.Raycast(transform.position, Player.Instance.gameObject.transform.position - transform.position, intelRadius, GameManager.Instance.maskAI);
 
                     if (hit.collider.CompareTag("Player"))
                         return new SensorResult
