@@ -73,7 +73,16 @@ namespace Moondown.Player
 
         public GameObject LowHealthPostProcessing => LowHealthPP;
 
-        public float MeleeStrength => InventoryManager.Instance.equiped.melee.Damage * GameManager.Instance.playerStrengthMultiplier;
+        public float MeleeStrength
+        {
+            get
+            {
+                if (InventoryManager.Instance.equiped.melee == null)
+                    return 0;
+
+                return InventoryManager.Instance.equiped.melee.Damage * GameManager.Instance.playerStrengthMultiplier;
+            }
+        }
 
         public float RangedStrength => throw new NotImplementedException();
 

@@ -35,7 +35,7 @@ namespace Moondown.AI.Enemy
             transform.transform.localScale = (int)facing * -1 * originalSize;
 
             GetComponent<Rigidbody2D>().velocity = new Vector2(
-                 movementAxis * GetSpeed(),
+                movementAxis * (GetSpeed() + Random.Range(-1.5f, 1.5f)),
                 0
             );
         }

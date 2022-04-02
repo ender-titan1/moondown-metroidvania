@@ -19,7 +19,6 @@ using Moondown.Utility;
 using Moondown.AI.Enemy;
 using Moondown.AI.Enemy.Modules;
 using Moondown.AI.Enemy.Modules.Sensor;
-using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -102,7 +101,7 @@ namespace Moondown.AI
 
         protected void Update()
         {
-            state.Execute(this);
+            state.Execute();
         }
 
         public virtual void Move(float target) { }
@@ -122,10 +121,10 @@ namespace Moondown.AI
 
         private void PlayerSpotted()
         {
+            playerPos = Player.Instance.GetGameObject().transform.position;
+            
             if (this.controller != null)
                 return;
-
-            playerPos = Player.Instance.GetGameObject().transform.position;
 
             Controller controller = new Controller(group);
 
@@ -155,8 +154,6 @@ namespace Moondown.AI
         public SensorResult Search()
         {
             RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, intelRadius, Vector2.zero, GameManager.Instance.maskAI);
-
-            Debug.Log(hits.Length);
 
             foreach (RaycastHit2D h in hits)
             {
@@ -191,8 +188,16 @@ namespace Moondown.AI
             Handles.color = Color.white;
             Handles.DrawWireDisc(transform.position, Vector3.back, intelRadius);
 
+            if (Player.Instance == null)
+                return;
+
             Handles.color = Color.gray;
             Handles.DrawLine(transform.position, Player.Instance.gameObject.transform.position);
+
+            Handles.color = Color.cyan;
+            Handles.DrawWireDisc(playerPos, Vector3.back, 1);
+
+            state.DrawGizmos();
         }
 #endif
         #endregion

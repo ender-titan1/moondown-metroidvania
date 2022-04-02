@@ -16,6 +16,7 @@
 */
 
 using Moondown.Utility;
+using UnityEditor;
 using UnityEngine;
 
 namespace Moondown.AI.Enemy
@@ -25,17 +26,18 @@ namespace Moondown.AI.Enemy
         //TODO: make this a variable
         private const float DISTANCE = 10f;
 
-        public abstract void Execute(Unit unit);
+        public abstract void Execute();
+        public virtual void DrawGizmos() { }
+
         public UnitState(Unit unit) { }
 
         public class Idle : UnitState
         {
-            public Idle(Unit u) : base(u)
-            {
+            Unit unit;
 
-            }
+            public Idle(Unit u) : base(u) => unit = u;
 
-            public override void Execute(Unit unit)
+            public override void Execute()
             {
                 unit.Move(unit.Facing == Facing.Left ? unit.patrolLeft : unit.patrolRight);
             }
@@ -43,12 +45,11 @@ namespace Moondown.AI.Enemy
 
         public class Engaged : UnitState
         {
-            public Engaged(Unit u) : base(u)
-            {
+            Unit unit;
 
-            }
+            public Engaged(Unit u) : base(u) => unit = u;
 
-            public override void Execute(Unit unit)
+            public override void Execute()
             {
                 unit.Move(unit.Target.GetGameObject().transform.position.x);
             }
@@ -57,9 +58,12 @@ namespace Moondown.AI.Enemy
         public class Searching : UnitState
         {
             float left, right;
+            Unit unit;
 
             public Searching(Unit unit) : base(unit)
             {
+                this.unit = unit;
+
                 // last sighted position
                 float playerX = unit.playerPos.x;
 
@@ -72,9 +76,23 @@ namespace Moondown.AI.Enemy
                 right = Mathf.Clamp(playerX + DISTANCE + rightVariation, unit.ZoneLeft.x, unit.ZoneRight.x);
             }
 
-            public override void Execute(Unit unit)
+            public override void Execute()
             {
                 unit.Move(unit.Facing == Facing.Left ? left : right);
+            }
+
+            public override void DrawGizmos()
+            {
+                Handles.color = Color.yellow;
+
+                float unitY = unit.gameObject.transform.position.y;
+
+                Handles.DrawWireDisc(new Vector2(left, unitY), Vector3.back, 0.5f);
+                Handles.DrawWireDisc(new Vector2(right, unitY), Vector3.back, 0.5f);
+
+                Handles.color = new Color(1, 0.92f, 0.016f, 0.75f);
+
+                Handles.DrawLine(new Vector2(left, unitY), new Vector2(right, unitY));
             }
         }
     }
