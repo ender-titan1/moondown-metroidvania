@@ -23,7 +23,5 @@ namespace Moondown.AI.Enemy.Modules
     public interface ISensor
     {
         SensorResult Search();
-
-        void Toggle(bool value);
     }
 }

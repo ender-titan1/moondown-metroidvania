@@ -86,7 +86,7 @@ namespace Moondown.Player
 
         public float RangedStrength => throw new NotImplementedException();
 
-        private MeleeAttack attack;
+        private MeleeAttackHandler attack;
         [SerializeField] private LayerMask mask;
 
         private void Awake()
@@ -94,7 +94,7 @@ namespace Moondown.Player
             if (Instance == null)
                 Instance = this;
 
-            attack = new MeleeAttack(GetComponent<BoxCollider2D>(), transform, mask);
+            attack = new MeleeAttackHandler(GetComponent<BoxCollider2D>(), transform, mask);
         }
 
         private void Start()

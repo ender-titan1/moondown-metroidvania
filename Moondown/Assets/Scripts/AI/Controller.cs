@@ -54,8 +54,6 @@ namespace Moondown.AI
 
         private void Tick()
         {
-            Debug.Log(hasLineOfSight);
-
             CheckSearch();
             SetAction();
             SetCommands();
@@ -87,7 +85,6 @@ namespace Moondown.AI
                     break;
 
                 hasLineOfSight = unit.Search().found;
-                Debug.Log($"               {hasLineOfSight}");
             }
 
             Searching = !hasLineOfSight;

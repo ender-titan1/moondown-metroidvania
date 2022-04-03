@@ -174,16 +174,12 @@ namespace Moondown.AI
             return SensorResult.failed;
         }
 
-        public void Toggle(bool value) { }
-
         #endregion
 
         #region Editor
 #if UNITY_EDITOR
-        private void OnDrawGizmos()
+        private void OnDrawGizmosSelected()
         {
-            if (Selection.activeGameObject != gameObject)
-                return;
 
             Handles.color = Color.white;
             Handles.DrawWireDisc(transform.position, Vector3.back, intelRadius);

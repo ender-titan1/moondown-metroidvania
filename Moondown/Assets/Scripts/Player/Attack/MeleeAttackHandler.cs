@@ -26,7 +26,7 @@ namespace Moondown.WeaponSystem.Attacks
 {
     using Moondown.Player;
     
-    public sealed class MeleeAttack
+    public sealed class MeleeAttackHandler
     {
         private readonly MainControls controls;
         private readonly BoxCollider2D collider;
@@ -35,7 +35,7 @@ namespace Moondown.WeaponSystem.Attacks
 
         public bool CanAttack { get; set; } = true;
 
-        public MeleeAttack(BoxCollider2D collider, Transform transform, LayerMask mask)
+        public MeleeAttackHandler(BoxCollider2D collider, Transform transform, LayerMask mask)
         {
             controls = new MainControls();
 

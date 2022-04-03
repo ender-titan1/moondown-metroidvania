@@ -33,6 +33,8 @@ namespace Moondown.AI.Enemy
 
         public UnitState(Unit unit) { }
 
+        /////////////////////////////////////////////
+
         public class Idle : UnitState
         {
             Unit unit;
@@ -61,6 +63,7 @@ namespace Moondown.AI.Enemy
             {
                 unit.Move(unit.Target.GetGameObject().transform.position.x);
             }
+
             public override UnitState SetUnit(Unit unit)
             {
                 this.unit = unit;
