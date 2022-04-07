@@ -34,6 +34,8 @@ namespace Moondown.AI
 
         private bool hasLineOfSight = false;
 
+        private Formation leftFormation, rightFormation;
+
         public Controller(ControllerGroup group)
         {
             this.group = group;
@@ -51,6 +53,7 @@ namespace Moondown.AI
             SetCommands();
             CreateFormations();
         }
+
         private void CheckSearch()
         {
             hasLineOfSight = false;
@@ -85,7 +88,15 @@ namespace Moondown.AI
 
         private void CreateFormations()
         {
+            // TODO: Decide which direction to create the formation
 
+            float range = 3f;
+
+            List<Unit> formationUnits = group.units;
+
+            Formation formation = new Formation(range, Player.Instance.transform.position, formationUnits);
+
+            leftFormation = formation;
         }
 
         public void SetStates(UnitState state, params Unit[] units)
