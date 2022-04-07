@@ -15,20 +15,15 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using UnityEngine;
-
 namespace Moondown.AI.Enemy
 {
-    [CreateAssetMenu(fileName = "EnemyData", menuName = "Enemies/EnemyData", order = 100)]
-    public class EnemyData : ScriptableObject
+    public enum FormationClass
     {
-        public string nameKey;
-        public string descKey;
-
-        public float meleeStrength;
-        public float rangedStrength;
-        public float speed;
-
-        public FormationClass formationClass;
+        Protected = -10,        // Protected by the formation.
+        Support = 0,            // Stays at the very back and only intervienes when neccessary.
+        Backline = 5,           // Heavier, ranged units that stay at the back.
+        Frontline = 10,         // Most units. Stays at the front of the battle, as close to the player as possible.
+        FrontlineShield = 15,   // Shield / cover units that serve as shields that protect the FrontLine class units.
+        PostFrontLine = 25      // Units that go furter away from the formation.
     }
 }

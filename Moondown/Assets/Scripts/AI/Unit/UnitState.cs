@@ -100,6 +100,7 @@ namespace Moondown.AI.Enemy
                 left = Mathf.Clamp(playerX - DISTANCE + leftVariation, unit.ZoneLeft.x, unit.ZoneRight.x);
                 right = Mathf.Clamp(playerX + DISTANCE + rightVariation, unit.ZoneLeft.x, unit.ZoneRight.x);
             }
+
             public override UnitState SetUnit(Unit unit)
             {
                 this.unit = unit;

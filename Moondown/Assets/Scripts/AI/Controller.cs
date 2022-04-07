@@ -26,18 +26,10 @@ namespace Moondown.AI
 
     public class Controller 
     {
-        public enum Action
-        {
-            Attack,
-            Retreat
-        }
-
         private ControllerGroup group;
-        private Action action;
 
         public string Name => group.name;
         public Unit[] Units => group.units.ToArray();
-        public Action CurrentAction => action;
         public bool Searching { get; private set; }
 
         private bool hasLineOfSight = false;
@@ -55,26 +47,10 @@ namespace Moondown.AI
         private void Tick()
         {
             CheckSearch();
-            SetAction();
+            EvaluateTargets();
             SetCommands();
+            CreateFormations();
         }
-
-        private void SetCommands()
-        {
-            if (action == Action.Attack && hasLineOfSight)
-            {
-                SetStates(new UnitState.Engaged(null), Units);
-            }
-        }
-
-        private void SetAction()
-        {
-            if (Player.Instance.MeleeStrength <= group.TotalMeleeStrength)
-                action = Action.Attack;
-            else
-                action = Action.Retreat;
-        }
-
         private void CheckSearch()
         {
             hasLineOfSight = false;
@@ -91,6 +67,24 @@ namespace Moondown.AI
 
             if (!hasLineOfSight)
                 SetStates(new UnitState.Searching(null), Units);
+
+        }
+
+        private void EvaluateTargets()
+        {
+            // TODO: add code
+        }
+
+        private void SetCommands()
+        {
+            if (hasLineOfSight)
+            {
+                SetStates(new UnitState.Engaged(null), Units);
+            }
+        }
+
+        private void CreateFormations()
+        {
 
         }
 

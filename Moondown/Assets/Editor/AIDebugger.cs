@@ -70,7 +70,6 @@ public class AIDebugger : EditorWindow
         Space(10);
 
         MoondownWindowUtility.TextBlock("State:", current.Controller.Searching ? "Searching" : "Engaged");
-        MoondownWindowUtility.TextBlock("Action:", current.Controller.CurrentAction.ToString());
     }
 
     private void GenData()
