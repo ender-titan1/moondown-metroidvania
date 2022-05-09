@@ -14,36 +14,52 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Moondown.Environment;
+using Moondown.Player.Movement;
 
 namespace Moondown.Player
 {
+    // TODO: Rework this file?
     public class EnvironmentInteraction : MonoBehaviour
     {
-        public struct Modifiers
+        // TODO: Extract to own file
+        public struct Result
         {
             public int health;
             public int charge;
 
             public bool hasBeenHit;
+            public bool climbable;
         }
 
         public static EnvironmentInteraction Instance { get; private set; }
 
         private List<GameObject> gameObjects = new List<GameObject> { };
+        public MainControls controls;
 
         private void Awake()
         {
             if (Instance == null)
                 Instance = this;
+
+            controls = new MainControls();
+
+            controls.Player.Interact.performed += _ =>
+            {
+                Debug.Log("hi");
+                HandleInteract();
+            };
         }
 
-        public Modifiers CheckCollisions()
+        #region Handle Collisions
+
+        public Result CheckCollisions()
         {
-            Modifiers m = new Modifiers();
+            Result m = new Result();
             m.charge = 0;
             m.health = 0;
 
@@ -70,6 +86,9 @@ namespace Moondown.Player
 
         public void OnTriggerEnter2D(Collider2D collision)
         {
+            if (collision.CompareTag("climbable"))
+                gameObjects.Add(collision.gameObject);
+
             if (collision.gameObject.GetComponent<EnvironmentBehaviour>() != null)
                 gameObjects.Add(collision.gameObject);
 
@@ -84,6 +103,24 @@ namespace Moondown.Player
                     if (respawn.cost == 0)
                         Player.Instance.DeathRespawn = respawn;
                 }
+            }
+        }
+
+        #endregion
+
+        private void HandleInteract()
+        {
+            Result res = CheckCollisions();
+
+            Debug.Log(res.climbable);
+            if (res.climbable)
+            {
+                PlayerMovement playerMovement = Player.Instance.GetComponent<PlayerMovement>();
+
+                if (playerMovement.mode == PlayerMovement.Mode.Normal)
+                    playerMovement.mode = PlayerMovement.Mode.Climbing;
+                else if (playerMovement.mode == PlayerMovement.Mode.Climbing)
+                    playerMovement.mode = PlayerMovement.Mode.Normal;
             }
         }
     }

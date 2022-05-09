@@ -27,16 +27,26 @@ using UnityEngine.InputSystem;
 
 namespace Moondown.Player.Movement
 {
+    // TODO: Encapsulate fields?
     [RequireComponent(typeof(BoxCollider2D))]
     public class PlayerMovement : MonoBehaviour
     {
+        public enum Mode
+        {
+            Normal,
+            Climbing
+        }
+
         public static PlayerMovement Instance { get; private set; }
 
         private const float MAX_ANGLE = 45f;
 
         public MainControls controls;
         private Rigidbody2D rigidBody;
+        public Mode mode;
         public Facing facing;
+
+        [SerializeField] private float climbingSpeed;
 
         #region Jumping 
         [Header("Jump & Wall Jump")]
@@ -81,6 +91,9 @@ namespace Moondown.Player.Movement
         private float dashCooldown;
         #endregion
 
+        private void OnEnable() => controls.Enable();
+        private void OnDisable() => controls.Disable();
+
         private void Awake()
         {
             if (Instance == null)
@@ -90,24 +103,36 @@ namespace Moondown.Player.Movement
 
             controls = new MainControls();
             rigidBody = gameObject.GetComponent<Rigidbody2D>();
-
-            controls.Player.Jump.performed += _ => Jump();
-
-            controls.Player.Dash.performed += _ => Dash(movementAxis == 0 ? 1 : movementAxis);
-
-            controls.Player.Movement.performed += ctx => 
-            { 
-                isMovementPressed = true;
-                movementAxis = ctx.ReadValue<float>().ToAxis(movementAxis == 0 ? 1 : movementAxis); 
-            };
-
-            controls.Player.Movement.canceled += _ => 
-            { 
-                isMovementPressed = false; 
-                MoveCancelled(); 
-            };
+            SetupEvents();
         }
 
+        private void SetupEvents()
+        {
+            // Jumping & Climbing controls
+            controls.Player.Jump.performed += _ => Jump();
+
+            controls.Player.Jump.canceled += _ =>
+            {
+                if (mode == Mode.Climbing)
+                    ClimbVertical(0); // Stop climbing
+            };
+
+            // Moving controls
+            controls.Player.Movement.performed += ctx =>
+            {
+                isMovementPressed = true;
+                movementAxis = ctx.ReadValue<float>().ToAxis(movementAxis == 0 ? 1 : movementAxis);
+            };
+
+            controls.Player.Movement.canceled += _ =>
+            {
+                isMovementPressed = false;
+                MoveCancelled();
+            };
+
+            // Dashing controls
+            controls.Player.Dash.performed += _ => Dash(movementAxis == 0 ? 1 : movementAxis);
+        }
 
         private void FixedUpdate()
         {
@@ -115,7 +140,7 @@ namespace Moondown.Player.Movement
             grounded = IsGrounded();
 
             // moving
-            if (isMovementPressed && !UIManager.Instance.isInInventory)
+            if (isMovementPressed && !UIManager.Instance.isInInventory && mode == Mode.Normal)
                 Move(movementAxis);
 
             // dashing
@@ -129,13 +154,21 @@ namespace Moondown.Player.Movement
                 canDash = true;
         }
 
-        private void OnEnable() => controls.Enable();
-        private void OnDisable() => controls.Disable();
+        private void Update()
+        {
+            rigidBody.gravityScale = mode.HasGravity() * 2;
+        }
 
         #region Movement
 
         void Jump()
         {
+            if (mode == Mode.Climbing)
+            {
+                ClimbVertical(1);
+                return;
+            }
+
             if (grounded && !UIManager.Instance.isInInventory)
             {
                 rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y + jumpVelocity);
@@ -168,11 +201,19 @@ namespace Moondown.Player.Movement
             rigidBody.velocity = new Vector2(0, wallJumpVelocity);
         }
 
+        void ClimbVertical(int direction)
+        {
+            rigidBody.velocity = new Vector2(
+                rigidBody.velocity.x,
+                climbingSpeed * direction
+            );
+        }
+
         #region Dash
 
         void Dash(float direction)
         {
-            if (!canDash || UIManager.Instance.isInInventory)
+            if (!canDash || UIManager.Instance.isInInventory || mode == Mode.Climbing)
                 return;
 
             canDash = false;

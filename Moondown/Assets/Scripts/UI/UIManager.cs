@@ -52,7 +52,6 @@ namespace Moondown.UI
 
             controls = new MainControls();
 
-            controls.Player.Interact.performed += _ => Interact();
             controls.Player.OpenInventory.performed += _ => OpenInventoryUI();
             controls.Player.PauseandexitUI.performed += _ => PauseOrExitUI();
             controls.Player.Pause.performed += _ =>
@@ -120,11 +119,6 @@ namespace Moondown.UI
             Time.timeScale = Convert.ToInt32(!value);
             isInPasue = value;
             UIPostProcessing.SetActive(value);
-        }
-
-        private void Interact()
-        {
-
         }
 
         private void OpenInventoryUI()

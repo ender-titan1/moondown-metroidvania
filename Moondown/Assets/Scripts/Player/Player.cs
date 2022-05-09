@@ -99,19 +99,31 @@ namespace Moondown.Player
 
         private void Update()
         {
-            EnvironmentInteraction.Modifiers modifiers = EnvironmentInteraction.Instance.CheckCollisions();
+            HandleEnvironmentInteraction();
 
-            if (modifiers.charge > 0)
-                OnCharge(modifiers.charge);
+            if (health <= 0)
+                Die();
 
-            if (modifiers.health != 0)
+            DisplayHUD.UpdateCharge(charge);
+            DisplayHUD.UpdateHealth(health);
+
+        }
+
+        private void HandleEnvironmentInteraction()
+        {
+            EnvironmentInteraction.Result res = EnvironmentInteraction.Instance.CheckCollisions();
+
+            if (res.charge > 0)
+                OnCharge(res.charge);
+
+            if (res.health != 0)
             {
 
-                if (modifiers.health > 0)
-                    OnHeal(modifiers.health);
+                if (res.health > 0)
+                    OnHeal(res.health);
                 else
                 {
-                    OnDamageTaken(modifiers.health);
+                    OnDamageTaken(res.health);
 
                     if (health == 1)
                         OnApplyLowHealth();
@@ -120,17 +132,10 @@ namespace Moondown.Player
                 }
             }
 
-            if (modifiers.hasBeenHit)
+            if (res.hasBeenHit)
             {
                 OnHazardRespawn(gameObject);
             }
-
-            if (health <= 0)
-                Die();
-
-            DisplayHUD.UpdateCharge(charge);
-            DisplayHUD.UpdateHealth(health);
-
         }
 
         private void Die()

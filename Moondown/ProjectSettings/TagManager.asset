@@ -13,6 +13,7 @@ TagManager:
   - global light ground
   - manager effects
   - tooltip
+  - climbable
   layers:
   - Default
   - TransparentFX
@@ -52,6 +53,9 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 1649140131
+    locked: 0
+  - name: PostBG
+    uniqueID: 589802347
     locked: 0
   - name: Ground
     uniqueID: 445426855
