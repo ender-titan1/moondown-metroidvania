@@ -111,7 +111,7 @@ namespace Moondown.Player
 
         private void HandleEnvironmentInteraction()
         {
-            EnvironmentInteraction.Result res = EnvironmentInteraction.Instance.CheckCollisions();
+            EnvironmentInteraction.Result res = EnvironmentInteraction.Instance.GlobalResult;
 
             if (res.charge > 0)
                 OnCharge(res.charge);

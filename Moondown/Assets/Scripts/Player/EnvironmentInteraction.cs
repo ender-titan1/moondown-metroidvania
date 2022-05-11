@@ -27,6 +27,7 @@ namespace Moondown.Player
     public class EnvironmentInteraction : MonoBehaviour
     {
         // TODO: Extract to own file
+        [System.Serializable]
         public struct Result
         {
             public int health;
@@ -41,6 +42,14 @@ namespace Moondown.Player
         private List<GameObject> gameObjects = new List<GameObject> { };
         public MainControls controls;
 
+        [SerializeField] private Result result;
+
+        public Result GlobalResult => result;
+
+        private void OnEnable() => controls.Enable();
+
+        private void OnDisable() => controls.Disable();
+
         private void Awake()
         {
             if (Instance == null)
@@ -50,28 +59,40 @@ namespace Moondown.Player
 
             controls.Player.Interact.performed += _ =>
             {
-                Debug.Log("hi");
                 HandleInteract();
             };
+        }
+
+        private void Update()
+        {
+            result = CheckCollisions();    
         }
 
         #region Handle Collisions
 
         public Result CheckCollisions()
         {
-            Result m = new Result();
-            m.charge = 0;
-            m.health = 0;
+            Result res = new Result
+            {
+                charge = 0,
+                health = 0
+            };
 
             foreach (GameObject collision in gameObjects)
             {
                 EnvironmentBehaviour behaviour = collision.GetComponent<EnvironmentBehaviour>();
 
-                m.charge += behaviour.chargeModifier;
-                m.health += behaviour.healthModifier;
+                if (collision.CompareTag("climbable"))
+                    res.climbable = true;
+
+                if (behaviour == null)
+                    continue;
+
+                res.charge += behaviour.chargeModifier;
+                res.health += behaviour.healthModifier;
 
                 if (behaviour.reset)
-                    m.hasBeenHit = true;
+                    res.hasBeenHit = true;
 
                 if (behaviour.singleUse)
                     Destroy(behaviour.gameObject);
@@ -79,9 +100,13 @@ namespace Moondown.Player
                 behaviour.isUsable = false;
             }
 
-            gameObjects.Clear();
-            return m;
+            return res;
+        }
 
+        public void OnTriggerExit2D(Collider2D collision)
+        {
+            if (gameObjects.Contains(collision.gameObject))
+                gameObjects.Remove(collision.gameObject);
         }
 
         public void OnTriggerEnter2D(Collider2D collision)
@@ -110,10 +135,7 @@ namespace Moondown.Player
 
         private void HandleInteract()
         {
-            Result res = CheckCollisions();
-
-            Debug.Log(res.climbable);
-            if (res.climbable)
+            if (result.climbable)
             {
                 PlayerMovement playerMovement = Player.Instance.GetComponent<PlayerMovement>();
 
