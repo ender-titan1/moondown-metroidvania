@@ -22,11 +22,11 @@ namespace Moondown.Inventory
 {
     public enum ItemType
     {
-        MEELE_WEAPON,
-        RANGED_WEAPON,
-        ARMOUR,
-        MODULE,
-        TOOL,
-        ITEM
+        Melee_Weapon,
+        Ranged_Weapon,
+        Armour,
+        Module,
+        Tool,
+        Item
     }
 }

@@ -85,6 +85,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Climb Vertical",
+                    "type": "Value",
+                    "id": "526c5ad5-c7dc-46d7-9622-de9b598909cc",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -201,7 +210,7 @@
                 {
                     "name": "",
                     "id": "b5fc22d9-03b9-477f-bb73-0dfdfca56b02",
-                    "path": "<Gamepad>/leftStick/up",
+                    "path": "<XInputController>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": "XBox controller",
@@ -283,6 +292,17 @@
                     "processors": "",
                     "groups": "XBox controller",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4d1a9229-b272-42c7-880d-e45a86e2e445",
+                    "path": "<XInputController>/leftStick/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XBox controller",
+                    "action": "Climb Vertical",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

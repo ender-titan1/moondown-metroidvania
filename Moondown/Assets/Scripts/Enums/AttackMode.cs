@@ -22,9 +22,9 @@ namespace Moondown.WeaponSystem
 {
     public enum AttackMode
     {
-        NORMAL,
-        DASH,
-        AIR,
-        DASH_AIR
+        Normal,
+        Dash,
+        Air,
+        DashAir
     }
 }

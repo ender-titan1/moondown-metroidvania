@@ -155,7 +155,7 @@ namespace Moondown.UI.Inventory
                     " " +
                     selectedSlot.content.Value.item.data.type.ToString().ToLower().Replace("_", " ");
 
-                if (selectedSlot.content.Value.item.data.type == ItemType.MEELE_WEAPON)
+                if (selectedSlot.content.Value.item.data.type == ItemType.Melee_Weapon)
                     DataPanel.Equipable = true;
                 else
                     DataPanel.Equipable = false;
@@ -265,7 +265,7 @@ namespace Moondown.UI.Inventory
                     " " +
                     selectedSlot.content.Value.item.data.type.ToString().ToLower().Replace("_", " ");
 
-                if (selectedSlot.content.Value.item.data.type == ItemType.MEELE_WEAPON)
+                if (selectedSlot.content.Value.item.data.type == ItemType.Melee_Weapon)
                     DataPanel.Equipable = true;
                 else
                     DataPanel.Equipable = false;

@@ -46,6 +46,8 @@ namespace Moondown.Player.Movement
         public Mode mode;
         public Facing facing;
 
+        private int climbingAxis;
+
         [SerializeField] private float climbingSpeed;
 
         #region Jumping 
@@ -132,6 +134,18 @@ namespace Moondown.Player.Movement
 
             // Dashing controls
             controls.Player.Dash.performed += _ => Dash(movementAxis == 0 ? 1 : movementAxis);
+
+            // Climbing
+            controls.Player.ClimbVertical.performed += ctx =>
+            {
+                climbingAxis = ctx.ReadValue<float>().ToAxis(climbingAxis == 0 ? 1 : climbingAxis);
+                Climb();
+            };
+            controls.Player.ClimbVertical.canceled += _ =>
+            {
+                climbingAxis = 0;
+                Climb();
+            };
         }
 
         private void FixedUpdate()
@@ -140,7 +154,7 @@ namespace Moondown.Player.Movement
             grounded = IsGrounded();
 
             // moving
-            if (isMovementPressed && !UIManager.Instance.isInInventory && mode == Mode.Normal)
+            if (isMovementPressed && !UIManager.Instance.isInInventory)
                 Move(movementAxis);
 
             // dashing
@@ -156,6 +170,11 @@ namespace Moondown.Player.Movement
 
         private void Update()
         {
+            EnvironmentInteraction.Result res = EnvironmentInteraction.Instance.GlobalResult;
+
+            if (!res.climbable && mode == Mode.Climbing)
+                mode = Mode.Normal;
+
             rigidBody.gravityScale = mode.HasGravity() * 2;
         }
 
@@ -185,10 +204,20 @@ namespace Moondown.Player.Movement
         {
             facing = (Facing)direction;
 
-            rigidBody.velocity = new Vector2(
-                playerSpeed * direction - (grounded ? (groundMaterial.friction * direction) : 0f),
-                rigidBody.velocity.y
-            );
+            if (mode == Mode.Normal)
+            {
+                rigidBody.velocity = new Vector2(
+                    playerSpeed * direction - (grounded && groundMaterial != null ? (groundMaterial.friction * direction) : 0f),
+                    rigidBody.velocity.y
+                );
+            }
+            else if (mode == Mode.Climbing)
+            {
+                rigidBody.velocity = new Vector2(
+                    climbingSpeed * direction,
+                    rigidBody.velocity.y
+                );
+            }
         }
 
         void MoveCancelled()
@@ -201,7 +230,13 @@ namespace Moondown.Player.Movement
             rigidBody.velocity = new Vector2(0, wallJumpVelocity);
         }
 
-        void ClimbVertical(int direction)
+        public void Climb()
+        {
+            if (mode == Mode.Climbing)
+                ClimbVertical(climbingAxis);
+        }
+
+        public void ClimbVertical(int direction)
         {
             rigidBody.velocity = new Vector2(
                 rigidBody.velocity.x,
@@ -280,7 +315,7 @@ namespace Moondown.Player.Movement
                 pos - new Vector2(0.001f * (int)direction, 0),
                 collider.size,
                 0,
-                direction == Facing.LEFT ? Vector2.left : Vector2.right,
+                direction == Facing.Left ? Vector2.left : Vector2.right,
                 0.1f,
                 mask
             );

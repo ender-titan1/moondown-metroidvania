@@ -107,6 +107,15 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Climb Vertical"",
+                    ""type"": ""Value"",
+                    ""id"": ""526c5ad5-c7dc-46d7-9622-de9b598909cc"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -223,7 +232,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b5fc22d9-03b9-477f-bb73-0dfdfca56b02"",
-                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""path"": ""<XInputController>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""XBox controller"",
@@ -305,6 +314,17 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""XBox controller"",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4d1a9229-b272-42c7-880d-e45a86e2e445"",
+                    ""path"": ""<XInputController>/leftStick/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XBox controller"",
+                    ""action"": ""Climb Vertical"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -559,6 +579,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_ExitUI = m_Player.FindAction("Exit UI", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_ClimbVertical = m_Player.FindAction("Climb Vertical", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Up = m_UI.FindAction("Up", throwIfNotFound: true);
@@ -634,6 +655,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_ExitUI;
     private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_ClimbVertical;
     public struct PlayerActions
     {
         private @MainControls m_Wrapper;
@@ -647,6 +669,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @ExitUI => m_Wrapper.m_Player_ExitUI;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @ClimbVertical => m_Wrapper.m_Player_ClimbVertical;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -683,6 +706,9 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @ClimbVertical.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClimbVertical;
+                @ClimbVertical.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClimbVertical;
+                @ClimbVertical.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClimbVertical;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -714,6 +740,9 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @ClimbVertical.started += instance.OnClimbVertical;
+                @ClimbVertical.performed += instance.OnClimbVertical;
+                @ClimbVertical.canceled += instance.OnClimbVertical;
             }
         }
     }
@@ -812,6 +841,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         void OnDash(InputAction.CallbackContext context);
         void OnExitUI(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnClimbVertical(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

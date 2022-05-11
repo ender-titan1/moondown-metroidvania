@@ -8031,7 +8031,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mode: 0
   facing: 0
-  climbingSpeed: 0
+  climbingSpeed: 3
   jumpVelocity: 12
   wallJumpVelocity: 10
   mask:
@@ -8100,6 +8100,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d1dfccbc82c84744a989faa846f97d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  result:
+    health: 0
+    charge: 0
+    hasBeenHit: 0
+    climbable: 0
 --- !u!114 &1744697648
 MonoBehaviour:
   m_ObjectHideFlags: 0

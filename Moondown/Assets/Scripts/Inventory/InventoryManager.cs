@@ -53,17 +53,17 @@ namespace Moondown.Inventory
 
                 switch (item.data.type)
                 {
-                    case ItemType.MEELE_WEAPON:
-                    case ItemType.RANGED_WEAPON:
+                    case ItemType.Melee_Weapon:
+                    case ItemType.Ranged_Weapon:
                         Weapons.Add(item);
                         break;
-                    case ItemType.TOOL:
+                    case ItemType.Tool:
                         Tools.Add(item);
                         break;
-                    case ItemType.ARMOUR:
+                    case ItemType.Armour:
                         Armour.Add(item);
                         break;
-                    case ItemType.MODULE:
+                    case ItemType.Module:
                         Modules.Add(item);
                         break;
                     default:

@@ -22,7 +22,7 @@ namespace Moondown.Player.Movement
 {
     public enum Facing
     {
-        LEFT = -1,
-        RIGHT = 1
+        Left = -1,
+        Right = 1
     }
 }

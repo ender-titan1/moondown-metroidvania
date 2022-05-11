@@ -140,9 +140,15 @@ namespace Moondown.Player
                 PlayerMovement playerMovement = Player.Instance.GetComponent<PlayerMovement>();
 
                 if (playerMovement.mode == PlayerMovement.Mode.Normal)
+                {
                     playerMovement.mode = PlayerMovement.Mode.Climbing;
+                    playerMovement.ClimbVertical(0);
+                }
                 else if (playerMovement.mode == PlayerMovement.Mode.Climbing)
+                {
                     playerMovement.mode = PlayerMovement.Mode.Normal;
+                    playerMovement.ClimbVertical(0);
+                }
             }
         }
     }
