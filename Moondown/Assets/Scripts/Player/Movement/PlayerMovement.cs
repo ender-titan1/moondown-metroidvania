@@ -141,10 +141,21 @@ namespace Moondown.Player.Movement
                 climbingAxis = ctx.ReadValue<float>().ToAxis(climbingAxis == 0 ? 1 : climbingAxis);
                 Climb();
             };
+
             controls.Player.ClimbVertical.canceled += _ =>
             {
                 climbingAxis = 0;
                 Climb();
+            };
+
+            controls.Player.ClimbDown.performed += _ =>
+            {
+                ClimbVertical(-1);
+            };
+
+            controls.Player.ClimbDown.canceled += _ =>
+            {
+                ClimbVertical(0);
             };
         }
 

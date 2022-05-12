@@ -8031,7 +8031,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mode: 0
   facing: 0
-  climbingSpeed: 3
+  climbingSpeed: 2
   jumpVelocity: 12
   wallJumpVelocity: 10
   mask:

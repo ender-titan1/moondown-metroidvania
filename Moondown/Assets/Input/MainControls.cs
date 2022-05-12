@@ -116,6 +116,15 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Climb Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""5e1db775-db20-45b8-aad1-2aa90c0eac5a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -325,6 +334,17 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""XBox controller"",
                     ""action"": ""Climb Vertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fd83bc74-4c47-4f43-9a13-ab5b32b25a3f"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Climb Down"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -580,6 +600,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         m_Player_ExitUI = m_Player.FindAction("Exit UI", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         m_Player_ClimbVertical = m_Player.FindAction("Climb Vertical", throwIfNotFound: true);
+        m_Player_ClimbDown = m_Player.FindAction("Climb Down", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Up = m_UI.FindAction("Up", throwIfNotFound: true);
@@ -656,6 +677,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_ExitUI;
     private readonly InputAction m_Player_Pause;
     private readonly InputAction m_Player_ClimbVertical;
+    private readonly InputAction m_Player_ClimbDown;
     public struct PlayerActions
     {
         private @MainControls m_Wrapper;
@@ -670,6 +692,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         public InputAction @ExitUI => m_Wrapper.m_Player_ExitUI;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputAction @ClimbVertical => m_Wrapper.m_Player_ClimbVertical;
+        public InputAction @ClimbDown => m_Wrapper.m_Player_ClimbDown;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -709,6 +732,9 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 @ClimbVertical.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClimbVertical;
                 @ClimbVertical.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClimbVertical;
                 @ClimbVertical.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClimbVertical;
+                @ClimbDown.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClimbDown;
+                @ClimbDown.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClimbDown;
+                @ClimbDown.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClimbDown;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -743,6 +769,9 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 @ClimbVertical.started += instance.OnClimbVertical;
                 @ClimbVertical.performed += instance.OnClimbVertical;
                 @ClimbVertical.canceled += instance.OnClimbVertical;
+                @ClimbDown.started += instance.OnClimbDown;
+                @ClimbDown.performed += instance.OnClimbDown;
+                @ClimbDown.canceled += instance.OnClimbDown;
             }
         }
     }
@@ -842,6 +871,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         void OnExitUI(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnClimbVertical(InputAction.CallbackContext context);
+        void OnClimbDown(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
