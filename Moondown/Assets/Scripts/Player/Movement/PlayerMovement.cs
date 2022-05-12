@@ -24,9 +24,12 @@ using System.Linq;
 using Moondown.UI;
 using UnityEngine.InputSystem.Users;
 using UnityEngine.InputSystem;
+using UnityEditor;
 
 namespace Moondown.Player.Movement
 {
+    // TODO: Jump Buffer
+    // TODO: Coyote Time
     // TODO: Encapsulate fields?
     [RequireComponent(typeof(BoxCollider2D))]
     public class PlayerMovement : MonoBehaviour
@@ -40,6 +43,8 @@ namespace Moondown.Player.Movement
         public static PlayerMovement Instance { get; private set; }
 
         private const float MAX_ANGLE = 45f;
+        private const int MAX_JUMPS = 1;
+        private readonly Vector2 RC_OFFSET = new Vector2(0, 0.005f);
 
         public MainControls controls;
         private Rigidbody2D rigidBody;
@@ -59,7 +64,11 @@ namespace Moondown.Player.Movement
         [SerializeField]
         private float wallJumpVelocity;
 
-        private bool grounded;
+        private bool canJump;
+
+        [SerializeField]
+        private int jumps;
+
         #endregion
 
         #region Movement
@@ -135,7 +144,7 @@ namespace Moondown.Player.Movement
             // Dashing controls
             controls.Player.Dash.performed += _ => Dash(movementAxis == 0 ? 1 : movementAxis);
 
-            // Climbing
+            // Climbing controls
             controls.Player.ClimbVertical.performed += ctx =>
             {
                 climbingAxis = ctx.ReadValue<float>().ToAxis(climbingAxis == 0 ? 1 : climbingAxis);
@@ -162,7 +171,10 @@ namespace Moondown.Player.Movement
         private void FixedUpdate()
         {
             // jumping
-            grounded = IsGrounded();
+            canJump = IsGrounded();
+
+            if (canJump)
+                jumps = MAX_JUMPS;
 
             // moving
             if (isMovementPressed && !UIManager.Instance.isInInventory)
@@ -175,7 +187,7 @@ namespace Moondown.Player.Movement
                     gameObject.transform.position = new Vector2(gameObject.transform.position.x, playerYPos);
             }
 
-            if (grounded)
+            if (canJump)
                 canDash = true;
         }
 
@@ -199,9 +211,16 @@ namespace Moondown.Player.Movement
                 return;
             }
 
-            if (grounded && !UIManager.Instance.isInInventory)
+            if (jumps > 0 && !UIManager.Instance.isInInventory)
             {
+                if (!canJump)
+                {
+                    rigidBody.velocity = Vector2.zero;
+                    canDash = true;
+                }
+
                 rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y + jumpVelocity);
+                jumps--;
                 return;
             }
 
@@ -218,7 +237,7 @@ namespace Moondown.Player.Movement
             if (mode == Mode.Normal)
             {
                 rigidBody.velocity = new Vector2(
-                    playerSpeed * direction - (grounded && groundMaterial != null ? (groundMaterial.friction * direction) : 0f),
+                    playerSpeed * direction - (canJump && groundMaterial != null ? (groundMaterial.friction * direction) : 0f),
                     rigidBody.velocity.y
                 );
             }
@@ -284,7 +303,7 @@ namespace Moondown.Player.Movement
 
         void RefreshDash()
         {
-            if (grounded)
+            if (canJump)
                 canDash = true;
         }
 
@@ -296,8 +315,7 @@ namespace Moondown.Player.Movement
         {
             BoxCollider2D collider = gameObject.GetComponent<BoxCollider2D>();
 
-            Vector2 pos = new Vector2(transform.position.x, transform.position.y);
-            RaycastHit2D[] hits = Physics2D.BoxCastAll(pos - new Vector2(0, 0.001f), collider.size, 0, Vector2.down, collider.size.y, mask);
+            RaycastHit2D[] hits = Physics2D.BoxCastAll((Vector2)transform.position - RC_OFFSET, collider.size, 0, Vector2.down, collider.size.y, mask);
 
             foreach (RaycastHit2D item in hits)
             {

@@ -178,7 +178,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 14
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -8034,6 +8034,7 @@ MonoBehaviour:
   climbingSpeed: 2
   jumpVelocity: 12
   wallJumpVelocity: 10
+  jumps: 0
   mask:
     serializedVersion: 2
     m_Bits: 1280
