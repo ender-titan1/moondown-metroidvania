@@ -43,7 +43,9 @@ namespace Moondown.Player.Movement
         public static PlayerMovement Instance { get; private set; }
 
         private const float MAX_ANGLE = 45f;
+        private const float COYOTE_TIME = 0.4f;
         private const int MAX_JUMPS = 1;
+
         private readonly Vector2 RC_OFFSET = new Vector2(0, 0.005f);
 
         public MainControls controls;
@@ -171,7 +173,7 @@ namespace Moondown.Player.Movement
         private void FixedUpdate()
         {
             // jumping
-            canJump = IsGrounded();
+                canJump = IsGrounded();
 
             if (canJump)
                 jumps = MAX_JUMPS;
@@ -198,7 +200,7 @@ namespace Moondown.Player.Movement
             if (!res.climbable && mode == Mode.Climbing)
                 mode = Mode.Normal;
 
-            rigidBody.gravityScale = mode.HasGravity() * 2;
+            rigidBody.gravityScale = mode.HasGravity() * 2.5f;
         }
 
         #region Movement
@@ -228,7 +230,6 @@ namespace Moondown.Player.Movement
             if (wallJump && !UIManager.Instance.isInInventory)
                 WallJump(facing);
         }
-
 
         void Move(float direction)
         {
@@ -315,7 +316,8 @@ namespace Moondown.Player.Movement
         {
             BoxCollider2D collider = gameObject.GetComponent<BoxCollider2D>();
 
-            RaycastHit2D[] hits = Physics2D.BoxCastAll((Vector2)transform.position - RC_OFFSET, collider.size, 0, Vector2.down, collider.size.y, mask);
+            Vector2 size = collider.size;
+            RaycastHit2D[] hits = Physics2D.BoxCastAll((Vector2)transform.position - RC_OFFSET, size, 0, Vector2.down, collider.size.y, mask);
 
             foreach (RaycastHit2D item in hits)
             {
