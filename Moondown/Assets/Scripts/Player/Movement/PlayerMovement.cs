@@ -122,7 +122,10 @@ namespace Moondown.Player.Movement
         private void SetupEvents()
         {
             // Jumping & Climbing controls
-            controls.Player.Jump.performed += _ => Jump();
+            controls.Player.Jump.performed += _ =>
+            {
+                Jump();
+            };
 
             controls.Player.Jump.canceled += _ =>
             {

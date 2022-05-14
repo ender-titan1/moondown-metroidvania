@@ -15,19 +15,15 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Moondown.WeaponSystem;
 using Moondown.Inventory;
 using Moondown.Player.Modules;
 using Moondown.Environment;
-using Moondown.UI.Localization;
 using Moondown.UI;
 using System;
 using System.Threading.Tasks;
 using Moondown.Player.Movement;
-using Moondown.Utility;
 using Moondown.UI.Inventory;
 using Moondown.WeaponSystem.Attacks;
 
