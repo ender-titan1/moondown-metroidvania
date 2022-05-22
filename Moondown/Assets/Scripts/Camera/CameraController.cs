@@ -36,7 +36,9 @@ namespace Moondown.Graphics {
 
         private void FixedUpdate()
         {
-            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, pos, speed * Time.fixedDeltaTime);
+            float dist = Vector2.Distance(transform.position, pos);
+            float moveSpeed = speed * Time.fixedDeltaTime * dist / 1.5f;
+            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, pos, moveSpeed);
         }
     } 
 }

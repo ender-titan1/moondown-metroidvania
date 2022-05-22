@@ -39,7 +39,18 @@ namespace Moondown.WeaponSystem.Attacks
         {
             controls = new MainControls();
 
-            controls.Player.AttackMeele.performed += _ => Attack();
+            controls.Player.AttackMeele.performed += _ =>
+            {
+                try
+                {
+                    Attack();
+                }
+                catch (System.NullReferenceException)
+                {
+
+                }
+            };
+            
             controls.Enable();
 
             this.collider = collider;

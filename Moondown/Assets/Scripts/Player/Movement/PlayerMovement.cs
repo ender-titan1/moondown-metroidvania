@@ -216,6 +216,13 @@ namespace Moondown.Player.Movement
                 return;
             }
 
+            bool wallJump = CanWallJump(facing);
+            if (wallJump && !UIManager.Instance.isInInventory)
+            {
+                WallJump(facing);
+                return;
+            }
+
             if (jumps > 0 && !UIManager.Instance.isInInventory)
             {
                 if (!canJump)
@@ -229,9 +236,6 @@ namespace Moondown.Player.Movement
                 return;
             }
 
-            bool wallJump = CanWallJump(facing);
-            if (wallJump && !UIManager.Instance.isInInventory)
-                WallJump(facing);
         }
 
         void Move(float direction)
