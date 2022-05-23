@@ -43,15 +43,13 @@ namespace Moondown.Player.Movement
         public static PlayerMovement Instance { get; private set; }
 
         private const float MAX_ANGLE = 45f;
-        private const float COYOTE_TIME = 0.4f;
         private const int MAX_JUMPS = 1;
-
-        private readonly Vector2 RC_OFFSET = new Vector2(0, 0.005f);
+        private readonly Vector2 RC_OFFSET = new Vector2(0, 0.0005f);
 
         public MainControls controls;
         private Rigidbody2D rigidBody;
         public Mode mode;
-        public Facing facing;
+        public Facing facing = Facing.Right;
 
         private int climbingAxis;
 
@@ -226,10 +224,7 @@ namespace Moondown.Player.Movement
             if (jumps > 0 && !UIManager.Instance.isInInventory)
             {
                 if (!canJump)
-                {
                     rigidBody.velocity = Vector2.zero;
-                    canDash = true;
-                }
 
                 rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y + jumpVelocity);
                 jumps--;
@@ -316,7 +311,6 @@ namespace Moondown.Player.Movement
         }
 
         #endregion
-
         #endregion
 
         bool IsGrounded()
