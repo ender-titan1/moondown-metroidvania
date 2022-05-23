@@ -123,6 +123,9 @@ namespace Moondown.UI
 
         private void OpenInventoryUI()
         {
+            if (isInPasue)
+                return;
+
             if (!isInInventory)
             {
                 UIPostProcessing.SetActive(true);

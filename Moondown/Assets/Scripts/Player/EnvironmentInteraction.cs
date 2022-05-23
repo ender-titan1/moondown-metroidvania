@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Moondown.Environment;
 using Moondown.Player.Movement;
+using Moondown.UI;
 
 namespace Moondown.Player
 {
@@ -135,7 +136,7 @@ namespace Moondown.Player
 
         private void HandleInteract()
         {
-            if (result.climbable)
+            if (result.climbable && !UIManager.Instance.isInInventory)
             {
                 PlayerMovement playerMovement = Player.Instance.GetComponent<PlayerMovement>();
 
