@@ -180,7 +180,7 @@ namespace Moondown.Player.Movement
                 jumps = MAX_JUMPS;
 
             // moving
-            if (isMovementPressed && !UIManager.Instance.isInInventory)
+            if (isMovementPressed && !UIManager.Instance.IsInInterface)
                 Move(movementAxis);
 
             // dashing
@@ -215,13 +215,13 @@ namespace Moondown.Player.Movement
             }
 
             bool wallJump = CanWallJump(facing);
-            if (wallJump && !UIManager.Instance.isInInventory)
+            if (wallJump && !UIManager.Instance.IsInInterface)
             {
                 WallJump(facing);
                 return;
             }
 
-            if (jumps > 0 && !UIManager.Instance.isInInventory)
+            if (jumps > 0 && !UIManager.Instance.IsInInterface)
             {
                 if (!canJump)
                     rigidBody.velocity = Vector2.zero;
@@ -281,7 +281,7 @@ namespace Moondown.Player.Movement
 
         void Dash(float direction)
         {
-            if (!canDash || UIManager.Instance.isInInventory || mode == Mode.Climbing)
+            if (!canDash || UIManager.Instance.IsInInterface || mode == Mode.Climbing)
                 return;
 
             canDash = false;

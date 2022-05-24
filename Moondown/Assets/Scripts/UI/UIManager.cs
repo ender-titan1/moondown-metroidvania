@@ -41,6 +41,11 @@ namespace Moondown.UI
         public bool isInInventory;
         private bool isInPasue;
 
+        public bool IsInInterface
+        {
+            get => isInInventory || isInPasue;
+        }
+
         public GameObject InventoryUI => UI;
 
         private void Awake()
@@ -119,6 +124,7 @@ namespace Moondown.UI
             Time.timeScale = Convert.ToInt32(!value);
             isInPasue = value;
             UIPostProcessing.SetActive(value);
+            pauseUI.GetComponentInChildren<VerticalNavBar>().Enabled = value;
         }
 
         private void OpenInventoryUI()
@@ -146,6 +152,7 @@ namespace Moondown.UI
 
         public void PauseQuit()
         {
+            DisablePauseNav();
             //TODO: add confirmation window
             Application.Quit();
         }
@@ -157,7 +164,13 @@ namespace Moondown.UI
 
         public void Resume()
         {
+            DisablePauseNav();
             TogglePause(false);
+        }
+
+        private void DisablePauseNav()
+        {
+            pauseUI.GetComponentInChildren<VerticalNavBar>().Enabled = false;
         }
 
         #endregion
