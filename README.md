@@ -28,13 +28,13 @@ To report a bug to the development team please open a new issue on GitHub with t
 To request a feature please open a new discussion in the Discussions page.
 
 ### Contributing Code
-Firstly please clone and fork the game.
-After that select an issuse form the Issues page you would like to work on.
-Create a comment on the issue letting us know you want to be assigned.
-After finishing work on the issue in a fork of the repo create a new pull request (PR).
-The PR name should match the issue name.
-The PR description should contain a 'Closes #issue' statement and should outline the changes
-The team will review your PR and let you know about the PR's state.
+* Firstly please clone and fork the game.
+* After that select an issuse form the Issues page you would like to work on.
+* Create a comment on the issue letting us know you want to be assigned.
+* After finishing work on the issue in a fork of the repo create a new pull request (PR).
+* The PR name should match the issue name.
+* The PR description should contain a 'Closes #issue' statement and should outline the changes
+* The team will review your PR and let you know about the PR's state.
 
 ## Adding translations
 Moondown uses a real-time translation system. All TMP 
