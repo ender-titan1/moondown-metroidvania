@@ -16,6 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using Moondown.Utility;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,6 +32,7 @@ namespace Moondown.UI
         private MainControls controls;
 
         private int axis;
+        private bool repeat;
 
         public bool Enabled
         {
@@ -46,7 +48,7 @@ namespace Moondown.UI
                 if (value)
                 {
                     controls.Enable();
-                    InvokeRepeating(nameof(RepeatSelect), 0, 0.3f);
+                    Debug.Log("ON");
                 }
                 else
                 {
@@ -56,8 +58,6 @@ namespace Moondown.UI
                     }
 
                     controls.Disable();
-
-                    CancelInvoke(nameof(RepeatSelect));
                 }
             }
         }
@@ -86,17 +86,45 @@ namespace Moondown.UI
             {
                 selected.GetComponent<NavBarElement>().Activate();
             };
+
         }
 
-        void RepeatSelect()
+        private void Start()
         {
-            Debug.Log(axis);
-
-            if (axis == 0)
-                return;
-
-            Select(axis > 0);
+            StartCoroutine(nameof(Repeat));
         }
+
+        // This code needs to be improved
+        IEnumerator Repeat()
+        {
+            while (true)
+            {
+                yield return new WaitForSecondsRealtime(0.2f);
+
+                if (Enabled && axis != 0)
+                {
+                    if (repeat && Enabled && axis != 0)
+                    {
+                        Select(axis < 0);
+                    }
+                    else
+                    {
+                        yield return new WaitForSecondsRealtime(1.0f);
+
+                        if (Enabled && axis != 0)
+                        {
+                            Select(axis < 0);
+                            repeat = true;
+                        }
+                    }
+                }
+                else
+                {
+                    repeat = false;
+                }
+            }
+        }
+
         
         void Select(bool direction)
         { 
