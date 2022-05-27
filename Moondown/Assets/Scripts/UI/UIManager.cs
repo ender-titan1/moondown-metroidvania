@@ -81,10 +81,7 @@ namespace Moondown.UI
                         return;
                     }
 
-                    UI.SetActive(false);
-                    UIPostProcessing.SetActive(false);
-                    DisplayHUD.Toggle();
-                    isInInventory = false;
+                    ToggleInventory(false);
                 }
                 else if (isInPasue)
                 {
@@ -107,24 +104,12 @@ namespace Moondown.UI
                     return;
                 }
 
-                UI.SetActive(false);
-                UIPostProcessing.SetActive(false);
-                DisplayHUD.Toggle();
-                isInInventory = false;
+                ToggleInventory(false);
             }
             else
             {
                 TogglePause(!isInPasue);
             }
-        }
-
-        private void TogglePause(bool value)
-        {
-            pauseUI.SetActive(value);
-            Time.timeScale = Convert.ToInt32(!value);
-            isInPasue = value;
-            UIPostProcessing.SetActive(value);
-            pauseUI.GetComponentInChildren<VerticalNavBar>().Enabled = value;
         }
 
         private void OpenInventoryUI()
@@ -133,20 +118,29 @@ namespace Moondown.UI
                 return;
 
             if (!isInInventory)
-            {
-                UIPostProcessing.SetActive(true);
-                UI.SetActive(true);
-                DisplayHUD.Toggle();
-                isInInventory = true;
-            }
+                ToggleInventory(true);
             else
-            {
-                UIPostProcessing.SetActive(false);
-                UI.SetActive(false);
-                DisplayHUD.Toggle();
-                isInInventory = false;
-            }
+                ToggleInventory(false);
         }
+
+        private void TogglePause(bool value)
+        {
+            DisplayHUD.Toggle(!value);
+            pauseUI.SetActive(value);
+            Time.timeScale = Convert.ToInt32(!value);
+            isInPasue = value;
+            UIPostProcessing.SetActive(value);
+            pauseUI.GetComponentInChildren<VerticalNavBar>().Enabled = value;
+        }
+
+        private void ToggleInventory(bool value)
+        {
+            UIPostProcessing.SetActive(value);
+            UI.SetActive(value);
+            DisplayHUD.Toggle(!value);
+            isInInventory = value;
+        }
+
 
         #region Pause Menu
 

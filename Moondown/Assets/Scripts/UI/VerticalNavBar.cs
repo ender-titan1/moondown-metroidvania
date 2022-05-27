@@ -16,6 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using Moondown.Utility;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -48,14 +49,10 @@ namespace Moondown.UI
                 if (value)
                 {
                     controls.Enable();
-                    Debug.Log("ON");
                 }
                 else
                 {
-                    foreach (GameObject @object in selection)
-                    {
-                        @object.GetComponent<NavBarElement>().Select(false);
-                    }
+                    HideAll();
 
                     controls.Disable();
                 }
@@ -82,10 +79,7 @@ namespace Moondown.UI
             controls.UI.Up.performed += _ => axis++;
             controls.UI.Up.canceled += _ =>  axis--;
 
-            controls.UI.Select.performed += _ =>
-            {
-                selected.GetComponent<NavBarElement>().Activate();
-            };
+            controls.UI.Select.performed += _ => selected.GetComponent<NavBarElement>().Activate();
 
         }
 
@@ -124,7 +118,6 @@ namespace Moondown.UI
                 }
             }
         }
-
         
         void Select(bool direction)
         { 
@@ -153,5 +146,12 @@ namespace Moondown.UI
 
         }
 
+        public void HideAll()
+        {
+            foreach (GameObject @object in selection)
+            {
+                @object.GetComponent<NavBarElement>().Select(false);
+            }
+        }
     }
 }

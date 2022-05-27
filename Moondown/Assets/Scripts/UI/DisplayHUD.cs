@@ -67,9 +67,9 @@ namespace Moondown.UI
             }
         }
 
-        public static void Toggle()
+        public static void Toggle(bool value)
         {
-            isEnabled = !isEnabled;
+            isEnabled = value;
             foreach (GameObject @object in healthBar)
                 @object.SetActive(isEnabled);
             foreach (GameObject @object in chargeBar)
