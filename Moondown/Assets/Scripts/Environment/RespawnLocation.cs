@@ -26,8 +26,8 @@ namespace Moondown.Environment
     {
         public enum RespawnMode
         {
-            HAZARD,
-            DEATH
+            Hazard,
+            Death
         }
 
         public Vector2 position;

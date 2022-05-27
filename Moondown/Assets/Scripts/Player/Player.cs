@@ -105,6 +105,7 @@ namespace Moondown.Player
 
         }
 
+        // TODO: Redo respawn system
         private void HandleEnvironmentInteraction()
         {
             EnvironmentInteraction.Result res = EnvironmentInteraction.Instance.GlobalResult;

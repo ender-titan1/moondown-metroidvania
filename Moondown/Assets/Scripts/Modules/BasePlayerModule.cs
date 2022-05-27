@@ -39,7 +39,7 @@ namespace Moondown.Player.Modules
 
         public override void OnDamageTaken(int amount)
         {
-            // this is done because the 'amount' parameter is negative
+            Debug.Log(Player.Instance.health);
             Player.Instance.health += amount;
         }
 
