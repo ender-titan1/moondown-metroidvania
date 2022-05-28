@@ -18,10 +18,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Moondown.Inventory;
-using Moondown.Player.Modules;
 using Moondown.Environment;
 using Moondown.UI;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Moondown.Player.Movement;
 using Moondown.UI.Inventory;
@@ -35,22 +35,6 @@ namespace Moondown.Player
         // singelton
         public static Player Instance { get; private set; }
 
-        #region events
-        public delegate void BlankDelegate();
-
-        public event Action<int> OnDamageTaken;
-        public event Action<int> OnHeal;
-
-        public event Action<int> OnCharge;
-
-        public event BlankDelegate OnDeath;
-        public event BlankDelegate OnRespawn;
-        public event Action<GameObject> OnHazardRespawn;
-
-        public event BlankDelegate OnApplyLowHealth;
-        public event BlankDelegate OnClearVignette;
-        #endregion
-
         public RespawnLocation LocalRespawn { get; set; }
         public RespawnLocation DeathRespawn { get; set; }
 
@@ -60,15 +44,11 @@ namespace Moondown.Player
         public int charge;
         public int MaxCharge { get; set; } = 3;
 
-        public List<AbstractModule> modules = new List<AbstractModule> { };
-
-        [SerializeField] private GameObject LowHealthPP;
-
         [SerializeField] private Material shaderMaterial;
 
-        public GameObject LowHealthPostProcessing => LowHealthPP;
-
+        [SuppressMessage("CodeQuality", "IDE0052:Remove unread private members")]
         private MeeleAttack attack;
+
         [SerializeField] private LayerMask mask;
 
         private void Awake()
@@ -82,10 +62,6 @@ namespace Moondown.Player
         private void Start()
         {
             DisplayHUD.Init(GameObject.FindGameObjectWithTag("hp bar"), GameObject.FindGameObjectWithTag("charge bar"));
-
-            modules.Add(new BasePlayerModule());
-
-            OnRespawn();
 
             InventoryManager.Instance.Add(new Weapon("Weapon"));
             InventoryManager.Instance.Add(new Item("Scrap"), 100);
@@ -108,37 +84,12 @@ namespace Moondown.Player
         // TODO: Redo respawn system
         private void HandleEnvironmentInteraction()
         {
-            EnvironmentInteraction.Result res = EnvironmentInteraction.Instance.GlobalResult;
-
-            if (res.charge > 0)
-                OnCharge(res.charge);
-
-            if (res.health != 0)
-            {
-
-                if (res.health > 0)
-                    OnHeal(res.health);
-                else
-                {
-                    OnDamageTaken(res.health);
-
-                    if (health == 1)
-                        OnApplyLowHealth();
-                    else
-                        OnClearVignette();
-                }
-            }
-
-            if (res.hasBeenHit)
-            {
-                OnHazardRespawn(gameObject);
-            }
+           
         }
 
         private void Die()
         {
-            OnDeath();
-            OnRespawn();
+            health = MaxHealth;   
         }
 
         public async Task AnimateHazardFade()

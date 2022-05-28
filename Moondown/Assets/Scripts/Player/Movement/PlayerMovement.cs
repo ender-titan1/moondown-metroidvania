@@ -196,10 +196,10 @@ namespace Moondown.Player.Movement
 
         private void Update()
         {
-            EnvironmentInteraction.Result res = EnvironmentInteraction.Instance.GlobalResult;
+            //EnvironmentInteraction.Result res = EnvironmentInteraction.Instance.GlobalResult;
 
-            if (!res.climbable && mode == Mode.Climbing)
-                mode = Mode.Normal;
+            //if (!res.climbable && mode == Mode.Climbing)
+            //    mode = Mode.Normal;
 
             rigidBody.gravityScale = mode.HasGravity() * 2.5f;
         }

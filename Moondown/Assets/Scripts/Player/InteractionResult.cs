@@ -15,24 +15,17 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Moondown.Environment;
-using Moondown.Player.Movement;
-using Moondown.UI;
-
 namespace Moondown.Player
 {
-    public class EnvironmentInteraction : MonoBehaviour
+
+    [System.Serializable]
+    public struct InteractionResult
     {
-        public static EnvironmentInteraction Instance { get; private set; }
+        public int health;
+        public int charge;
 
-        private void Update()
-        {
-            BoxCollider2D collider = GetComponent<BoxCollider2D>();
-            RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, collider.bounds.size, 0.0f, Vector2.zero);
-        }
-
+        public bool hasBeenHit;
+        public bool climbable;
     }
+
 }
