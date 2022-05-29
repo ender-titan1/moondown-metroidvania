@@ -26,6 +26,17 @@ namespace Moondown.Player
 
         public bool hasBeenHit;
         public bool climbable;
+
+        public static InteractionResult operator +(InteractionResult a, InteractionResult b)
+        {
+            return new InteractionResult
+            {
+                health = a.health + b.health,
+                charge = a.charge + b.charge,
+                hasBeenHit = a.hasBeenHit || b.hasBeenHit,
+                climbable = a.climbable || b.climbable
+            };
+        }
     }
 
 }

@@ -26,9 +26,10 @@ namespace Moondown.Utility
 {
     public static class Extensions
     {
-
         public static bool Has<T>(this GameObject gameObject) where T : Component => gameObject.GetComponent<T>() != null;
+
         public static bool Has<T>(this Component component) where T : Component => component.GetComponent<T>() != null;
+
         public static bool ChildHas<T>(this GameObject gameObject) where T : Component => gameObject.GetComponentInChildren<T>() != null;
 
         public static GameObject[] GetChildren(this GameObject gameObject)

@@ -169,6 +169,12 @@ namespace Moondown.Player.Movement
             {
                 ClimbVertical(0);
             };
+
+            // Interaction controls
+            controls.Player.Interact.performed += _ =>
+            {
+                Interact();
+            };
         }
 
         private void FixedUpdate()
@@ -196,10 +202,12 @@ namespace Moondown.Player.Movement
 
         private void Update()
         {
-            //EnvironmentInteraction.Result res = EnvironmentInteraction.Instance.GlobalResult;
+            InteractionResult res = EnvironmentInteraction.Result;
 
-            //if (!res.climbable && mode == Mode.Climbing)
-            //    mode = Mode.Normal;
+            Debug.Log(res.climbable);
+
+            if (!res.climbable && mode == Mode.Climbing)
+                mode = Mode.Normal;
 
             rigidBody.gravityScale = mode.HasGravity() * 2.5f;
         }
@@ -312,6 +320,25 @@ namespace Moondown.Player.Movement
 
         #endregion
         #endregion
+
+        void Interact()
+        {
+            if (EnvironmentInteraction.Result.climbable)
+            {
+                switch (mode)
+                {
+                    case Mode.Normal:
+                        rigidBody.velocity = Vector2.zero;
+                        mode = Mode.Climbing;
+                        break;
+                    case Mode.Climbing:
+                        mode = Mode.Normal;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
 
         bool IsGrounded()
         {

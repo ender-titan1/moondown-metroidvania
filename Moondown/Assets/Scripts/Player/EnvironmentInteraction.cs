@@ -21,18 +21,68 @@ using UnityEngine;
 using Moondown.Environment;
 using Moondown.Player.Movement;
 using Moondown.UI;
+using Moondown.Utility;
 
 namespace Moondown.Player
 {
     public class EnvironmentInteraction : MonoBehaviour
     {
-        public static EnvironmentInteraction Instance { get; private set; }
+        public static InteractionResult Result
+        {
+            get
+            {
+                return Player.Instance.GetComponent<EnvironmentInteraction>().GetResult();
+            }
+        }
 
-        private void Update()
+        private InteractionResult GetResult()
         {
             BoxCollider2D collider = GetComponent<BoxCollider2D>();
-            RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, collider.bounds.size, 0.0f, Vector2.zero);
+
+            RaycastHit2D[] hits = Physics2D.BoxCastAll(
+                transform.position,
+                (Vector2)collider.bounds.size + new Vector2(0.1f, 0.1f),
+                0.0f,
+                Vector2.zero
+            );
+
+            InteractionResult result = new InteractionResult();
+
+            foreach (RaycastHit2D hit in hits)
+            {
+                GameObject go = hit.transform.gameObject;
+
+                if (go.Has<EnvironmentBehaviour>())
+                {
+                    EnvironmentBehaviour eb = go.GetComponent<EnvironmentBehaviour>();
+
+                    result += new InteractionResult
+                    {
+                        health = eb.healthModifier,
+                        charge = eb.chargeModifier,
+                        hasBeenHit = eb.reset,
+                        climbable = go.CompareTag("climbable")
+                    };
+                }
+                else
+                {
+                    if (go.CompareTag("climbable"))
+                    {
+                        
+                        result += new InteractionResult
+                        {
+                            health = 0,
+                            charge = 0,
+                            hasBeenHit = false,
+                            climbable = true
+                        };
+                    }
+                }
+            }
+
+            return result;
         }
+
 
     }
 }

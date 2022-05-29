@@ -84,7 +84,10 @@ namespace Moondown.Player
         // TODO: Redo respawn system
         private void HandleEnvironmentInteraction()
         {
-           
+            InteractionResult res = EnvironmentInteraction.Result;
+
+            health += res.health;
+            charge += res.charge;
         }
 
         private void Die()
