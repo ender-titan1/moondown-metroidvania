@@ -11448,7 +11448,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 277f1ae644b6c1f44813b47b1f37c017, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthModifier: 0
+  healthModifier: -1
   chargeModifier: 0
   singleUse: 0
   reset: 1
@@ -12618,6 +12618,7 @@ GameObject:
   - component: {fileID: 1993804487}
   - component: {fileID: 1993804490}
   - component: {fileID: 1993804489}
+  - component: {fileID: 1993804488}
   m_Layer: 8
   m_Name: Respawn Hazard
   m_TagString: hazard respawn
@@ -12633,12 +12634,31 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1993804486}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 18.7514, y: 4.99, z: 6.895447}
+  m_LocalPosition: {x: 18.7514, y: -0.83, z: 6.895447}
   m_LocalScale: {x: 2.2902, y: 13.0105, z: 1}
   m_Children: []
   m_Father: {fileID: 1401367099}
   m_RootOrder: 29
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1993804488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993804486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 277f1ae644b6c1f44813b47b1f37c017, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthModifier: 0
+  chargeModifier: 0
+  singleUse: 0
+  reset: 0
+  healthPoints: 0
+  attackable: 0
+  isUsable: 0
 --- !u!61 &1993804489
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12652,7 +12672,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.38684464}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -12663,7 +12683,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 0.90052557}
   m_EdgeRadius: 0
 --- !u!212 &1993804490
 SpriteRenderer:

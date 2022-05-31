@@ -48,7 +48,8 @@ namespace Moondown.Player
 
         [SerializeField] private LayerMask mask;
 
-        private Vector2 hazardRespawnPoint;
+        private Vector2 hazardRespawnPoint = new Vector2(0, 0);
+        private Vector2 deathRespawnPoint = new Vector2(0, 0);
 
         private void Awake()
         {
@@ -80,17 +81,33 @@ namespace Moondown.Player
 
         }
 
-        // TODO: Redo respawn system
         private void HandleEnvironmentInteraction()
         {
             InteractionResult res = EnvironmentInteraction.Result;
 
             health += res.health;
             charge += res.charge;
+
+            if (res.hazardRespawn.HasValue)
+                hazardRespawnPoint = (Vector2)res.hazardRespawn;
+
+            if (health <= 0)
+            {
+                Die();
+            }
+            else if (res.hasBeenHit)
+            {
+                PlayerMovement.Instance.CancelInvoke("CancelDash");
+                PlayerMovement.Instance.CancelDash();
+                transform.position = hazardRespawnPoint;
+            }
         }
 
         private void Die()
         {
+            PlayerMovement.Instance.CancelInvoke("CancelDash");
+            PlayerMovement.Instance.CancelDash();
+            transform.position = deathRespawnPoint;
             health = MaxHealth;   
         }
 

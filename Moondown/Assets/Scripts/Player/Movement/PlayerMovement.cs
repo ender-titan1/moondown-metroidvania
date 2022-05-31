@@ -302,7 +302,7 @@ namespace Moondown.Player.Movement
             Invoke(nameof(RefreshDash), dashCooldown);
         }
 
-        void CancelDash()
+        public void CancelDash()
         {
             rigidBody.velocity = Vector2.zero;
             controls.Enable();
@@ -310,7 +310,7 @@ namespace Moondown.Player.Movement
             isDashing = false;
         }
 
-        void RefreshDash()
+        public void RefreshDash()
         {
             if (canJump)
                 canDash = true;
