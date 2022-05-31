@@ -61,7 +61,8 @@ namespace Moondown.Player
                         health = eb.healthModifier,
                         charge = eb.chargeModifier,
                         hasBeenHit = eb.reset,
-                        climbable = go.CompareTag("climbable")
+                        climbable = go.CompareTag("climbable"),
+                        hazardRespawn = go.CompareTag("hazard respawn") ? go.transform.position : (Vector3?)null
                     };
                 }
                 else
@@ -74,7 +75,8 @@ namespace Moondown.Player
                             health = 0,
                             charge = 0,
                             hasBeenHit = false,
-                            climbable = true
+                            climbable = true,
+                            hazardRespawn = (Vector3?)null
                         };
                     }
                 }
@@ -82,7 +84,5 @@ namespace Moondown.Player
 
             return result;
         }
-
-
     }
 }

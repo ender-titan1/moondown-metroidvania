@@ -85,13 +85,6 @@ namespace Moondown.WeaponSystem.Attacks
                     EnvironmentBehaviour behaviour = hit.collider.GetComponent<EnvironmentBehaviour>();
                     behaviour.healthPoints -= InventoryManager.Instance.equiped.meele.Damage;
                 }
-                else if (hit.collider.Has<RespawnLocation>() && hit.collider.GetComponent<RespawnLocation>().cost > 0)
-                {
-                    if (Player.Instance.DeathRespawn.cost == 0)
-                        Object.Destroy(Player.Instance.DeathRespawn.gameObject);
-
-                    hit.collider.GetComponent<RespawnLocation>().Activate();
-                }
             }
 
             //CanAttack = false;

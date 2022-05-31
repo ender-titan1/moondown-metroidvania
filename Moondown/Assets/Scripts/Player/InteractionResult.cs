@@ -15,6 +15,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using UnityEngine;
+
 namespace Moondown.Player
 {
 
@@ -27,6 +29,8 @@ namespace Moondown.Player
         public bool hasBeenHit;
         public bool climbable;
 
+        public Vector3? hazardRespawn;
+
         public static InteractionResult operator +(InteractionResult a, InteractionResult b)
         {
             return new InteractionResult
@@ -34,7 +38,8 @@ namespace Moondown.Player
                 health = a.health + b.health,
                 charge = a.charge + b.charge,
                 hasBeenHit = a.hasBeenHit || b.hasBeenHit,
-                climbable = a.climbable || b.climbable
+                climbable = a.climbable || b.climbable,
+                hazardRespawn = b.hazardRespawn ?? a.hazardRespawn 
             };
         }
     }

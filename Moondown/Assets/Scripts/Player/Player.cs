@@ -35,9 +35,6 @@ namespace Moondown.Player
         // singelton
         public static Player Instance { get; private set; }
 
-        public RespawnLocation LocalRespawn { get; set; }
-        public RespawnLocation DeathRespawn { get; set; }
-
         public int health;
         public int MaxHealth { get; set; } = 5;
 
@@ -50,6 +47,8 @@ namespace Moondown.Player
         private MeeleAttack attack;
 
         [SerializeField] private LayerMask mask;
+
+        private Vector2 hazardRespawnPoint;
 
         private void Awake()
         {

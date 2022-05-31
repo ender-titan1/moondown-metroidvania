@@ -204,8 +204,6 @@ namespace Moondown.Player.Movement
         {
             InteractionResult res = EnvironmentInteraction.Result;
 
-            Debug.Log(res.climbable);
-
             if (!res.climbable && mode == Mode.Climbing)
                 mode = Mode.Normal;
 

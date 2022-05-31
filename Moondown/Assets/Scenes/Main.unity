@@ -1002,7 +1002,6 @@ GameObject:
   - component: {fileID: 140382647}
   - component: {fileID: 140382650}
   - component: {fileID: 140382649}
-  - component: {fileID: 140382648}
   m_Layer: 8
   m_Name: Respawn
   m_TagString: Untagged
@@ -1024,21 +1023,6 @@ Transform:
   m_Father: {fileID: 1401367099}
   m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &140382648
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 140382646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a9fd4eb89a66f842a56a62bb0a4951e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  position: {x: 0, y: 0}
-  mode: 1
-  cost: 0
 --- !u!61 &140382649
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3673,7 +3657,7 @@ GameObject:
   - component: {fileID: 742294686}
   - component: {fileID: 742294688}
   - component: {fileID: 742294687}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Climb (2)
   m_TagString: climbable
   m_Icon: {fileID: 0}
@@ -6982,7 +6966,7 @@ GameObject:
   - component: {fileID: 1219253374}
   - component: {fileID: 1219253376}
   - component: {fileID: 1219253375}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Climb (1)
   m_TagString: climbable
   m_Icon: {fileID: 0}
@@ -11688,49 +11672,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1855222037}
   m_CullTransparentMesh: 1
---- !u!1 &1857437915
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1857437916}
-  - component: {fileID: 1857437917}
-  m_Layer: 0
-  m_Name: Analytics
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1857437916
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1857437915}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1902099404}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1857437917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1857437915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68199814a47b9c14a83adeed4b247fbe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1902099403
 GameObject:
   m_ObjectHideFlags: 0
@@ -11761,7 +11702,6 @@ Transform:
   - {fileID: 299618935}
   - {fileID: 15081075}
   - {fileID: 1100730731}
-  - {fileID: 1857437916}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12356,7 +12296,7 @@ GameObject:
   - component: {fileID: 1954812392}
   - component: {fileID: 1954812391}
   - component: {fileID: 1954812390}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Climb
   m_TagString: climbable
   m_Icon: {fileID: 0}
@@ -12678,10 +12618,9 @@ GameObject:
   - component: {fileID: 1993804487}
   - component: {fileID: 1993804490}
   - component: {fileID: 1993804489}
-  - component: {fileID: 1993804488}
   m_Layer: 8
   m_Name: Respawn Hazard
-  m_TagString: Untagged
+  m_TagString: hazard respawn
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12700,21 +12639,6 @@ Transform:
   m_Father: {fileID: 1401367099}
   m_RootOrder: 29
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1993804488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1993804486}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a9fd4eb89a66f842a56a62bb0a4951e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  position: {x: 0, y: 0}
-  mode: 0
-  cost: 0
 --- !u!61 &1993804489
 BoxCollider2D:
   m_ObjectHideFlags: 0

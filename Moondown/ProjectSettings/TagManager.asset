@@ -14,6 +14,7 @@ TagManager:
   - manager effects
   - tooltip
   - climbable
+  - hazard respawn
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - Water
   - UI
   - 
-  - 
+  - Climb
   - Ground
   - Enemy
   - Destroyable
