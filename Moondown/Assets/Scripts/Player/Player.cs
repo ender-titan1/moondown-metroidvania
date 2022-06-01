@@ -35,10 +35,32 @@ namespace Moondown.Player
         // singelton
         public static Player Instance { get; private set; }
 
-        public int health;
+        private int _health, _charge;
+
+        public int Health 
+        {
+            get => _health;
+
+            set
+            {
+                if (value <= MaxHealth)
+                    _health = value;
+            }
+        }
+
         public int MaxHealth { get; set; } = 5;
 
-        public int charge;
+        public int Charge
+        {
+            get => _charge;
+
+            set
+            {
+                if (value <= MaxCharge)
+                    _charge = value;
+            }
+        }
+
         public int MaxCharge { get; set; } = 3;
 
         [SerializeField] private Material shaderMaterial;
@@ -73,11 +95,11 @@ namespace Moondown.Player
         {
             HandleEnvironmentInteraction();
 
-            if (health <= 0)
-                Die();
+            if (Health <= 0)
+                Respawn();
 
-            DisplayHUD.UpdateCharge(charge);
-            DisplayHUD.UpdateHealth(health);
+            DisplayHUD.UpdateCharge(Charge);
+            DisplayHUD.UpdateHealth(Health);
 
         }
 
@@ -85,15 +107,18 @@ namespace Moondown.Player
         {
             InteractionResult res = EnvironmentInteraction.Result;
 
-            health += res.health;
-            charge += res.charge;
+            Health += res.health;
+            Charge += res.charge;
 
             if (res.hazardRespawn.HasValue)
                 hazardRespawnPoint = (Vector2)res.hazardRespawn;
 
-            if (health <= 0)
+            if (res.deathRespawn.HasValue)
+                deathRespawnPoint = (Vector2)res.deathRespawn;
+
+            if (Health <= 0)
             {
-                Die();
+                Respawn();
             }
             else if (res.hasBeenHit)
             {
@@ -101,14 +126,17 @@ namespace Moondown.Player
                 PlayerMovement.Instance.CancelDash();
                 transform.position = hazardRespawnPoint;
             }
+
+            foreach (GameObject go in res.toDestroy)
+                Destroy(go);
         }
 
-        private void Die()
+        private void Respawn()
         {
             PlayerMovement.Instance.CancelInvoke("CancelDash");
             PlayerMovement.Instance.CancelDash();
             transform.position = deathRespawnPoint;
-            health = MaxHealth;   
+            Health = MaxHealth;   
         }
 
         public async Task AnimateHazardFade()

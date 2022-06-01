@@ -46,7 +46,16 @@ namespace Moondown.Player
                 Vector2.zero
             );
 
-            InteractionResult result = new InteractionResult();
+            InteractionResult result = new InteractionResult
+            {
+                health = 0,
+                charge = 0,
+                hasBeenHit = false,
+                climbable = false,
+                hazardRespawn = (Vector3?)null,
+                deathRespawn = (Vector3?)null,
+                toDestroy = new GameObject[] { }
+            };
 
             foreach (RaycastHit2D hit in hits)
             {
@@ -62,21 +71,24 @@ namespace Moondown.Player
                         charge = eb.chargeModifier,
                         hasBeenHit = eb.reset,
                         climbable = go.CompareTag("climbable"),
-                        hazardRespawn = go.CompareTag("hazard respawn") ? go.transform.position : (Vector3?)null
+                        hazardRespawn = go.CompareTag("hazard respawn") ? go.transform.position : (Vector3?)null,
+                        deathRespawn = go.CompareTag("death respawn") ? go.transform.position : (Vector3?)null,
+                        toDestroy = eb.singleUse ? new GameObject[] { go } : new GameObject[] { }
                     };
                 }
                 else
                 {
                     if (go.CompareTag("climbable"))
                     {
-                        
                         result += new InteractionResult
                         {
                             health = 0,
                             charge = 0,
                             hasBeenHit = false,
                             climbable = true,
-                            hazardRespawn = (Vector3?)null
+                            hazardRespawn = (Vector3?)null,
+                            deathRespawn = (Vector3?)null,
+                            toDestroy = new GameObject[] { }
                         };
                     }
                 }

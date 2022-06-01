@@ -15,6 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System.Linq;
 using UnityEngine;
 
 namespace Moondown.Player
@@ -30,6 +31,9 @@ namespace Moondown.Player
         public bool climbable;
 
         public Vector3? hazardRespawn;
+        public Vector3? deathRespawn;
+
+        public GameObject[] toDestroy;
 
         public static InteractionResult operator +(InteractionResult a, InteractionResult b)
         {
@@ -39,7 +43,9 @@ namespace Moondown.Player
                 charge = a.charge + b.charge,
                 hasBeenHit = a.hasBeenHit || b.hasBeenHit,
                 climbable = a.climbable || b.climbable,
-                hazardRespawn = b.hazardRespawn ?? a.hazardRespawn 
+                hazardRespawn = b.hazardRespawn ?? a.hazardRespawn,
+                deathRespawn = b.deathRespawn ?? a.deathRespawn,
+                toDestroy = a.toDestroy.Concat(b.toDestroy).ToArray()
             };
         }
     }

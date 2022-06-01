@@ -15,6 +15,7 @@ TagManager:
   - tooltip
   - climbable
   - hazard respawn
+  - death respawn
   layers:
   - Default
   - TransparentFX
