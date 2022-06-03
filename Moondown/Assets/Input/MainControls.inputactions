@@ -51,7 +51,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Pause and exit UI",
+                    "name": "Pause And Exit UI1",
                     "type": "Button",
                     "id": "104aca5d-7766-4359-9ebf-13a181ebea2c",
                     "expectedControlType": "Button",
@@ -103,6 +103,42 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Attack Ranged",
+                    "type": "Button",
+                    "id": "19c57f0c-38fc-44d5-a70b-182df078eeb4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Charge Range Attack",
+                    "type": "Button",
+                    "id": "964d8cf7-1528-48f4-9b45-fb45a56b2227",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Right Stick X",
+                    "type": "Value",
+                    "id": "ff7799b7-8b85-497c-b888-a27023d147f9",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Right Stick Y",
+                    "type": "Value",
+                    "id": "146e0832-7aeb-4c7b-b138-75f2f51d0ac3",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -256,7 +292,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard & Mouse",
-                    "action": "Pause and exit UI",
+                    "action": "Pause And Exit UI1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -323,6 +359,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "Climb Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d9dce449-7272-49e8-a34b-51a8ef5d8664",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack Ranged",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a2e498a8-bfb3-4173-adac-dc6921f54cbb",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Charge Range Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dce2533f-01f2-41b4-9bf8-a58e3e224a42",
+                    "path": "<Gamepad>/rightStick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Right Stick X",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5350f8a8-38d8-4786-b866-d1d93a6a38f1",
+                    "path": "<Gamepad>/rightStick/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Right Stick Y",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

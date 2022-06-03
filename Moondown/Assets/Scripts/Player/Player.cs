@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using Moondown.Player.Movement;
 using Moondown.UI.Inventory;
 using Moondown.WeaponSystem.Attacks;
+using System;
 
 namespace Moondown.Player
 {
@@ -31,8 +32,8 @@ namespace Moondown.Player
     {
         // singelton
         public static Player Instance { get; private set; }
-
         private Config config;
+        private MainControls controls;
 
         private int _health, _charge;
 
@@ -69,6 +70,9 @@ namespace Moondown.Player
         private Vector2 hazardRespawnPoint = new Vector2(0, 0);
         private Vector2 deathRespawnPoint = new Vector2(0, 0);
 
+        private bool rangedAttack;
+        private float rangedX, rangedY;
+
         private void Awake()
         {
             if (Instance == null)
@@ -76,10 +80,20 @@ namespace Moondown.Player
 
             attack = new MeeleAttack(GetComponent<BoxCollider2D>(), transform, mask);
             config = Config.Load();
+            controls = new MainControls();
+
+            controls.Player.AttackRanged.performed += _ => rangedAttack = true;
+            controls.Player.AttackRanged.canceled  += _ => rangedAttack = false;
+            controls.Player.RightStickX.performed += ctx => rangedX = ctx.ReadValue<float>();
+            controls.Player.RightStickX.canceled += _ => rangedX = 0;
+            controls.Player.RightStickY.performed += ctx => rangedY = ctx.ReadValue<float>();
+            controls.Player.RightStickY.canceled += _ => rangedY = 0;
         }
 
         private void Start()
         {
+            controls.Enable();
+
             DisplayHUD.Init(GameObject.FindGameObjectWithTag("hp bar"), GameObject.FindGameObjectWithTag("charge bar"));
 
             InventoryManager.Instance.Add(new Weapon("Weapon"));
@@ -98,6 +112,20 @@ namespace Moondown.Player
             DisplayHUD.UpdateCharge(Charge);
             DisplayHUD.UpdateHealth(Health);
 
+            if (rangedAttack)
+                AimRanged();
+        }
+
+        private void AimRanged()
+        {
+
+            if (rangedX != 0 || rangedY != 0)
+            {
+                float angle = Mathf.Atan2(rangedY, rangedX) * Mathf.Rad2Deg;
+                // TEMPORARY
+                GameObject go = GameObject.Find("Ranged");
+                go.transform.eulerAngles = Vector3.forward * angle;
+            }
         }
 
         private void HandleEnvironmentInteraction()

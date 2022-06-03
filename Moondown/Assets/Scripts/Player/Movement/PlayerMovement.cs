@@ -18,7 +18,7 @@
 using UnityEngine;
 using Moondown.Utility;
 using Moondown.UI;
-
+using System;
 
 namespace Moondown.Player.Movement
 {
@@ -96,6 +96,9 @@ namespace Moondown.Player.Movement
         [SerializeField]
         private float dashCooldown;
         #endregion
+
+
+        public bool IsGrounded => canJump;
 
         private void OnEnable() => controls.Enable();
         private void OnDisable() => controls.Disable();
@@ -199,7 +202,7 @@ namespace Moondown.Player.Movement
         private void FixedUpdate()
         {
             // jumping
-                canJump = IsGrounded();
+                canJump = CheckGround();
 
             if (canJump)
                 jumps = MAX_JUMPS;
@@ -357,7 +360,7 @@ namespace Moondown.Player.Movement
             }
         }
 
-        bool IsGrounded()
+        bool CheckGround()
         {
             BoxCollider2D collider = gameObject.GetComponent<BoxCollider2D>();
 

@@ -58,7 +58,7 @@ namespace Moondown.UI
             controls = new MainControls();
 
             controls.Player.OpenInventory.performed += _ => OpenInventoryUI();
-            controls.Player.PauseandexitUI.performed += _ => PauseOrExitUI();
+            controls.Player.PauseAndExitUI1.performed += _ => PauseOrExitUI();
             controls.Player.Pause.performed += _ =>
             {
                 if (isInInventory)
@@ -140,7 +140,6 @@ namespace Moondown.UI
             DisplayHUD.Toggle(!value);
             isInInventory = value;
         }
-
 
         #region Pause Menu
 

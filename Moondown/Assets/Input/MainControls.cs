@@ -73,7 +73,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Pause and exit UI"",
+                    ""name"": ""Pause And Exit UI1"",
                     ""type"": ""Button"",
                     ""id"": ""104aca5d-7766-4359-9ebf-13a181ebea2c"",
                     ""expectedControlType"": ""Button"",
@@ -125,6 +125,42 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack Ranged"",
+                    ""type"": ""Button"",
+                    ""id"": ""19c57f0c-38fc-44d5-a70b-182df078eeb4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Charge Range Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""964d8cf7-1528-48f4-9b45-fb45a56b2227"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Right Stick X"",
+                    ""type"": ""Value"",
+                    ""id"": ""ff7799b7-8b85-497c-b888-a27023d147f9"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Right Stick Y"",
+                    ""type"": ""Value"",
+                    ""id"": ""146e0832-7aeb-4c7b-b138-75f2f51d0ac3"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -278,7 +314,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""Pause and exit UI"",
+                    ""action"": ""Pause And Exit UI1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -345,6 +381,50 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Climb Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d9dce449-7272-49e8-a34b-51a8ef5d8664"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack Ranged"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a2e498a8-bfb3-4173-adac-dc6921f54cbb"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Charge Range Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dce2533f-01f2-41b4-9bf8-a58e3e224a42"",
+                    ""path"": ""<Gamepad>/rightStick/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right Stick X"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5350f8a8-38d8-4786-b866-d1d93a6a38f1"",
+                    ""path"": ""<Gamepad>/rightStick/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right Stick Y"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -595,12 +675,16 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_OpenInventory = m_Player.FindAction("Open Inventory", throwIfNotFound: true);
-        m_Player_PauseandexitUI = m_Player.FindAction("Pause and exit UI", throwIfNotFound: true);
+        m_Player_PauseAndExitUI1 = m_Player.FindAction("Pause And Exit UI1", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_ExitUI = m_Player.FindAction("Exit UI", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         m_Player_ClimbVertical = m_Player.FindAction("Climb Vertical", throwIfNotFound: true);
         m_Player_ClimbDown = m_Player.FindAction("Climb Down", throwIfNotFound: true);
+        m_Player_AttackRanged = m_Player.FindAction("Attack Ranged", throwIfNotFound: true);
+        m_Player_ChargeRangeAttack = m_Player.FindAction("Charge Range Attack", throwIfNotFound: true);
+        m_Player_RightStickX = m_Player.FindAction("Right Stick X", throwIfNotFound: true);
+        m_Player_RightStickY = m_Player.FindAction("Right Stick Y", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Up = m_UI.FindAction("Up", throwIfNotFound: true);
@@ -672,12 +756,16 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_OpenInventory;
-    private readonly InputAction m_Player_PauseandexitUI;
+    private readonly InputAction m_Player_PauseAndExitUI1;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_ExitUI;
     private readonly InputAction m_Player_Pause;
     private readonly InputAction m_Player_ClimbVertical;
     private readonly InputAction m_Player_ClimbDown;
+    private readonly InputAction m_Player_AttackRanged;
+    private readonly InputAction m_Player_ChargeRangeAttack;
+    private readonly InputAction m_Player_RightStickX;
+    private readonly InputAction m_Player_RightStickY;
     public struct PlayerActions
     {
         private @MainControls m_Wrapper;
@@ -687,12 +775,16 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @OpenInventory => m_Wrapper.m_Player_OpenInventory;
-        public InputAction @PauseandexitUI => m_Wrapper.m_Player_PauseandexitUI;
+        public InputAction @PauseAndExitUI1 => m_Wrapper.m_Player_PauseAndExitUI1;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @ExitUI => m_Wrapper.m_Player_ExitUI;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputAction @ClimbVertical => m_Wrapper.m_Player_ClimbVertical;
         public InputAction @ClimbDown => m_Wrapper.m_Player_ClimbDown;
+        public InputAction @AttackRanged => m_Wrapper.m_Player_AttackRanged;
+        public InputAction @ChargeRangeAttack => m_Wrapper.m_Player_ChargeRangeAttack;
+        public InputAction @RightStickX => m_Wrapper.m_Player_RightStickX;
+        public InputAction @RightStickY => m_Wrapper.m_Player_RightStickY;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -717,9 +809,9 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 @OpenInventory.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenInventory;
                 @OpenInventory.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenInventory;
                 @OpenInventory.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenInventory;
-                @PauseandexitUI.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseandexitUI;
-                @PauseandexitUI.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseandexitUI;
-                @PauseandexitUI.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseandexitUI;
+                @PauseAndExitUI1.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseAndExitUI1;
+                @PauseAndExitUI1.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseAndExitUI1;
+                @PauseAndExitUI1.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseAndExitUI1;
                 @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
@@ -735,6 +827,18 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 @ClimbDown.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClimbDown;
                 @ClimbDown.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClimbDown;
                 @ClimbDown.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClimbDown;
+                @AttackRanged.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttackRanged;
+                @AttackRanged.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttackRanged;
+                @AttackRanged.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttackRanged;
+                @ChargeRangeAttack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChargeRangeAttack;
+                @ChargeRangeAttack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChargeRangeAttack;
+                @ChargeRangeAttack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChargeRangeAttack;
+                @RightStickX.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightStickX;
+                @RightStickX.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightStickX;
+                @RightStickX.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightStickX;
+                @RightStickY.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightStickY;
+                @RightStickY.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightStickY;
+                @RightStickY.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightStickY;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -754,9 +858,9 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 @OpenInventory.started += instance.OnOpenInventory;
                 @OpenInventory.performed += instance.OnOpenInventory;
                 @OpenInventory.canceled += instance.OnOpenInventory;
-                @PauseandexitUI.started += instance.OnPauseandexitUI;
-                @PauseandexitUI.performed += instance.OnPauseandexitUI;
-                @PauseandexitUI.canceled += instance.OnPauseandexitUI;
+                @PauseAndExitUI1.started += instance.OnPauseAndExitUI1;
+                @PauseAndExitUI1.performed += instance.OnPauseAndExitUI1;
+                @PauseAndExitUI1.canceled += instance.OnPauseAndExitUI1;
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
@@ -772,6 +876,18 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 @ClimbDown.started += instance.OnClimbDown;
                 @ClimbDown.performed += instance.OnClimbDown;
                 @ClimbDown.canceled += instance.OnClimbDown;
+                @AttackRanged.started += instance.OnAttackRanged;
+                @AttackRanged.performed += instance.OnAttackRanged;
+                @AttackRanged.canceled += instance.OnAttackRanged;
+                @ChargeRangeAttack.started += instance.OnChargeRangeAttack;
+                @ChargeRangeAttack.performed += instance.OnChargeRangeAttack;
+                @ChargeRangeAttack.canceled += instance.OnChargeRangeAttack;
+                @RightStickX.started += instance.OnRightStickX;
+                @RightStickX.performed += instance.OnRightStickX;
+                @RightStickX.canceled += instance.OnRightStickX;
+                @RightStickY.started += instance.OnRightStickY;
+                @RightStickY.performed += instance.OnRightStickY;
+                @RightStickY.canceled += instance.OnRightStickY;
             }
         }
     }
@@ -866,12 +982,16 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnOpenInventory(InputAction.CallbackContext context);
-        void OnPauseandexitUI(InputAction.CallbackContext context);
+        void OnPauseAndExitUI1(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnExitUI(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnClimbVertical(InputAction.CallbackContext context);
         void OnClimbDown(InputAction.CallbackContext context);
+        void OnAttackRanged(InputAction.CallbackContext context);
+        void OnChargeRangeAttack(InputAction.CallbackContext context);
+        void OnRightStickX(InputAction.CallbackContext context);
+        void OnRightStickY(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
