@@ -15,16 +15,10 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Moondown.Utility;
-using System;
-using System.Linq;
 using Moondown.UI;
-using UnityEngine.InputSystem.Users;
-using UnityEngine.InputSystem;
-using UnityEditor;
+
 
 namespace Moondown.Player.Movement
 {
@@ -50,6 +44,7 @@ namespace Moondown.Player.Movement
         private Rigidbody2D rigidBody;
         public Mode mode;
         public Facing facing = Facing.Right;
+        private float gravity = 2.5f;
 
         private int climbingAxis;
 
@@ -115,6 +110,30 @@ namespace Moondown.Player.Movement
             controls = new MainControls();
             rigidBody = gameObject.GetComponent<Rigidbody2D>();
             SetupEvents();
+
+            Config config = Config.Load();
+
+            if (config != null)
+            {
+                if (config.playerDashVelocity != 0)
+                    dashVelocity = config.playerDashVelocity;
+                
+                if (config.playerGravity != 0)
+                {
+                    rigidBody.gravityScale = config.playerGravity;
+                    gravity = config.playerGravity;
+                }
+
+                if (config.playerJumpVelocity != 0)
+                    jumpVelocity = config.playerJumpVelocity;
+                
+                if (config.playerWallJumpVelocity != 0)
+                    wallJumpVelocity = config.playerWallJumpVelocity;
+
+                if (config.playerMass != 0)
+                    rigidBody.mass = config.playerMass;
+
+            }
         }
 
         private void SetupEvents()
@@ -207,7 +226,7 @@ namespace Moondown.Player.Movement
             if (!res.climbable && mode == Mode.Climbing)
                 mode = Mode.Normal;
 
-            rigidBody.gravityScale = mode.HasGravity() * 2.5f;
+            rigidBody.gravityScale = mode.HasGravity() * gravity;
         }
 
         #region Movement

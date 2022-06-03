@@ -15,13 +15,10 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-using System.Collections.Generic;
 using UnityEngine;
 using Moondown.Inventory;
-using Moondown.Environment;
 using Moondown.UI;
-using System;
-using System.Diagnostics.CodeAnalysis;
+using Moondown.Utility;
 using System.Threading.Tasks;
 using Moondown.Player.Movement;
 using Moondown.UI.Inventory;
@@ -35,6 +32,8 @@ namespace Moondown.Player
         // singelton
         public static Player Instance { get; private set; }
 
+        private Config config;
+
         private int _health, _charge;
 
         public int Health 
@@ -43,8 +42,7 @@ namespace Moondown.Player
 
             set
             {
-                if (value <= MaxHealth)
-                    _health = value;
+                _health = Mathf.Min(value, MaxHealth);
             }
         }
 
@@ -56,8 +54,7 @@ namespace Moondown.Player
 
             set
             {
-                if (value <= MaxCharge)
-                    _charge = value;
+                _charge = Mathf.Min(value, MaxCharge);
             }
         }
 
@@ -65,7 +62,6 @@ namespace Moondown.Player
 
         [SerializeField] private Material shaderMaterial;
 
-        [SuppressMessage("CodeQuality", "IDE0052:Remove unread private members")]
         private MeeleAttack attack;
 
         [SerializeField] private LayerMask mask;
@@ -79,6 +75,7 @@ namespace Moondown.Player
                 Instance = this;
 
             attack = new MeeleAttack(GetComponent<BoxCollider2D>(), transform, mask);
+            config = Config.Load();
         }
 
         private void Start()
@@ -107,7 +104,9 @@ namespace Moondown.Player
         {
             InteractionResult res = EnvironmentInteraction.Result;
 
-            Health += res.health;
+            if (config != null && !config.invincible)
+                Health += res.health;
+
             Charge += res.charge;
 
             if (res.hazardRespawn.HasValue)
