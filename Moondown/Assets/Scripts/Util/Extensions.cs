@@ -41,6 +41,15 @@ namespace Moondown.Utility
             return @out.ToArray();
         }
 
+        public static GameObject GetChild(this GameObject gameObject, string name)
+        {
+            foreach (Transform t in gameObject.transform)
+                if (t.gameObject.name == name)
+                    return t.gameObject;
+
+            return null;
+        }
+
         public static int ToAxis(this float @float, int previous)
         {
             if (@float > 0)

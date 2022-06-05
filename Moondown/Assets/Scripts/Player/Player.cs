@@ -72,6 +72,7 @@ namespace Moondown.Player
 
         private bool rangedAttack;
         private float rangedX, rangedY;
+        [SerializeField] GameObject bulletPrefab;
 
         private void Awake()
         {
@@ -88,7 +89,9 @@ namespace Moondown.Player
             controls.Player.RightStickX.canceled += _ => rangedX = 0;
             controls.Player.RightStickY.performed += ctx => rangedY = ctx.ReadValue<float>();
             controls.Player.RightStickY.canceled += _ => rangedY = 0;
+            controls.Player.ChargeRangeAttack.canceled += _ => FireRanged();
         }
+
 
         private void Start()
         {
@@ -118,14 +121,22 @@ namespace Moondown.Player
 
         private void AimRanged()
         {
-
             if (rangedX != 0 || rangedY != 0)
             {
                 float angle = Mathf.Atan2(rangedY, rangedX) * Mathf.Rad2Deg;
-                // TEMPORARY
-                GameObject go = GameObject.Find("Ranged");
+                GameObject go = gameObject.GetChild("Ranged");
                 go.transform.eulerAngles = Vector3.forward * angle;
             }
+        }
+        private void FireRanged()
+        {
+            // TEMPORARY
+            GameObject go = gameObject.GetChild("Ranged");
+            GameObject bullet = Instantiate(bulletPrefab);
+            bullet.transform.position = transform.position;
+            bullet.transform.eulerAngles = go.transform.rotation.eulerAngles;
+            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+            rb.velocity = bullet.transform.right * 20f;
         }
 
         private void HandleEnvironmentInteraction()
