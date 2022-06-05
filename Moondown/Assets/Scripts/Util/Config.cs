@@ -23,12 +23,21 @@ namespace Moondown.Utility
     [Serializable]
     class Config
     {
-        public float playerGravity;
+        [Serializable]
+        public struct RigidBodyConfig
+        {
+            public float gravity;
+            public float angularDrag;
+            public float linearDrag;
+            public float mass;
+        }
+
         public float playerJumpVelocity;
         public float playerDashVelocity;
         public float playerWallJumpVelocity;
-        public float playerMass;
         public bool invincible;
+        public RigidBodyConfig bulletPhysics;
+        public RigidBodyConfig playerPhysics;
 
         public static Config Load()
         {

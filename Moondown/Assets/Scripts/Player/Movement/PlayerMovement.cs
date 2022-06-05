@@ -121,10 +121,10 @@ namespace Moondown.Player.Movement
                 if (config.playerDashVelocity != 0)
                     dashVelocity = config.playerDashVelocity;
                 
-                if (config.playerGravity != 0)
+                if (config.playerPhysics.gravity != 0)
                 {
-                    rigidBody.gravityScale = config.playerGravity;
-                    gravity = config.playerGravity;
+                    rigidBody.gravityScale = config.playerPhysics.gravity;
+                    gravity = config.playerPhysics.gravity;
                 }
 
                 if (config.playerJumpVelocity != 0)
@@ -133,8 +133,8 @@ namespace Moondown.Player.Movement
                 if (config.playerWallJumpVelocity != 0)
                     wallJumpVelocity = config.playerWallJumpVelocity;
 
-                if (config.playerMass != 0)
-                    rigidBody.mass = config.playerMass;
+                if (config.playerPhysics.mass != 0)
+                    rigidBody.mass = config.playerPhysics.mass;
 
             }
         }
