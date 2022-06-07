@@ -135,7 +135,23 @@ namespace Moondown.Player
             GameObject bullet = Instantiate(bulletPrefab);
             bullet.transform.position = transform.position;
             bullet.transform.eulerAngles = go.transform.rotation.eulerAngles;
+
+
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+
+            if (config.bulletPhysics.mass != 0)
+                rb.mass = config.bulletPhysics.mass;
+
+            if (config.bulletPhysics.gravity != 0)
+                rb.gravityScale = config.bulletPhysics.gravity;
+
+            if (config.bulletPhysics.angularDrag != 0)
+                rb.angularDrag = config.bulletPhysics.angularDrag;
+
+            if (config.bulletPhysics.linearDrag != 0)
+                rb.drag = config.bulletPhysics.linearDrag;
+
+
             rb.velocity = bullet.transform.right * 20f;
         }
 

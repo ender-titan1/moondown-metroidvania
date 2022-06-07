@@ -135,6 +135,12 @@ namespace Moondown.Player.Movement
 
                 if (config.playerPhysics.mass != 0)
                     rigidBody.mass = config.playerPhysics.mass;
+                
+                if (config.playerPhysics.linearDrag != 0)
+                    rigidBody.drag = config.playerPhysics.linearDrag;
+
+                if (config.playerPhysics.angularDrag != 0)
+                    rigidBody.angularDrag = config.playerPhysics.angularDrag;
 
             }
         }
