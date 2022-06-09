@@ -15,36 +15,41 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using Moondown.Utility;
+using UnityEngine;
 
 namespace Moondown.Sys
 {
-    public struct ControlGroup
+    public class Unit
     {
-        public enum Task
+        public enum Focus
         {
-            Idle,
-            Wandering,
-            Collecting,
-            Defending,
-            Protecting,
-            Scouting,
-            Repairing,
-            Scavenging,
-            Reasearching
+            Balanced = 0,
+            MeleeFocused = 1,
+            RangedFocused = -1,
         }
 
-        public Task task;
-        public Unit[] units;
+        public Focus focus;
+        public int size;
 
-        public ControlGroup(Unit[] units, Task task)
+        [UnitField]
+        public int meleePower;
+        [UnitField]
+        public int rangedPower;
+
+        public Unit(Focus f, int size)
         {
-            this.units = units;
-            this.task = task;
+            meleePower = Random.Range(10, 101) + 15 * (int)f;
+            rangedPower = Random.Range(10, 101) - 15 * (int)f;
+
+            focus = f;
+            this.size = size;
         }
+
+        public Unit(int size) : this(Util.EnumRandom<Focus>(), size) { }
 
         public override string ToString()
         {
-            return $"task: {task}\nunits:\n{units.Display(", \n")}";
+            return $"[\nsize: {size},\nfocus: {(int)focus},\nmelee: {meleePower},\nranged: {rangedPower}\n]";
         }
     }
 }

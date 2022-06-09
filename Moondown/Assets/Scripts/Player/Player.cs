@@ -15,15 +15,15 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System.Threading.Tasks;
 using UnityEngine;
 using Moondown.Inventory;
 using Moondown.UI;
 using Moondown.Utility;
-using System.Threading.Tasks;
 using Moondown.Player.Movement;
 using Moondown.UI.Inventory;
 using Moondown.WeaponSystem.Attacks;
-using System;
+using Moondown.Sys;
 
 namespace Moondown.Player
 {
@@ -103,6 +103,9 @@ namespace Moondown.Player
             InventoryManager.Instance.Add(new Item("Scrap"), 100);
             InventoryManager.Instance.Add(new Item("RareItem"));
             InventoryManager.Instance.Add(new Item("Special"));
+
+            ControlGroupFactory cgf = new ControlGroupFactory();
+            Debug.Log(cgf.MakeGroup(10).ToString());
         }
 
         private void Update()

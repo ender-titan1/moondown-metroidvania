@@ -62,13 +62,13 @@ namespace Moondown.Utility
 
         public static Facing Reverse(this Facing facing) => (Facing)((int)facing * -1);
 
-        public static string Display<T>(this T[] arr)
+        public static string Display<T>(this T[] arr, string sep=", ")
         {
             string @out = "";
 
             foreach (T element in arr)
             {
-                @out += element.ToString() + ", ";
+                @out += element.ToString() + sep;
             }
 
             return @out;

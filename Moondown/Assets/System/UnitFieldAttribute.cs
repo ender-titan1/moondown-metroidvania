@@ -14,37 +14,12 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-using Moondown.Utility;
+using System;
 
 namespace Moondown.Sys
 {
-    public struct ControlGroup
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
+    public class UnitFieldAttribute : Attribute
     {
-        public enum Task
-        {
-            Idle,
-            Wandering,
-            Collecting,
-            Defending,
-            Protecting,
-            Scouting,
-            Repairing,
-            Scavenging,
-            Reasearching
-        }
-
-        public Task task;
-        public Unit[] units;
-
-        public ControlGroup(Unit[] units, Task task)
-        {
-            this.units = units;
-            this.task = task;
-        }
-
-        public override string ToString()
-        {
-            return $"task: {task}\nunits:\n{units.Display(", \n")}";
-        }
     }
 }

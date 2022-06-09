@@ -14,37 +14,17 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-using Moondown.Utility;
 
-namespace Moondown.Sys
+using System;
+
+namespace Moondown.Utility
 {
-    public struct ControlGroup
+    public static class Util
     {
-        public enum Task
+        public static T EnumRandom<T>() where T : Enum
         {
-            Idle,
-            Wandering,
-            Collecting,
-            Defending,
-            Protecting,
-            Scouting,
-            Repairing,
-            Scavenging,
-            Reasearching
-        }
-
-        public Task task;
-        public Unit[] units;
-
-        public ControlGroup(Unit[] units, Task task)
-        {
-            this.units = units;
-            this.task = task;
-        }
-
-        public override string ToString()
-        {
-            return $"task: {task}\nunits:\n{units.Display(", \n")}";
+            Array values = Enum.GetValues(typeof(T));
+            return (T)values.GetValue(UnityEngine.Random.Range(0, values.Length));
         }
     }
 }
