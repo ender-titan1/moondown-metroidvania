@@ -105,7 +105,7 @@ namespace Moondown.Player
             InventoryManager.Instance.Add(new Item("Special"));
 
             ControlGroupFactory cgf = new ControlGroupFactory();
-            Debug.Log(cgf.MakeGroup(10).ToString());
+            Debug.Log(cgf.MakeGroup(15).ToString());
         }
 
         private void Update()

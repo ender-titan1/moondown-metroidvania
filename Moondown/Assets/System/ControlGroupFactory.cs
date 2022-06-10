@@ -30,19 +30,24 @@ namespace Moondown.Sys
         {
             // Generate units
 
-            ControlGroup.Task task = Util.EnumRandom<ControlGroup.Task>();
             int unitSize = 0;
 
             List<Unit> units = new List<Unit>();
+            List<FieldInfo> maxFields = new List<FieldInfo>();
+            List<FieldInfo> minFields = new List<FieldInfo>();
 
             while (true)
             {
-                Unit unit = new Unit(UnityEngine.Random.Range(1, 5));
+                Unit unit = new Unit(UnityEngine.Random.Range(1, 4));
 
                 if (unitSize + unit.size <= size)
                 {
                     unitSize += unit.size;
                     units.Add(unit);
+
+                    (FieldInfo, FieldInfo) minMax = unit.GetMinMax();
+                    minFields.Add(minMax.Item1);
+                    maxFields.Add(minMax.Item2);
                 }
                 else
                 {
@@ -50,6 +55,74 @@ namespace Moondown.Sys
                 }
             }
 
+            // Get the most common lowest and highest value fields
+
+            FieldInfo minField = (from FieldInfo fi in minFields
+                                  group fi by fi into fig
+                                  orderby fig.Count() descending
+                                  select fig.Key).First();
+
+            FieldInfo maxField = (from FieldInfo fi in maxFields
+                                  group fi by fi into fig
+                                  orderby fig.Count() descending
+                                  select fig.Key).First();
+
+            // Amplify each unit's lowest and highest values
+
+            foreach (Unit unit in units)
+            {
+                minField.SetValue(
+                    unit, 
+                    Mathf.Clamp(
+                        (int)minField.GetValue(unit) - UnityEngine.Random.Range(10, 50), 
+                        20, 
+                        130
+                    )
+                );
+
+
+                maxField.SetValue(
+                    unit,
+                    Mathf.Clamp(
+                        (int)maxField.GetValue(unit) + UnityEngine.Random.Range(10, 50),
+                        20,
+                        130
+                    )
+                );
+            }
+
+            // Generate Counter Unit
+
+            Unit counter = new Unit(2);
+            minField.SetValue(
+                    counter,
+                    Mathf.Clamp(
+                        (int)minField.GetValue(counter) + UnityEngine.Random.Range(10, 60),
+                        20,
+                        130
+                    )
+                );
+
+
+            maxField.SetValue(
+                counter,
+                Mathf.Clamp(
+                    (int)maxField.GetValue(counter) - UnityEngine.Random.Range(10, 60),
+                    20,
+                    130
+                )
+            );
+
+            units.Add(counter);
+
+            // Display Values
+
+            Debug.Log(minField);
+            Debug.Log(maxField);
+
+            // Create Group
+
+            ControlGroup.Task task = Util.EnumRandom<ControlGroup.Task>();
             ControlGroup cg = new ControlGroup(units.ToArray(), task);
 
             return cg;

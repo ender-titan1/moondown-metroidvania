@@ -14,6 +14,9 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Reflection;
+using System.Linq;
 using Moondown.Utility;
 using UnityEngine;
 
@@ -35,11 +38,14 @@ namespace Moondown.Sys
         public int meleePower;
         [UnitField]
         public int rangedPower;
+        [UnitField]
+        public int attention;
 
         public Unit(Focus f, int size)
         {
-            meleePower = Random.Range(10, 101) + 15 * (int)f;
-            rangedPower = Random.Range(10, 101) - 15 * (int)f;
+            meleePower =  UnityEngine.Random.Range(30, 121) + 20 * (int)f;
+            rangedPower = UnityEngine.Random.Range(30, 121) - 20 * (int)f;
+            attention = UnityEngine.Random.Range(10, 111);
 
             focus = f;
             this.size = size;
@@ -47,9 +53,26 @@ namespace Moondown.Sys
 
         public Unit(int size) : this(Util.EnumRandom<Focus>(), size) { }
 
+        public (FieldInfo, FieldInfo) GetMinMax()
+        {
+            Type type = typeof(Unit);
+
+            FieldInfo max = (from FieldInfo fi in type.GetFields()
+                             where fi.IsDefined(typeof(UnitFieldAttribute))
+                             orderby (int)fi.GetValue(this) descending
+                             select fi).First();
+
+            FieldInfo min = (from FieldInfo fi in type.GetFields()
+                             where fi.IsDefined(typeof(UnitFieldAttribute)) 
+                             orderby (int)fi.GetValue(this) ascending
+                             select fi).First();
+
+            return (min, max);
+        }
+
         public override string ToString()
         {
-            return $"[\nsize: {size},\nfocus: {(int)focus},\nmelee: {meleePower},\nranged: {rangedPower}\n]";
+            return $"[\nsize: {size},\nfocus: {(int)focus},\nmelee: {meleePower},\nranged: {rangedPower},\nattention: {attention}\n]";
         }
     }
 }
