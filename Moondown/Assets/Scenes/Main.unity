@@ -11826,6 +11826,14 @@ MonoBehaviour:
     m_Bits: 1536
   bulletPrefab: {fileID: 5332920161944525323, guid: eebd52d1aabd6de4eabebfbc8caacf06,
     type: 3}
+  templates:
+  - {fileID: 11400000, guid: e84b31f47cb0cde4cafc6da863314ebf, type: 2}
+  - {fileID: 11400000, guid: 1cd755a8026d2c6449df7e5fbacfd61e, type: 2}
+  - {fileID: 11400000, guid: 1cd755a8026d2c6449df7e5fbacfd61e, type: 2}
+  - {fileID: 11400000, guid: 48da37bc6e249c743a87d774368effff, type: 2}
+  - {fileID: 11400000, guid: 48da37bc6e249c743a87d774368effff, type: 2}
+  - {fileID: 11400000, guid: 68a84d905b9de5f41bcd985e1ef02c1c, type: 2}
+  - {fileID: 11400000, guid: 4dfa3deafdebdc343911cea53c94d48a, type: 2}
 --- !u!1 &1749350117
 GameObject:
   m_ObjectHideFlags: 0

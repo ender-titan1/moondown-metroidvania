@@ -24,6 +24,8 @@ using Moondown.Player.Movement;
 using Moondown.UI.Inventory;
 using Moondown.WeaponSystem.Attacks;
 using Moondown.Sys;
+using Moondown.Sys.Template;
+using Moondown.Sys.Mono;
 
 namespace Moondown.Player
 {
@@ -74,6 +76,8 @@ namespace Moondown.Player
         private float rangedX, rangedY;
         [SerializeField] GameObject bulletPrefab;
 
+        [SerializeField] UnitTemplate[] templates;
+
         private void Awake()
         {
             if (Instance == null)
@@ -104,8 +108,12 @@ namespace Moondown.Player
             InventoryManager.Instance.Add(new Item("RareItem"));
             InventoryManager.Instance.Add(new Item("Special"));
 
+            // Below this line the code is temporary and will be moved to GameManager
+
             ControlGroupFactory cgf = new ControlGroupFactory();
-            Debug.Log(cgf.MakeGroup(15).ToString());
+            ControlGroup cg = cgf.MakeGroup(15, templates);
+            foreach (Unit unit in cg.units)
+                GroundedUnitEnemy.newEnemy(unit);
         }
 
         private void Update()

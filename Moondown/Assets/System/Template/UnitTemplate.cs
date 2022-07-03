@@ -14,29 +14,20 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using UnityEngine;
 
-using System;
-
-namespace Moondown.Utility
+namespace Moondown.Sys.Template
 {
-    public static class Util
+    [CreateAssetMenu(fileName = nameof(UnitTemplate), menuName = "Unit/Unit Template", order = 100)]
+    public class UnitTemplate : ScriptableObject
     {
-        public static T EnumRandom<T>() where T : Enum
-        {
-            Array values = Enum.GetValues(typeof(T));
-            return (T)values.GetValue(UnityEngine.Random.Range(0, values.Length));
-        }
+        public new string name;
+        public GameObject prefab;
 
-        public static T ArrayRandom<T>(Array array)
-        {
-            try 
-            {
-                return (T)array.GetValue(UnityEngine.Random.Range(0, array.Length));
-            }
-            catch (InvalidCastException)
-            {
-                throw new ArgumentException();
-            }
-        }
+        public int rangedPreferance;
+        public int meleePreferance;
+        public int attentionPreferance;
+        
+        public int size;
     }
 }

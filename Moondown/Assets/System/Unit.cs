@@ -18,7 +18,7 @@ using System;
 using System.Reflection;
 using System.Linq;
 using Moondown.Utility;
-using UnityEngine;
+using Moondown.Sys.Template;
 
 namespace Moondown.Sys
 {
@@ -33,6 +33,7 @@ namespace Moondown.Sys
 
         public Focus focus;
         public int size;
+        public UnitTemplate template;
 
         [UnitField]
         public int meleePower;
@@ -41,7 +42,7 @@ namespace Moondown.Sys
         [UnitField]
         public int attention;
 
-        public Unit(Focus f, int size)
+        public Unit(Focus f, int size, UnitTemplate template)
         {
             meleePower =  UnityEngine.Random.Range(30, 121) + 20 * (int)f;
             rangedPower = UnityEngine.Random.Range(30, 121) - 20 * (int)f;
@@ -49,9 +50,10 @@ namespace Moondown.Sys
 
             focus = f;
             this.size = size;
+            this.template = template;
         }
 
-        public Unit(int size) : this(Util.EnumRandom<Focus>(), size) { }
+        public Unit(UnitTemplate template) : this(Util.EnumRandom<Focus>(), template.size, template) { }
 
         public (FieldInfo, FieldInfo) GetMinMax()
         {

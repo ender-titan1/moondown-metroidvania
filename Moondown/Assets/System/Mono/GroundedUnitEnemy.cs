@@ -14,29 +14,26 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using Moondown.Sys.Template;
+using UnityEngine;
 
-using System;
-
-namespace Moondown.Utility
+namespace Moondown.Sys.Mono
 {
-    public static class Util
+    public class GroundedUnitEnemy : MonoBehaviour
     {
-        public static T EnumRandom<T>() where T : Enum
-        {
-            Array values = Enum.GetValues(typeof(T));
-            return (T)values.GetValue(UnityEngine.Random.Range(0, values.Length));
-        }
+        public Unit Unit { get; protected set; }
 
-        public static T ArrayRandom<T>(Array array)
+        public static GroundedUnitEnemy newEnemy(Unit unit, Transform parent=null)
         {
-            try 
-            {
-                return (T)array.GetValue(UnityEngine.Random.Range(0, array.Length));
-            }
-            catch (InvalidCastException)
-            {
-                throw new ArgumentException();
-            }
+            GroundedUnitEnemy gue;
+            if (parent == null)
+                gue = Instantiate(unit.template.prefab).GetComponent<GroundedUnitEnemy>();
+            else
+                gue = Instantiate(unit.template.prefab, parent).GetComponent<GroundedUnitEnemy>();
+
+            gue.Unit = unit;
+            gue.gameObject.name = unit.template.name;
+            return gue;
         }
-    }
+    } 
 }

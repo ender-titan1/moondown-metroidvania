@@ -18,15 +18,16 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
 using UnityEngine;
 using Moondown.Utility;
-using System.Linq;
+using Moondown.Sys.Template;
 
 namespace Moondown.Sys
 {
     class ControlGroupFactory
     {
-        public ControlGroup MakeGroup(int size)
+        public ControlGroup MakeGroup(int size, UnitTemplate[] templates)
         {
             // Generate units
 
@@ -38,7 +39,7 @@ namespace Moondown.Sys
 
             while (true)
             {
-                Unit unit = new Unit(UnityEngine.Random.Range(1, 4));
+                Unit unit = new Unit(Util.ArrayRandom<UnitTemplate>(templates));
 
                 if (unitSize + unit.size <= size)
                 {
@@ -93,15 +94,15 @@ namespace Moondown.Sys
 
             // Generate Counter Unit
 
-            Unit counter = new Unit(2);
+            Unit counter = new Unit(Util.ArrayRandom<UnitTemplate>(templates));
             minField.SetValue(
-                    counter,
-                    Mathf.Clamp(
-                        (int)minField.GetValue(counter) + UnityEngine.Random.Range(10, 60),
-                        20,
-                        130
-                    )
-                );
+                counter,
+                Mathf.Clamp(
+                    (int)minField.GetValue(counter) + UnityEngine.Random.Range(10, 60),
+                    20,
+                    130
+                )
+            );
 
 
             maxField.SetValue(
