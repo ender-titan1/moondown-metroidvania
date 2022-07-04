@@ -18,3 +18,4 @@ MonoBehaviour:
   meleePreferance: 0
   attentionPreferance: 0
   size: 3
+  capabilities: -1

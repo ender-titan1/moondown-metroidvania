@@ -14,12 +14,22 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-using System;
+using Moondown.Sys.Template;
+using UnityEngine;
 
-namespace Moondown.Sys
+namespace Moondown
 {
-    [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
-    public class UnitFieldAttribute : Attribute
+    public class GameManager : MonoBehaviour
     {
+        public static GameManager Instance { get; private set; } = null;
+
+        public UnitTemplate[] Templates { get; private set; }
+
+        private void Awake()
+        {
+            if (Instance == null)
+                Instance = this;
+            Templates = Resources.LoadAll<UnitTemplate>(@"Enemies\Templates");
+        }
     }
 }

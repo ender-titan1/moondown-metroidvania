@@ -118,8 +118,8 @@ namespace Moondown.Sys
 
             // Display Values
 
-            Debug.Log(minField);
-            Debug.Log(maxField);
+            Debug.Log("Min: " + minField);
+            Debug.Log("Max: " + maxField);
 
             // Create Group
 

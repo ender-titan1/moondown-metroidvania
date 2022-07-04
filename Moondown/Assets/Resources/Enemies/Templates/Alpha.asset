@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Main Unit
   prefab: {fileID: 3302494264925920305, guid: 8c9547f4a6dc0794695201bbaaab699a, type: 3}
-  rangedPreferance: 0
-  meleePreferance: 0
-  attentionPreferance: 0
+  rangedPreferance: 30
+  meleePreferance: 25
+  attentionPreferance: 10
   size: 5
+  capabilities: 1

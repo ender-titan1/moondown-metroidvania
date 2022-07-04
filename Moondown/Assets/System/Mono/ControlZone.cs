@@ -14,12 +14,30 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-using System;
+using UnityEngine;
 
-namespace Moondown.Sys
+namespace Moondown.Sys.Mono.Zone
 {
-    [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
-    public class UnitFieldAttribute : Attribute
+    public class ControlZone : MonoBehaviour
     {
+        public Vector2 unitSpawnPoint = Vector2.zero;
+        public int totalSize = 9;
+
+        private void Start()
+        {
+            if (unitSpawnPoint == Vector2.zero) 
+                unitSpawnPoint = transform.position;
+
+            ControlGroupFactory cgf = new ControlGroupFactory();
+            Dispatch(cgf.MakeGroup(totalSize, GameManager.Instance.Templates));
+        }
+
+        public void Dispatch(ControlGroup cg)
+        {
+            foreach (Unit unit in cg.units)
+            {
+                GroundedUnitEnemy.New(unit, unitSpawnPoint);
+            }
+        }
     }
 }

@@ -23,16 +23,13 @@ namespace Moondown.Sys.Mono
     {
         public Unit Unit { get; protected set; }
 
-        public static GroundedUnitEnemy newEnemy(Unit unit, Transform parent=null)
+        public static GroundedUnitEnemy New(Unit unit, Vector2 pos)
         {
-            GroundedUnitEnemy gue;
-            if (parent == null)
-                gue = Instantiate(unit.template.prefab).GetComponent<GroundedUnitEnemy>();
-            else
-                gue = Instantiate(unit.template.prefab, parent).GetComponent<GroundedUnitEnemy>();
+            GroundedUnitEnemy gue = Instantiate(unit.template.prefab).GetComponent<GroundedUnitEnemy>();
 
             gue.Unit = unit;
             gue.gameObject.name = unit.template.name;
+            gue.transform.position = pos;
             return gue;
         }
     } 

@@ -44,9 +44,10 @@ namespace Moondown.Sys
 
         public Unit(Focus f, int size, UnitTemplate template)
         {
-            meleePower =  UnityEngine.Random.Range(30, 121) + 20 * (int)f;
-            rangedPower = UnityEngine.Random.Range(30, 121) - 20 * (int)f;
-            attention = UnityEngine.Random.Range(10, 111);
+
+            meleePower =  (UnityEngine.Random.Range(30, 121) + 20 * (int)f) + template.meleePreferance;
+            rangedPower = (UnityEngine.Random.Range(30, 121) - 20 * (int)f) + template.rangedPreferance;
+            attention =    UnityEngine.Random.Range(10, 111) + template.attentionPreferance;
 
             focus = f;
             this.size = size;

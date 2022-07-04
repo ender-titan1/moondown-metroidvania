@@ -29,5 +29,6 @@ namespace Moondown.Sys.Template
         public int attentionPreferance;
         
         public int size;
+        public UnitCapability capabilities;
     }
 }

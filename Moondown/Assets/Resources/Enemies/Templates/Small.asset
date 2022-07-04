@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Small
   prefab: {fileID: 3302494264925920305, guid: 6275c701ee2bf4a44a48684098daa3d8, type: 3}
-  rangedPreferance: 0
+  rangedPreferance: 10
   meleePreferance: 0
-  attentionPreferance: 0
+  attentionPreferance: 15
   size: 2
+  capabilities: 3

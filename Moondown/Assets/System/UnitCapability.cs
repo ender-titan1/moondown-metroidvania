@@ -14,12 +14,15 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-using System;
 
 namespace Moondown.Sys
 {
-    [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
-    public class UnitFieldAttribute : Attribute
+    [System.Flags]
+    public enum UnitCapability
     {
+        None = 0,
+        Patrol = 1,
+        Gather = 2,
+        Transport = 4
     }
 }

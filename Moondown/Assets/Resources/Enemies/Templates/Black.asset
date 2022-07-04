@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Black Unit
   prefab: {fileID: 3302494264925920305, guid: 8c9547f4a6dc0794695201bbaaab699a, type: 3}
-  rangedPreferance: 0
-  meleePreferance: 0
+  rangedPreferance: 25
+  meleePreferance: -20
   attentionPreferance: 0
   size: 2
+  capabilities: 4
