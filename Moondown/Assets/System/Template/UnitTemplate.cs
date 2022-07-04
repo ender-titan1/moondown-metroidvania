@@ -30,5 +30,6 @@ namespace Moondown.Sys.Template
         
         public int size;
         public UnitCapability capabilities;
+        public bool unique;
     }
 }

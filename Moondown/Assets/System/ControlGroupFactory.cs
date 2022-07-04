@@ -39,7 +39,11 @@ namespace Moondown.Sys
 
             while (true)
             {
-                Unit unit = new Unit(Util.ArrayRandom<UnitTemplate>(templates));
+                UnitTemplate template = Util.ArrayRandom<UnitTemplate>(templates);
+                Unit unit = new Unit(template);
+
+                if (template.unique && units.Exists(u => u.template.name == template.name))
+                    continue;
 
                 if (unitSize + unit.size <= size)
                 {
@@ -94,7 +98,20 @@ namespace Moondown.Sys
 
             // Generate Counter Unit
 
-            Unit counter = new Unit(Util.ArrayRandom<UnitTemplate>(templates));
+            // Refactor this
+            UnitTemplate counterTemplate;
+            while (true)
+            {
+                UnitTemplate t = Util.ArrayRandom<UnitTemplate>(templates);
+
+                if (t.unique && units.Exists(u => u.template.name == t.name))
+                    continue;
+
+                counterTemplate = t;
+                break;
+            }
+
+            Unit counter = new Unit(counterTemplate);
             minField.SetValue(
                 counter,
                 Mathf.Clamp(

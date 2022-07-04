@@ -19,3 +19,4 @@ MonoBehaviour:
   attentionPreferance: 10
   size: 5
   capabilities: 1
+  unique: 1

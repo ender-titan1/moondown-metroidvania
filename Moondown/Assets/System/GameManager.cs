@@ -29,6 +29,7 @@ namespace Moondown
         {
             if (Instance == null)
                 Instance = this;
+
             Templates = Resources.LoadAll<UnitTemplate>(@"Enemies\Templates");
         }
     }
