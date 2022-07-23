@@ -81,11 +81,6 @@ namespace Moondown.UI.Localization
         {
             CurrentLocale = name;
             Translate();
-
-            foreach (Item item in InventoryManager.Instance.All)
-            {
-                item.RefreshName();
-            }
         }
 
 
@@ -109,7 +104,6 @@ namespace Moondown.UI.Localization
             // translate
             foreach (TextMeshProUGUI text in toTranslate)
             {
-
                 if (currentLocale.ContainsKey(text.text))
                 {
                     text.text = currentLocale[text.text];

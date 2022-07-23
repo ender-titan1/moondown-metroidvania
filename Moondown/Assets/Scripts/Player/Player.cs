@@ -80,14 +80,6 @@ namespace Moondown.Player
 
             config = Config.Load();
             controls = new MainControls();
-
-            controls.Player.AttackRanged.performed += _ => rangedAttack = true;
-            controls.Player.AttackRanged.canceled  += _ => rangedAttack = false;
-            controls.Player.RightStickX.performed += ctx => rangedX = ctx.ReadValue<float>();
-            controls.Player.RightStickX.canceled += _ => rangedX = 0;
-            controls.Player.RightStickY.performed += ctx => rangedY = ctx.ReadValue<float>();
-            controls.Player.RightStickY.canceled += _ => rangedY = 0;
-            controls.Player.ChargeRangeAttack.canceled += _ => FireRanged();
         }
 
 
@@ -98,7 +90,7 @@ namespace Moondown.Player
             DisplayHUD.Init(GameObject.FindGameObjectWithTag("hp bar"), GameObject.FindGameObjectWithTag("charge bar"));
 
             InventoryManager.Instance.Add(new Weapon("Weapon"));
-            InventoryManager.Instance.Add(new Item("Scrap"), 100);
+            InventoryManager.Instance.Add(new Item("Scrap"), 151);
             InventoryManager.Instance.Add(new Item("RareItem"));
             InventoryManager.Instance.Add(new Item("Special"));
         }
@@ -112,46 +104,6 @@ namespace Moondown.Player
 
             DisplayHUD.UpdateCharge(Charge);
             DisplayHUD.UpdateHealth(Health);
-
-            if (rangedAttack)
-                AimRanged();
-        }
-
-        private void AimRanged()
-        {
-            if (rangedX != 0 || rangedY != 0)
-            {
-                float angle = Mathf.Atan2(rangedY, rangedX) * Mathf.Rad2Deg;
-                GameObject go = gameObject.GetChild("Ranged");
-                go.transform.eulerAngles = Vector3.forward * angle;
-            }
-        }
-
-        private void FireRanged()
-        {
-            // TEMPORARY
-            GameObject go = gameObject.GetChild("Ranged");
-            GameObject bullet = Instantiate(bulletPrefab);
-            bullet.transform.position = transform.position;
-            bullet.transform.eulerAngles = go.transform.rotation.eulerAngles;
-
-
-            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-
-            if (config.bulletPhysics.mass != 0)
-                rb.mass = config.bulletPhysics.mass;
-
-            if (config.bulletPhysics.gravity != 0)
-                rb.gravityScale = config.bulletPhysics.gravity;
-
-            if (config.bulletPhysics.angularDrag != 0)
-                rb.angularDrag = config.bulletPhysics.angularDrag;
-
-            if (config.bulletPhysics.linearDrag != 0)
-                rb.drag = config.bulletPhysics.linearDrag;
-
-
-            rb.velocity = bullet.transform.right * 20f;
         }
 
         private void HandleEnvironmentInteraction()
@@ -190,46 +142,6 @@ namespace Moondown.Player
             PlayerMovement.Instance.CancelDash();
             transform.position = deathRespawnPoint;
             Health = MaxHealth;   
-        }
-
-        public async Task AnimateHazardFade()
-        {
-            PlayerMovement.Instance.controls.Disable();
-            await Animate();
-            
-            Task delay = Task.Delay(2000);
-
-            await delay;
-            PlayerMovement.Instance.controls.Enable();
-
-        }
-
-        public async Task AnimateReverse()
-        {
-            float i = 1;
-            while (i > 0)
-            {
-                shaderMaterial.SetFloat("_FadeValue", i);
-                await Task.Delay(10);
-                i -= 0.01f;
-            }
-        }
-
-        private async Task Animate()
-        {
-            float i = 0;
-            while (i < 1)
-            {
-                shaderMaterial.SetFloat("_FadeValue", i);
-                await Task.Delay(10);
-                i += 0.01f;
-            }
-        }
-
-        public void EquipWeapon()
-        {
-            InventoryManager.Instance.Equip(DataPanel.Items.item);
-            UIManager.Instance.InventoryUI.GetComponentInChildren<DisplayInventory>().RefreshEquipment();
         }
     }
 }

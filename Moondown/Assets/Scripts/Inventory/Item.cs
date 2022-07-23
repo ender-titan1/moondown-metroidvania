@@ -20,7 +20,7 @@ using UnityEngine;
 
 namespace Moondown.Inventory
 {
-    public class Item 
+    public struct Item 
     {
         public enum Rarity
         {
@@ -40,12 +40,13 @@ namespace Moondown.Inventory
         }
 
         public ItemData data;
-        public string Name { get; protected set; }
-        public string Desc { get; protected set; }
+        public string Name { get; set; }
+        public string Desc { get; set; }
 
         public Item(string name)
         {
-            this.data = Resources.Load<ItemData>(@"Inventory\" + name);
+            //Debug.Log(name);
+            data = Resources.Load<ItemData>(@"Inventory\" + name);
             Name = LocalizationManager.Get(data.nameKey);
             Desc = LocalizationManager.Get(data.descriptionKey);
         }

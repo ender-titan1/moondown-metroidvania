@@ -73,58 +73,6 @@ namespace Moondown.Utility
             return @out;
         }
 
-        // TODO: Move
-        public static List<ItemStack> MakeStacks(this List<Item> items)
-        {
-            HashSet<Item> set = new HashSet<Item>();
-            List<string> names = new List<string>();
-
-            foreach (Item item in items)
-            {
-                string name = item.data.nameKey;
-                if (!names.Contains(name))
-                {
-                    names.Add(name);
-                    set.Add(item);
-                }
-            }
-
-
-            Dictionary<Item, int> amounts = new Dictionary<Item, int>();
-
-            foreach (Item i in set)
-            {
-                int count = 0;
-
-                foreach (Item item in items)
-                {
-                    if (item.data.nameKey == i.data.nameKey)
-                        count++;
-                }
-
-                amounts[i] = count;
-            }
-
-
-            List<ItemStack> stacks = new List<ItemStack>();
-
-            foreach (Item item in amounts.Keys)
-            {
-                int amount = amounts[item];
-
-                while (amount >= item.data.stackSize)
-                {
-                    amount -= item.data.stackSize;
-                    stacks.Add(new ItemStack(item, item.data.stackSize));
-                }
-
-                if (amount != 0)
-                    stacks.Add(new ItemStack(item, amount));
-            }
-
-            return stacks;
-        }
-
         public static string CapitalizeFirst(this string input)
         {
             return input switch

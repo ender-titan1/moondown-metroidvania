@@ -1,32 +1,26 @@
 ﻿using Moondown.Utility;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Moondown.Inventory
 {
     public class InventoryManager
     {
-        public struct PlayerEquipment
-        {
-            public Weapon meele;
-        }
-
         public static InventoryManager Instance { get; set; } = new InventoryManager();
 
-        public List<Item> Resources { get; set; } = new List<Item>();
-        public List<Item> Weapons   { get; set; } = new List<Item>();
-        public List<Item> Armour    { get; set; } = new List<Item>();
-        public List<Item> Tools     { get; set; } = new List<Item>();
-        public List<Item> Modules   { get; set; } = new List<Item>();
-        public List<Item> Special   { get; set; } = new List<Item>();
+        public List<ItemStack> Resources { get; set; } = new List<ItemStack>();
+        public List<ItemStack> Weapons   { get; set; } = new List<ItemStack>();
+        public List<ItemStack> Armour    { get; set; } = new List<ItemStack>();
+        public List<ItemStack> Tools     { get; set; } = new List<ItemStack>();
+        public List<ItemStack> Modules   { get; set; } = new List<ItemStack>();
+        public List<ItemStack> Special   { get; set; } = new List<ItemStack>();
 
-        public PlayerEquipment equiped = new PlayerEquipment();
-
-        public List<Item> All
+        public List<ItemStack> All
         {
             get
             {
-                List<Item> items = new List<Item>();
+                List<ItemStack> items = new List<ItemStack>();
                 items.AddRange(Resources);
                 items.AddRange(Weapons);
                 items.AddRange(Armour);
@@ -39,42 +33,71 @@ namespace Moondown.Inventory
 
         public void Add(Item item, int amount = 1)
         {
-            for (int i = 0; i < amount; i++)
-            {
-                if (item.data.rarity == Item.Rarity.Special)
-                {
-                    Special.Add(item);
-                    continue;
-                }
+            ItemStack stack = new ItemStack(item, amount);
 
-                switch (item.data.type)
-                {
-                    case ItemType.Melee_Weapon:
-                    case ItemType.Ranged_Weapon:
-                        Weapons.Add(item);
-                        break;
-                    case ItemType.Tool:
-                        Tools.Add(item);
-                        break;
-                    case ItemType.Armour:
-                        Armour.Add(item);
-                        break;
-                    case ItemType.Module:
-                        Modules.Add(item);
-                        break;
-                    default:
-                        Resources.Add(item);
-                        break;
-                }
+            if (item.data.rarity == Item.Rarity.Special)
+            {
+                Special.Add(stack);
+                return;
+            }
+
+            switch (item.data.type)
+            {
+                case ItemType.Melee_Weapon:
+                case ItemType.Ranged_Weapon:
+                    Weapons.Add(stack);
+                    break;
+                case ItemType.Item:
+                    Resources.Add(stack);
+                    break;
+                case ItemType.Armour:
+                    Armour.Add(stack);
+                    break;
+                case ItemType.Tool:
+                    Tools.Add(stack);
+                    break;
+                case ItemType.Module:
+                    Modules.Add(stack);
+                    break;
+                default:
+                    Resources.Add(stack);
+                    break;
             }
         }
 
-        public List<ItemStack> GetInventory(List<Item> items, string filter)
+        public List<ItemStack> GetInventory(List<ItemStack> stacks, string filter)
         {
-            List<ItemStack> inventory = items.MakeStacks();
+            List<ItemStack> inventory = new List<ItemStack>();
+            Dictionary<string, int> itemCounts = new Dictionary<string, int>();
+
+            // Get count of all the items
+            foreach (ItemStack stack in stacks)
+            {
+                string key = stack.item.data.name;
+                if (itemCounts.ContainsKey(key))
+                    itemCounts[key] += stack.amount;
+                else
+                    itemCounts.Add(key, stack.amount);
+            }
+            
+            // Create stacks
+            foreach (KeyValuePair<string, int> pair in itemCounts)
+            {
+                Item item = new Item(pair.Key);
+                int value = pair.Value;
+                int size = item.data.stackSize;
+                int stackAmount = value / size;
+                int remainder = value % size;
+                int valuePerStack = (value - remainder) / stackAmount;
+                
+                for (int i = 0; i < stackAmount; i++)
+                    inventory.Add(new ItemStack(item, valuePerStack));
+
+                if (remainder != 0)
+                    inventory.Add(new ItemStack(item, remainder));
+            }
 
             filter ??= "";
-
             inventory = (from ItemStack stack in inventory
                          where stack.item.Name.ToLower().Contains(filter.ToLower())
                          orderby (int)stack.item.data.rarity descending
@@ -82,12 +105,6 @@ namespace Moondown.Inventory
 
             return inventory;
 
-        }
-
-        public void Equip(Item item)
-        {
-            if (item is Weapon weapon)
-                equiped.meele = weapon;
         }
     }
 }

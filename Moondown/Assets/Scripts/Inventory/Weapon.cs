@@ -1,13 +1,20 @@
 ﻿namespace Moondown.Inventory
 {
-    public class Weapon : Item
+    public struct Weapon
     {
         public int Range { get; set; }
         public int Damage { get; set; }
-        public Weapon(string n) : base(n)
+
+        private Item item;
+
+        public Weapon(string n)
         {
-            Range = ((WeaponData)data).range;
-            Damage = ((WeaponData)data).damage;
+            item = new Item(n);
+            WeaponData data = ((WeaponData)item.data);
+            Range = data.range;
+            Damage = data.damage;
         }
+
+        public static implicit operator Item(Weapon weapon) => weapon.item;
     }
 }

@@ -13,7 +13,7 @@ namespace Moondown.UI.Inventory
     {
         private string   filter = "";
         private readonly List<GameObject> slots = new List<GameObject>();
-        private List<Item> currentPage = InventoryManager.Instance.Weapons;
+        private List<ItemStack> currentPage = InventoryManager.Instance.Weapons;
 
         [Header("Data Panel")]
         [SerializeField] private GameObject      dataPanel;
@@ -94,7 +94,7 @@ namespace Moondown.UI.Inventory
 
             var page = currentPage;
             
-            currentPage = (List<Item>)prop.GetValue(InventoryManager.Instance, null);
+            currentPage = (List<ItemStack>)prop.GetValue(InventoryManager.Instance, null);
 
             if (currentPage != page)
             {
@@ -134,14 +134,14 @@ namespace Moondown.UI.Inventory
 
         public void RefreshEquipment()
         {
-            if (InventoryManager.Instance.equiped.meele == null)
-            {
-                equiment.GetComponent<RawImage>().enabled = false;
-                return;
-            }
+            //if (InventoryManager.Instance.equiped.meele == null)
+            //{
+            //   equiment.GetComponent<RawImage>().enabled = false;
+            //    return;
+            //}
 
-            equiment.GetComponent<RawImage>().enabled = true;
-            equiment.GetComponent<RawImage>().texture = InventoryManager.Instance.equiped.meele.data.image;
+            //equiment.GetComponent<RawImage>().enabled = true;
+            //equiment.GetComponent<RawImage>().texture = InventoryManager.Instance.equiped.meele.data.image;
         }
     }
 }

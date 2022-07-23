@@ -30,6 +30,5 @@ namespace Moondown.Inventory
 
         public int stackSize;
         public Item.Rarity rarity;
-
     }
 }
