@@ -18,9 +18,7 @@ using Moondown.Inventory;
 using Moondown.Utility;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Moondown.UI.Inventory

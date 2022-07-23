@@ -17,7 +17,6 @@
 using Moondown.Inventory;
 using Moondown.Player.Movement;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Moondown.Player.Movement.PlayerMovement;
@@ -74,6 +73,7 @@ namespace Moondown.Utility
             return @out;
         }
 
+        // TODO: Move
         public static List<ItemStack> MakeStacks(this List<Item> items)
         {
             HashSet<Item> set = new HashSet<Item>();

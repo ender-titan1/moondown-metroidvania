@@ -14,13 +14,8 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Moondown.Environment;
-using Moondown.Player.Movement;
-using Moondown.UI;
 using Moondown.Utility;
 
 namespace Moondown.Player

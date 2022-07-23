@@ -22,7 +22,6 @@ using Moondown.UI;
 using Moondown.Utility;
 using Moondown.Player.Movement;
 using Moondown.UI.Inventory;
-using Moondown.WeaponSystem.Attacks;
 using Moondown.Sys;
 using Moondown.Sys.Template;
 using Moondown.Sys.Mono;
@@ -65,8 +64,6 @@ namespace Moondown.Player
 
         [SerializeField] private Material shaderMaterial;
 
-        private MeeleAttack attack;
-
         [SerializeField] private LayerMask mask;
 
         private Vector2 hazardRespawnPoint = new Vector2(0, 0);
@@ -81,7 +78,6 @@ namespace Moondown.Player
             if (Instance == null)
                 Instance = this;
 
-            attack = new MeeleAttack(GetComponent<BoxCollider2D>(), transform, mask);
             config = Config.Load();
             controls = new MainControls();
 
@@ -130,6 +126,7 @@ namespace Moondown.Player
                 go.transform.eulerAngles = Vector3.forward * angle;
             }
         }
+
         private void FireRanged()
         {
             // TEMPORARY

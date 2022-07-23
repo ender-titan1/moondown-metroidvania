@@ -16,10 +16,6 @@
 */
 
 using Moondown.UI.Localization;
-using Moondown.Utility;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 namespace Moondown.Inventory

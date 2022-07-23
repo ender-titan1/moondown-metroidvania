@@ -1,10 +1,6 @@
-﻿using Moondown.UI.Inventory;
-using Moondown.Utility;
-using System;
+﻿using Moondown.Utility;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Moondown.Inventory
 {

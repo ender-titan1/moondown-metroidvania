@@ -15,10 +15,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using Moondown.Inventory;
-using Moondown.Player.Movement;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using Unity.VectorGraphics;
 using UnityEngine;

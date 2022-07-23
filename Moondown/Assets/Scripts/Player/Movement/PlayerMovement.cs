@@ -208,7 +208,7 @@ namespace Moondown.Player.Movement
         private void FixedUpdate()
         {
             // jumping
-                canJump = CheckGround();
+            canJump = CheckGround();
 
             if (canJump)
                 jumps = MAX_JUMPS;
