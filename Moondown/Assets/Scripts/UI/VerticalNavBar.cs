@@ -16,6 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using Moondown.Utility;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +25,8 @@ namespace Moondown.UI
 {
     public class VerticalNavBar : MonoBehaviour
     {
+        public event Action<GameObject> OnSelect;
+
         private GameObject[] selection;
         private GameObject selected;
         private bool _enabled;
@@ -57,6 +60,8 @@ namespace Moondown.UI
                 }
             }
         }
+
+        public GameObject Selected => selected;
 
         private void Awake()
         {
@@ -139,6 +144,9 @@ namespace Moondown.UI
             }
 
             selected = selection[index];
+            
+            if (OnSelect != null)
+                OnSelect(selected);
 
             if (selected.Has<NavBarElement>())
                 selected.GetComponent<NavBarElement>().Select(true);

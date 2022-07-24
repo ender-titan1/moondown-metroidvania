@@ -15,8 +15,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using UnityEngine;
-using Moondown.UI.Inventory;
 using System;
+using Moondown.Inventory;
 
 namespace Moondown.UI
 {
@@ -37,10 +37,7 @@ namespace Moondown.UI
         public bool isInInventory;
         private bool isInPasue;
 
-        public bool IsInInterface
-        {
-            get => isInInventory || isInPasue;
-        }
+        public bool IsInInterface => isInInventory || isInPasue;
 
         public GameObject InventoryUI => UI;
 
@@ -70,12 +67,12 @@ namespace Moondown.UI
             {
                 if (isInInventory)
                 {
-                    if (!InventoryNavigation.Instance.SideBarActive)
-                    {
-                        InventoryNavigation.Instance.SideBarActive = true;
-                        InventoryNavigation.Instance.selectedSlot.OnPointerExit(null);
-                        return;
-                    }
+                    //if (!InventoryNavigation.Instance.SideBarActive)
+                    //{
+                    //    InventoryNavigation.Instance.SideBarActive = true;
+                    //   InventoryNavigation.Instance.selectedSlot.OnPointerExit(null);
+                    //    return;
+                    //}
 
                     ToggleInventory(false);
                 }
@@ -92,13 +89,13 @@ namespace Moondown.UI
         {
             if (isInInventory)
             {
-                if (!InventoryNavigation.Instance.SideBarActive)
-                {
-                    DataPanel.Hide();
-                    InventoryNavigation.Instance.SideBarActive = true;
-                    InventoryNavigation.Instance.selectedSlot.OnPointerExit(null);
-                    return;
-                }
+                //if (!InventoryNavigation.Instance.SideBarActive)
+                //{
+                //    DataPanel.Hide();
+                //    InventoryNavigation.Instance.SideBarActive = true;
+                //   InventoryNavigation.Instance.selectedSlot.OnPointerExit(null);
+                //    return;
+                //}
 
                 ToggleInventory(false);
             }
@@ -135,6 +132,7 @@ namespace Moondown.UI
             UI.SetActive(value);
             DisplayHUD.Toggle(!value);
             isInInventory = value;
+            InventoryManager.Instance.HandleInventoryToggle(value);
         }
 
         #region Pause Menu

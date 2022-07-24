@@ -21,7 +21,6 @@ using Moondown.Inventory;
 using Moondown.UI;
 using Moondown.Utility;
 using Moondown.Player.Movement;
-using Moondown.UI.Inventory;
 using Moondown.Sys;
 using Moondown.Sys.Template;
 using Moondown.Sys.Mono;

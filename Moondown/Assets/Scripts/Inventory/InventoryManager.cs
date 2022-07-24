@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Moondown.Inventory
 {
-    public class InventoryManager
+    public partial class InventoryManager
     {
         public static InventoryManager Instance { get; set; } = new InventoryManager();
 
