@@ -10,5 +10,7 @@
             this.amount = amount;
             this.item = item;
         }
+
+        public override string ToString() => $"{amount}:{item.Name}";
     }
 }

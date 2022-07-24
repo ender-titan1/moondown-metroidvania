@@ -15,7 +15,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using Moondown.UI;
+using Moondown.Utility;
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 namespace Moondown.Inventory
@@ -23,21 +26,22 @@ namespace Moondown.Inventory
     public partial class InventoryManager
     {
         VerticalNavBar navBar = null;
+        MainControls controls;
         bool subscribed = false;
 
         public void OnInventoryOpen()
         {
             if (navBar == null)
-            {
                 navBar = GameObject.FindGameObjectWithTag("InvNavBar").GetComponent<VerticalNavBar>();
-            }
 
             if (!subscribed)
             {
                 navBar.OnSelect += OnNavBarSelect;
                 subscribed = true;
                 navBar.Enabled = true;
-            }  
+            }
+
+            controls = new MainControls();
         }
 
         public void OnInventoryClose()
@@ -52,7 +56,9 @@ namespace Moondown.Inventory
 
         private void OnNavBarSelect(GameObject selected)
         {
-            Debug.Log($"InventoryManager.OnNavBarSelect({selected.name})");
+            PropertyInfo prop = typeof(InventoryManager).GetProperty(selected.name);
+            List<ItemStack> inv = Instance.GetInventory((List<ItemStack>)prop.GetValue(Instance), null);
+            Debug.Log(inv.ToArray().Display());
         }
 
         public void HandleInventoryToggle(bool value)

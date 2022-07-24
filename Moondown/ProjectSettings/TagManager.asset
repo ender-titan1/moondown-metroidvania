@@ -16,6 +16,7 @@ TagManager:
   - climbable
   - hazard respawn
   - death respawn
+  - InvNavBar
   layers:
   - Default
   - TransparentFX
