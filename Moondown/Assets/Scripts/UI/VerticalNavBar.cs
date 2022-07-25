@@ -26,6 +26,10 @@ namespace Moondown.UI
     public class VerticalNavBar : MonoBehaviour
     {
         public event Action<GameObject> OnSelect;
+        public event Action<GameObject> OnActivate;
+        public event Action<bool> OnEnabledStateChanged;
+
+        [SerializeField] private int? @default; 
 
         private GameObject[] selection;
         private GameObject selected;
@@ -46,6 +50,7 @@ namespace Moondown.UI
 
             set
             {
+                OnEnabledStateChanged?.Invoke(value);
                 _enabled = value;
 
                 if (value)
@@ -61,16 +66,21 @@ namespace Moondown.UI
             }
         }
 
+
         public GameObject Selected => selected;
 
         private void Awake()
         {
+
             List<GameObject> objects = new List<GameObject>();
 
             foreach (Transform transform in gameObject.transform)
                 objects.Add(transform.gameObject);
 
             selection = objects.ToArray();
+
+            if (@default != null)
+                selected = selection[@default.Value];
 
             controls = new MainControls();
 
@@ -83,8 +93,12 @@ namespace Moondown.UI
             controls.UI.Up.performed += _ => axis++;
             controls.UI.Up.canceled += _ =>  axis--;
 
-            controls.UI.Select.performed += _ => selected.GetComponent<NavBarElement>().Activate();
-
+            controls.UI.Select.performed += _ =>
+            {
+                Activate();
+                
+                selected.GetComponent<NavBarElement>().Activate();
+            };
         }
 
         private void Start()
@@ -144,9 +158,8 @@ namespace Moondown.UI
             }
 
             selected = selection[index];
-            
-            if (OnSelect != null)
-                OnSelect(selected);
+
+            SelectEvent();
 
             if (selected.Has<NavBarElement>())
                 selected.GetComponent<NavBarElement>().Select(true);
@@ -160,5 +173,9 @@ namespace Moondown.UI
                 @object.GetComponent<NavBarElement>().Select(false);
             }
         }
+
+        public void Activate() => OnActivate?.Invoke(selected);
+
+        public void SelectEvent() => OnSelect?.Invoke(selected);
     }
 }

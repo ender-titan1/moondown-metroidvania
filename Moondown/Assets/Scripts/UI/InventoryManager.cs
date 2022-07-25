@@ -26,6 +26,7 @@ namespace Moondown.Inventory
     public partial class InventoryManager
     {
         VerticalNavBar navBar = null;
+        NavGrid navGrid = null;
         MainControls controls;
         bool subscribed = false;
 
@@ -34,9 +35,13 @@ namespace Moondown.Inventory
             if (navBar == null)
                 navBar = GameObject.FindGameObjectWithTag("InvNavBar").GetComponent<VerticalNavBar>();
 
+            if (navGrid == null)
+                navGrid = GameObject.FindGameObjectWithTag("InvNavGrid").GetComponent<NavGrid>();
+
             if (!subscribed)
             {
                 navBar.OnSelect += OnNavBarSelect;
+                navBar.OnActivate += OnNavBarActivate;
                 subscribed = true;
                 navBar.Enabled = true;
             }
@@ -49,6 +54,7 @@ namespace Moondown.Inventory
             if (subscribed)
             {
                 navBar.OnSelect -= OnNavBarSelect;
+                navBar.OnActivate -= OnNavBarActivate;
                 subscribed = false;
                 navBar.Enabled = false;
             }
@@ -56,9 +62,18 @@ namespace Moondown.Inventory
 
         private void OnNavBarSelect(GameObject selected)
         {
+            if (selected == null)
+                return;
+
             PropertyInfo prop = typeof(InventoryManager).GetProperty(selected.name);
             List<ItemStack> inv = Instance.GetInventory((List<ItemStack>)prop.GetValue(Instance), null);
             Debug.Log(inv.ToArray().Display());
+        }
+
+        private void OnNavBarActivate(GameObject selected)
+        {
+            navGrid.Enabled = navBar.Enabled;
+            navBar.Enabled = !navBar.Enabled;
         }
 
         public void HandleInventoryToggle(bool value)

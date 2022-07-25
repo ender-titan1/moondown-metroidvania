@@ -20,7 +20,7 @@ using UnityEngine.EventSystems;
 
 namespace Moondown.UI
 {
-    public class NavBarElement : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class NavBarElement : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
     {
         public void Select(bool value)
         {
@@ -40,13 +40,20 @@ namespace Moondown.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            GetComponentInParent<VerticalNavBar>().HideAll();
+            VerticalNavBar navBar = GetComponentInParent<VerticalNavBar>();
+            navBar.HideAll();
+            navBar.SelectEvent();
             Select(true);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             Select(false);
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            GetComponentInParent<VerticalNavBar>().Activate();
         }
     }
 }

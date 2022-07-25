@@ -17,6 +17,7 @@ TagManager:
   - hazard respawn
   - death respawn
   - InvNavBar
+  - InvNavGrid
   layers:
   - Default
   - TransparentFX
