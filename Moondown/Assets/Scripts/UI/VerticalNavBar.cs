@@ -29,8 +29,6 @@ namespace Moondown.UI
         public event Action<GameObject> OnActivate;
         public event Action<bool> OnEnabledStateChanged;
 
-        [SerializeField] private int? @default; 
-
         private GameObject[] selection;
         private GameObject selected;
         private bool _enabled;
@@ -79,8 +77,7 @@ namespace Moondown.UI
 
             selection = objects.ToArray();
 
-            if (@default != null)
-                selected = selection[@default.Value];
+            selected = selection[0];
 
             controls = new MainControls();
 

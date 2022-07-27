@@ -19,6 +19,7 @@ using Moondown.Utility;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Unity.VectorGraphics;
 using UnityEngine;
 
 namespace Moondown.Inventory
@@ -42,6 +43,8 @@ namespace Moondown.Inventory
             {
                 navBar.OnSelect += OnNavBarSelect;
                 navBar.OnActivate += OnNavBarActivate;
+                navGrid.OnSelect += OnNavGridSelect;
+                navGrid.OnPreSelect += OnNavGridPreSelect;
                 subscribed = true;
                 navBar.Enabled = true;
             }
@@ -55,6 +58,8 @@ namespace Moondown.Inventory
             {
                 navBar.OnSelect -= OnNavBarSelect;
                 navBar.OnActivate -= OnNavBarActivate;
+                navGrid.OnSelect -= OnNavGridSelect;
+                navGrid.OnPreSelect -= OnNavGridPreSelect;
                 subscribed = false;
                 navBar.Enabled = false;
             }
@@ -65,15 +70,32 @@ namespace Moondown.Inventory
             if (selected == null)
                 return;
 
+            if (!navBar.Enabled)
+            {
+                navGrid.Enabled = false;
+                navBar.Enabled = true;
+            }
+
             PropertyInfo prop = typeof(InventoryManager).GetProperty(selected.name);
             List<ItemStack> inv = Instance.GetInventory((List<ItemStack>)prop.GetValue(Instance), null);
-            Debug.Log(inv.ToArray().Display());
+            navGrid.LoadPanel(inv);
         }
 
         private void OnNavBarActivate(GameObject selected)
         {
             navGrid.Enabled = navBar.Enabled;
             navBar.Enabled = !navBar.Enabled;
+        }
+
+        private void OnNavGridSelect(NavGrid.GridSlot slot)
+        {
+            slot.slot.GetComponent<SVGImage>().color = new Color(1, 0.11461f, 0);
+            Debug.Log(slot.pos);
+        }
+
+        private void OnNavGridPreSelect(NavGrid.GridSlot slot)
+        {
+            slot.slot.GetComponent<SVGImage>().color = Color.white;
         }
 
         public void HandleInventoryToggle(bool value)

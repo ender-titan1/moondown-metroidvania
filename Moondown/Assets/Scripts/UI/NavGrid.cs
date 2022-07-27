@@ -16,11 +16,12 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using Moondown.Inventory;
-using Moondown.Utility;
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using System;
 
 namespace Moondown.UI
 {
@@ -28,24 +29,30 @@ namespace Moondown.UI
     {
         public struct GridSlot
         {
-            public static GridSlot Empty => new GridSlot(null, Vector2Int.zero, null);
+            public static GridSlot Empty => new GridSlot(null, Vector2Int.zero, null, 0);
 
             public ItemStack? stack;
             public Vector2Int pos;
             public GameObject slot;
+            public int index;
 
-            public GridSlot(ItemStack? stack, Vector2Int pos, GameObject slot)
+            public GridSlot(ItemStack? stack, Vector2Int pos, GameObject slot, int index)
             {
                 this.stack = stack;
                 this.pos = pos;
                 this.slot = slot;
+                this.index = index;
             }
         }
+        
+        public event Action<GridSlot> OnSelect;
+        public event Action<GridSlot> OnPreSelect;
+        public event Action<GridSlot> OnActivate;
 
-        public const int COLUMNS_PER_ROW = 5;
-        public const int MAX_COLUMNS = 10;
+        public const int COLUMNS_PER_ROW = 6;
 
-        private GridSlot selected;
+        private int xAxis, yAxis;
+        private GridSlot? selected;
         private MainControls controls;
         private bool _enabled;
         private GridSlot[][] selection;
@@ -62,9 +69,14 @@ namespace Moondown.UI
                 _enabled = value;
 
                 if (value)
+                {
+                    Select();
                     controls.Enable();
+                }
                 else
+                {
                     controls.Disable();
+                }
             }
         }
 
@@ -76,22 +88,107 @@ namespace Moondown.UI
             int child = 0;
             for (int y = 0; y < rows; y++)
             {
-                selection[y] = new GridSlot[COLUMNS_PER_ROW] { GridSlot.Empty, GridSlot.Empty, GridSlot.Empty, GridSlot.Empty, GridSlot.Empty };
+                selection[y] = new GridSlot[COLUMNS_PER_ROW] { GridSlot.Empty, GridSlot.Empty, GridSlot.Empty, GridSlot.Empty, GridSlot.Empty, GridSlot.Empty };
 
                 for (int x = 0; x < COLUMNS_PER_ROW; x++)
                 {
-                    selection[y][x] = new GridSlot(null, new Vector2Int(x, y), transform.GetChild(child).gameObject);
+                    selection[y][x] = new GridSlot(null, new Vector2Int(x, y), transform.GetChild(child).gameObject, child);
                     child++;
                 }
             }
 
             controls = new MainControls();
             controls.UI.Select.performed += _ => Debug.Log("hi");
+
+            controls.UI.Left.performed += _ =>
+            {
+                xAxis--;
+                Select();
+            };
+
+            controls.UI.Right.performed += _ => 
+            {
+                xAxis++;
+                Select();
+            };
+
+            controls.UI.Up.performed += _ => 
+            {
+                yAxis++;
+                Select();
+            };
+
+            controls.UI.Down.performed += _ => 
+            {
+                yAxis--;
+                Select();
+            };
+
+            controls.UI.Left.canceled += _ => xAxis++;
+            controls.UI.Right.canceled += _ => xAxis--;
+            controls.UI.Up.canceled += _ => yAxis--;
+            controls.UI.Down.canceled += _ => yAxis++;
         }
 
-        public void LoadPanel(ItemStack[] inv)
+        public void Select()
         {
+            if (selected == null)
+            {
+                selected = selection[0][0];
+                OnSelect?.Invoke(selected.Value);
+                return;
+            }
 
+            OnPreSelect?.Invoke(selected.Value);
+            
+            try
+            {
+                selected = selection[selected.Value.pos.y + yAxis * -1][selected.Value.pos.x + xAxis * 1];
+            }
+            catch (IndexOutOfRangeException)
+            {
+
+            }
+
+            OnSelect?.Invoke(selected.Value);
+        }
+
+        public Vector2Int NextFree()
+        {
+            return (from GridSlot slot in selection.SelectMany(x => x)
+                    where slot.stack == null
+                    orderby slot.index ascending
+                    select slot.pos).First();
+        }
+
+        public void UnloadAll()
+        {
+            foreach (GridSlot slot in selection.SelectMany(x => x))
+            {
+                slot.slot.GetComponentInChildren<RawImage>().enabled = false;
+                slot.slot.GetComponentInChildren<TextMeshProUGUI>().text = "";
+                selection[slot.pos.y][slot.pos.x].stack = null;
+            }
+        }
+
+        public void LoadPanel(List<ItemStack> inv)
+        {
+            UnloadAll();
+
+            foreach (ItemStack stack in inv)
+            {
+                Vector2Int pos = NextFree();
+                ref GridSlot gridSlot = ref selection[pos.y][pos.x];
+
+                gridSlot.stack = stack;
+                RawImage image = gridSlot.slot.GetComponentInChildren<RawImage>();
+                TextMeshProUGUI text = gridSlot.slot.GetComponentInChildren<TextMeshProUGUI>();
+
+                image.enabled = true;
+                image.texture = stack.item.data.image;
+
+                text.text = stack.amount != 1 ? stack.amount.ToString() : "";
+            }
         }
     }
 }
