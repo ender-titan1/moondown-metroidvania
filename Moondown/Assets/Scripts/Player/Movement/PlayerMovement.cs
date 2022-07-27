@@ -97,7 +97,6 @@ namespace Moondown.Player.Movement
         private float dashCooldown;
         #endregion
 
-
         public bool IsGrounded => canJump;
 
         private void OnEnable() => controls.Enable();

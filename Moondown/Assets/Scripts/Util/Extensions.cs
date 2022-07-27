@@ -59,7 +59,7 @@ namespace Moondown.Utility
                 return previous;
         }
 
-        public static Facing Reverse(this Facing facing) => (Facing)((int)facing * -1);
+        public static Facing Reverse(this Facing facing) => facing == Facing.Left ? Facing.Right : Facing.Left;
 
         public static string Display<T>(this T[] arr, string sep=", ")
         {

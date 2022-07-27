@@ -16,29 +16,12 @@
 */
 using UnityEngine;
 
-namespace Moondown.Sys.Mono.Zone
+namespace Moondown.Sys
 {
-    public class ControlZone : MonoBehaviour
+    [System.Serializable]
+    public struct Path<T>
     {
-        public Vector2 unitSpawnPoint = Vector2.zero;
-        public Path<Transform> path;
-        public int totalSize = 9;
-
-        private void Start()
-        {
-            if (unitSpawnPoint == Vector2.zero) 
-                unitSpawnPoint = transform.position;
-
-            ControlGroupFactory cgf = new ControlGroupFactory();
-            Dispatch(cgf.MakeGroup(totalSize, GameManager.Instance.Templates));
-        }
-
-        public void Dispatch(ControlGroup cg)
-        {
-            foreach (Unit unit in cg.units)
-            {
-                GroundedUnitEnemy.New(unit, unitSpawnPoint, this, path);
-            }
-        }
+        public T a;
+        public T b;
     }
 }
